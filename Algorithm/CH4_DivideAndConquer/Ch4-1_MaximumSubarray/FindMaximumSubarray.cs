@@ -72,5 +72,18 @@ namespace Algorithm.CH4_DivideAndConquer.Ch4_1_MaximumSubarray
             Assert.AreEqual(10, result.Item2);
             Assert.AreEqual(43, result.Item3);
         }
+
+        [Test]
+        [Description("4.1-1 when all elements of A are neagtive")]
+        public void AllNegativeElements()
+        {
+            int[] A = new int[] { -13, -3, -25, -20, -3, -6, -23, -18, -20, -1, -12, -5, -22, -15, -4, -7 };
+            var result = FindMaximumSubarray(A, 0, A.Length - 1);
+
+            // will return only one element with the maxinum value
+            Assert.AreEqual(9, result.Item1);
+            Assert.AreEqual(9, result.Item2);
+            Assert.AreEqual(-1, result.Item3);
+        }
     }
 }
