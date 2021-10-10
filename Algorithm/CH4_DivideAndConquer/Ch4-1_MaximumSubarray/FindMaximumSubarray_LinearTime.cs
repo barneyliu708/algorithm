@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Algorithm.CH4_DivideAndConquer.Ch4_1_MaximumSubarrayEmpty_LinearTime
+namespace Algorithm.CH4_DivideAndConquer.Ch4_1_MaximumSubarray
 {
     [TestFixture]
-    public class Executor
+    public class Ch4_1_MaximumSubarrayEmpty_LinearTime
     {
         // 4.1-4
         // Find maximum subarray but allow return empty array

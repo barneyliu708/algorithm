@@ -6,7 +6,7 @@ using System.Text;
 namespace Algorithm.CH4_DivideAndConquer.Ch4_1_MaximumSubarray
 {
     [TestFixture]
-    public class Executor
+    public class Ch4_1_MaximumSubarray
     {
         public Tuple<int, int, int> FindMaximumSubarray(int[] A, int low, int high)
         {
