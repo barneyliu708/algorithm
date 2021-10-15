@@ -1,0 +1,14 @@
+
+.vs/Algorithm/DesignTimeBuild/.dtbcache.v2
+.vs/Algorithm/v16/.suo
+Algorithm/bin/Debug/netcoreapp3.1/Algorithm.dll
+Algorithm/bin/Debug/netcoreapp3.1/Algorithm.pdb
+Algorithm/bin/Debug/netcoreapp3.1/nunit_random_seed.tmp
+Algorithm/obj/Debug/netcoreapp3.1/Algorithm.csproj.CoreCompileInputs.cache
+Algorithm/obj/Debug/netcoreapp3.1/Algorithm.csprojAssemblyReference.cache
+Algorithm/obj/Debug/netcoreapp3.1/Algorithm.dll
+Algorithm/obj/Debug/netcoreapp3.1/Algorithm.pdb
+
+Algorithm/obj/*
+Algorithm/bin/*
+
