@@ -73,7 +73,7 @@ namespace Algorithm.CH4_DivideAndConque
             int[] pre = new int[] { 3, 9, 20, 15, 7 };
             int[] ino = new int[] { 9, 3, 15, 20, 7 };
             int len = ino.Length;
-            TreeNode root = BuildTree(pre, ino, 0, len - 1);
+            TreeNode root = BuildTree(pre, ino);
         }
         [Test]
         public void PositiveCaase2()
@@ -81,7 +81,7 @@ namespace Algorithm.CH4_DivideAndConque
             int[] pre = new int[] { -1 };
             int[] ino = new int[] { -1 };
             int len = ino.Length;
-            TreeNode root = BuildTree(pre, ino, 0, len - 1);
+            TreeNode root = BuildTree(pre, ino);
         }
     }
 }
