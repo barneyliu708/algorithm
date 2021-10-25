@@ -6,27 +6,31 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_2_MaintainingTheHeapProper
 {
     public class Heap
     {
-        public void MaxHeapify(int[] A, int i)
+        public void MaxHeapify(int[] A, int i, int heapSize)
         {
             int maxIndex = i;
             int rightIndex = RightChildIndex(i);
             int leftIndex = LeftChildIndex(i);
-            if (leftIndex < A.Length && A[leftIndex] > A[i])
+            if (leftIndex < heapSize && A[leftIndex] > A[i])
             {
                 maxIndex = leftIndex;
             }
-            if (rightIndex < A.Length && A[rightIndex] > A[maxIndex])
+            if (rightIndex < heapSize && A[rightIndex] > A[maxIndex])
             {
                 maxIndex = rightIndex;
             }
 
             if (i != maxIndex)
             {
+                // swap the value of ith node and the maxIndex node
                 int temp = A[i];
                 A[i] = A[maxIndex];
                 A[maxIndex] = temp;
 
                 MaxHeapify(A, maxIndex);
+                MaxHeapify(A, maxIndex, heapSize);
+            }
+        }
             }
         }
 
