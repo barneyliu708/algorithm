@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CH6_SortingAndOrderStatistics\Ch6-5_PriorityQueue\" />
+  </ItemGroup>
+
 </Project>
