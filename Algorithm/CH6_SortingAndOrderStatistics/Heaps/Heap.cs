@@ -39,6 +39,19 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_2_MaintainingTheHeapProper
             }
         }
 
+        public void HeapSort(int[] A)
+        {
+            int heapSize = A.Length;
+            BuildMaxHeap(A);
+            for (int i = A.Length - 1; i > 0; i--)
+            {
+                // swap: put root to the right position
+                int temp = A[i];
+                A[i] = A[0];
+                A[0] = temp;
+
+                // decrease heap size by 1 and re-heapify at the root node
+                MaxHeapify(A, 0, --heapSize);
             }
         }
 
