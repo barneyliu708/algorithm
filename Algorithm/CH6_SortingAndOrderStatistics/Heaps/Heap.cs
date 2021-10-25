@@ -27,10 +27,18 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_2_MaintainingTheHeapProper
                 A[i] = A[maxIndex];
                 A[maxIndex] = temp;
 
-                MaxHeapify(A, maxIndex);
                 MaxHeapify(A, maxIndex, heapSize);
             }
         }
+
+        public void BuildMaxHeap(int[] A)
+        {
+            for (int i = A.Length / 2; i >= 0; i--)
+            {
+                MaxHeapify(A, i, A.Length);
+            }
+        }
+
             }
         }
 
