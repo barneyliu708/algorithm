@@ -13,9 +13,8 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_3_BuildMaxHeap
         public void Figure6_3_BuildMaxHeapExample()
         {
             int[] A = new int[] { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
-            Heap heap = new Heap();
 
-            heap.BuildMaxHeap(A);
+            Heap.BuildMaxHeap(A);
             Assert.AreEqual(16, A[0]);
             Assert.AreEqual(14, A[1]);
             Assert.AreEqual(10, A[2]);

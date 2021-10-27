@@ -9,16 +9,20 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_2_MaintainingTheHeapProper
         private int[] _A;
         private int _heapSize;
 
-        public Heap(int size)
+        public Heap(int capability)
         {
-            _heapSize = size;
-            _A = new int[size];
+            _heapSize = 0;
+            _A = new int[capability];
         }
 
         public Heap(int[] A)
         {
             _heapSize = A.Length;
-            _A = A;
+            _A = new int[A.Length * 2];
+            for (int i = 0; i < A.Length; i++)
+            {
+                _A[i] = A[i];
+            }
             BuildMaxHeap(this._A);
         }
 
@@ -48,7 +52,7 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_2_MaintainingTheHeapProper
             return max;
         }
 
-        public void IncreaseKey(int i, int key)
+        private void IncreaseKey(int i, int key)
         {
             if (key < _A[i])
             {
@@ -64,7 +68,18 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_2_MaintainingTheHeapProper
             }
         }
 
-        public void MaxHeapify(int[] A, int i, int heapSize)
+        public void Insert(int key)
+        {
+            if (_heapSize == _A.Length)
+            {
+                throw new Exception("heap overflow");
+            }
+            _heapSize++;
+            _A[_heapSize - 1] = key;
+            IncreaseKey(_heapSize - 1, key);
+        }
+
+        public static void MaxHeapify(int[] A, int i, int heapSize)
         {
             int maxIndex = i;
             int rightIndex = RightChildIndex(i);
@@ -89,7 +104,7 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_2_MaintainingTheHeapProper
             }
         }
 
-        public void BuildMaxHeap(int[] A)
+        public static void BuildMaxHeap(int[] A)
         {
             for (int i = A.Length / 2; i >= 0; i--)
             {
@@ -97,7 +112,7 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_2_MaintainingTheHeapProper
             }
         }
 
-        public void HeapSort(int[] A)
+        public static void HeapSort(int[] A)
         {
             int heapSize = A.Length;
             BuildMaxHeap(A);
@@ -113,17 +128,17 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_2_MaintainingTheHeapProper
             }
         }
 
-        public int ParentIndex(int i)
+        public static int ParentIndex(int i)
         {
             return (i - 1) / 2;
         }
 
-        public int LeftChildIndex(int i)
+        public static int LeftChildIndex(int i)
         {
             return i * 2 + 1;
         }
 
-        public int RightChildIndex(int i)
+        public static int RightChildIndex(int i)
         {
             return i * 2 + 2;
         }

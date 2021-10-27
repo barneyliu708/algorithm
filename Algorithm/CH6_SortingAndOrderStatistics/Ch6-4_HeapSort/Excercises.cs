@@ -13,8 +13,7 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_4_HeapSort
         public void Ex6_1_HeapSort()
         {
             int[] A = new int[] { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
-            Heap heap = new Heap();
-            heap.HeapSort(A);
+            Heap.HeapSort(A);
             Assert.AreEqual(1, A[0]);
             Assert.AreEqual(2, A[1]);
             Assert.AreEqual(3, A[2]);
