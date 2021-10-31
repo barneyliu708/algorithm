@@ -48,5 +48,30 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_5_PriorityQueue
             Assert.AreEqual(1, heap.ExtractMax());
             Assert.AreEqual(0, heap.ExtractMax());
         }
+
+        [Test]
+        public void Excercise6_5_8()
+        {
+            // arrange
+            int[] A = new int[] { 15, 13, 9, 5, 12, 8, 7, 4, 0, 6, 2, 1 };
+            Heap heap = new Heap(A);
+            Assert.AreEqual(8, heap[5]);
+
+            // act
+            heap.Delete(5);
+
+            // assert
+            Assert.AreEqual(15, heap.ExtractMax());
+            Assert.AreEqual(13, heap.ExtractMax());
+            Assert.AreEqual(12, heap.ExtractMax());
+            Assert.AreEqual(9, heap.ExtractMax());
+            Assert.AreEqual(7, heap.ExtractMax());
+            Assert.AreEqual(6, heap.ExtractMax());
+            Assert.AreEqual(5, heap.ExtractMax());
+            Assert.AreEqual(4, heap.ExtractMax());
+            Assert.AreEqual(2, heap.ExtractMax());
+            Assert.AreEqual(1, heap.ExtractMax());
+            Assert.AreEqual(0, heap.ExtractMax());
+        }
     }
 }

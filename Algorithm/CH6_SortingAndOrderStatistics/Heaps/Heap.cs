@@ -79,6 +79,12 @@ namespace Algorithm.CH6_SortingAndOrderStatistics.Ch6_2_MaintainingTheHeapProper
             IncreaseKey(_heapSize - 1, key);
         }
 
+        public void Delete(int i)
+        {
+            IncreaseKey(i, int.MaxValue);
+            ExtractMax();
+        }
+
         public static void MaxHeapify(int[] A, int i, int heapSize)
         {
             int maxIndex = i;
