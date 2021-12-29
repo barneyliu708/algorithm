@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Algorithm.CH10_ElementaryDataStructure
 {
-    public class LC071SimplifyPath
+    public class LC071SimplifyPathQuestion
     {
         public string SimplifyPath(string path)
         {
