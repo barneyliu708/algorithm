@@ -48,5 +48,76 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return rightTail == null ? leftTail : rightTail;
         }
+
+        public class Pair<K, V>
+        {
+            K key;
+            V value;
+            public Pair(K a, V b)
+            {
+                this.key = a;
+                this.value = b;
+            }
+            public K getKey()
+            {
+                return this.key;
+            }
+            public V getValue()
+            {
+                return this.value;
+            }
+        }
+
+        public void FlattenV2(TreeNode root)
+        {
+            TreeNode tailNode = null;
+            int START = 1;
+            int END = 2;
+            Stack<Pair<TreeNode, int>> stack = new Stack<Pair<TreeNode, int>>();
+            stack.Push(new Pair<TreeNode, int>(root, START));
+
+            while (stack.Count != 0)
+            {
+                Pair<TreeNode, int> pair = stack.Pop();
+                TreeNode currentNode = pair.getKey();
+                int currentState = pair.getValue();
+
+                if (currentNode.left == null && currentNode.right == null)
+                {
+                    tailNode = currentNode;
+                    continue;
+                }
+
+                if (currentState == START)
+                {
+                    if (currentNode.left != null)
+                    {
+                        stack.Push(new Pair<TreeNode, int>(currentNode, END));
+                        stack.Push(new Pair<TreeNode, int>(currentNode.left, START));
+                    }
+                    else if (currentNode.right != null)
+                    {
+                        stack.Push(new Pair<TreeNode, int>(currentNode.right, START));
+                    }
+                }
+                else
+                {
+                    TreeNode rightNode = currentNode.right;
+                    if (tailNode != null)
+                    {
+                        tailNode.right = currentNode.right;
+                        currentNode.right = currentNode.left;
+                        currentNode.left = null;
+
+                        rightNode = tailNode.right;
+                    }
+
+                    if (rightNode != null)
+                    {
+                        stack.Push(new Pair<TreeNode, int>(rightNode, START));
+                    }
+                }
+            }
+        }
     }
 }
