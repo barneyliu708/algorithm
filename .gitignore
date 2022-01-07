@@ -12,3 +12,4 @@ Algorithm/obj/Debug/netcoreapp3.1/Algorithm.pdb
 Algorithm/obj/*
 Algorithm/bin/*
 
+*.testlog
