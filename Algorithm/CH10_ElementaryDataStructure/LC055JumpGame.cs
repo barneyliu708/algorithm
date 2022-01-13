@@ -32,6 +32,39 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
 
+        public class DynamicProgrammingTopDownMethod
+        {
+            private int UNKNOWN = 0;
+            private int BAD = -1;
+            private int GOOD = 1;
 
+            public bool CanJump(int[] nums)
+            {
+                int[] dp = new int[nums.Length];
+                dp[dp.Length - 1] = GOOD; // the last position can always reach out to itself
+                return backtracking(0, nums, dp);
+            }
+
+            private bool backtracking(int position, int[] nums, int[] dp)
+            {
+                if (dp[position] != UNKNOWN)
+                {
+                    return dp[position] == GOOD;
+                }
+
+                int maxJump = Math.Min(position + nums[position], nums.Length - 1);
+                for (int nextPosition = maxJump; nextPosition > position; nextPosition--)
+                {
+                    if (backtracking(nextPosition, nums, dp))
+                    {
+                        dp[position] = GOOD;
+                        return true;
+                    }
+                }
+
+                dp[position] = BAD;
+                return false;
+            }
+        }
     }
 }
