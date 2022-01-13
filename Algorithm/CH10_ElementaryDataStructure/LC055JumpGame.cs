@@ -98,5 +98,21 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return dp[0] == GOOD;
             }
         }
+
+        public class Greedy
+        {
+            public bool CanJump(int[] nums)
+            {
+                int lastPos = nums.Length - 1;
+                for (int i = nums.Length - 1; i >= 0; i--)
+                {
+                    if (i + nums[i] >= lastPos)
+                    {
+                        lastPos = i;
+                    }
+                }
+                return lastPos == 0;
+            }
+        }
     }
 }
