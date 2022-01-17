@@ -8,62 +8,91 @@ namespace Algorithm.CH10_ElementaryDataStructure
     [TestFixture]
     public class LC139WordBreak
     {
-        public bool WordBreak(string s, IList<string> wordDict)
+        public class RecursionWithMemoization_DP
         {
-
-            return WordBreak(s, 0, new bool[s.Length], new HashSet<string>(wordDict));
-        }
-
-        private bool WordBreak(string s, int i, bool[] dp, HashSet<string> wordDict)
-        {
-            Console.WriteLine(i);
-            if (i >= s.Length)
+            public bool WordBreak(string s, IList<string> wordDict)
             {
-                return true;
+
+                int[] dp = new int[s.Length];
+                return WordBreak(s, 0, dp, new HashSet<string>(wordDict));
             }
 
-            if (dp[i])
+            private bool WordBreak(string s, int i, int[] dp, HashSet<string> wordDict)
             {
-                return true;
-            }
-
-            for (int j = i; j < s.Length; j++)
-            {
-
-                if (wordDict.Contains(s.Substring(i, j - i + 1)) && WordBreak(s, j + 1, dp, wordDict))
+                if (i >= s.Length)
                 {
-                    return dp[i] = true;
+                    return true;
                 }
+
+                if (dp[i] != 0) // 0 = not visited, 1 = false, 2 = true;
+                {
+                    return dp[i] == 2;
+                }
+
+                for (int j = i; j < s.Length; j++)
+                {
+
+                    if (wordDict.Contains(s.Substring(i, j - i + 1)) && WordBreak(s, j + 1, dp, wordDict))
+                    {
+                        dp[i] = 2;
+                        return true;
+                    }
+                }
+
+                dp[i] = 1;
+                return false;
             }
 
-            return false;
-        }
+            [Test]
+            public void TestCase1()
+            {
+                string s = "applepenapple";
+                IList<string> wordDict = new List<string> { "apple", "pen" };
 
-        [Test]
-        public void TestCase1()
+                Assert.AreEqual(true, WordBreak(s, wordDict));
+            }
+
+            [Test]
+            public void TestCase2()
+            {
+                string s = "leetcodeleetcodeleetcodeleetapplecodeleetcodeleetcodeapple";
+                IList<string> wordDict = new List<string> { "leet", "code", "apple" };
+
+                Assert.AreEqual(true, WordBreak(s, wordDict));
+            }
+
+            [Test]
+            public void TestCase3()
+            {
+                string s = "catsandog";
+                IList<string> wordDict = new List<string> { "cats", "dog", "sand", "and", "cat" };
+
+                Assert.AreEqual(false, WordBreak(s, wordDict));
+            }
+        }
+        
+        public class DynamicProgramming
         {
-            string s = "applepenapple";
-            IList<string> wordDict = new List<string> { "apple", "pen" };
+            public bool WordBreak(string s, IList<string> wordDict)
+            {
 
-            Assert.AreEqual(true, WordBreak(s, wordDict));
-        }
+                bool[] dp = new bool[s.Length + 1];
+                dp[s.Length] = true;
 
-        [Test]
-        public void TestCase2()
-        {
-            string s = "leetcodeleetcodeleetcodeleetapplecodeleetcodeleetcodeapple";
-            IList<string> wordDict = new List<string> { "leet", "code", "apple" };
+                for (int i = s.Length - 1; i >= 0; i--)
+                {
+                    for (int j = s.Length - 1; j >= i; j--)
+                    {
+                        if (dp[j + 1] && wordDict.Contains(s.Substring(i, j - i + 1)))
+                        {
+                            dp[i] = true;
+                            break;
+                        }
+                    }
+                }
 
-            Assert.AreEqual(true, WordBreak(s, wordDict));
-        }
-
-        [Test]
-        public void TestCase3()
-        {
-            string s = "catsandog";
-            IList<string> wordDict = new List<string> { "cats", "dog", "sand", "and", "cat" };
-
-            Assert.AreEqual(false, WordBreak(s, wordDict));
-        }
+                return dp[0];
+            }
+        }       
     }
 }
