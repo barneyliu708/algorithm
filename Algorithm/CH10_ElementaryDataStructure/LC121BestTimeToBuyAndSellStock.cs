@@ -22,4 +22,3 @@ namespace Algorithm.CH10_ElementaryDataStructure
         }
     }
 }
-}
