@@ -57,5 +57,28 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
 
+        public class DynamicProgramming
+        {
+            public int MaxProduct(int[] nums)
+            {
+
+                int[] max = new int[nums.Length];
+                int[] min = new int[nums.Length];
+
+                max[0] = nums[0];
+                min[0] = nums[0];
+                int ans = max[0];
+
+                for (int i = 1; i < nums.Length; i++)
+                {
+                    max[i] = Math.Max(nums[i], Math.Max(max[i - 1] * nums[i], min[i - 1] * nums[i]));
+                    min[i] = Math.Min(nums[i], Math.Min(max[i - 1] * nums[i], min[i - 1] * nums[i]));
+                    ans = Math.Max(ans, max[i]);
+                }
+
+                return ans;
+            }
+        }
+
     }
 }
