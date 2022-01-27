@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Algorithm.CH10_ElementaryDataStructure
 {
-    class LC141LinkedListCycle
+    class LC142LinkedListCycleII
     {
         public class ListNode
         {
@@ -17,7 +17,7 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
 
-        public bool HasCycle(ListNode head)
+        public ListNode DetectCycle(ListNode head)
         {
 
             HashSet<ListNode> hashset = new HashSet<ListNode>();
@@ -26,13 +26,13 @@ namespace Algorithm.CH10_ElementaryDataStructure
             {
                 if (hashset.Contains(head))
                 {
-                    return true;
+                    return head;
                 }
                 hashset.Add(head);
                 head = head.next;
             }
 
-            return false;
+            return null;
         }
     }
 }
