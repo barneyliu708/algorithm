@@ -6,6 +6,13 @@ namespace Algorithm.CH10_ElementaryDataStructure
 {
     class LC510InorderSuccessorInBSTII
     {
+        public class Node
+        {
+            public int val;
+            public Node left;
+            public Node right;
+            public Node parent;
+        }
         public Node InorderSuccessor(Node x)
         {
 
