@@ -19,6 +19,8 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 nums[index] *= -1;
             }
 
+
+
             return int.MinValue;
         }
     }
