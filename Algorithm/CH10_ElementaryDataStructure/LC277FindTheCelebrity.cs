@@ -36,5 +36,34 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
 
+        public class OneScan
+        {
+            public bool Knows(int i, int j)
+            {
+                return i == j;
+            }
+
+            public int FindCelebrity(int n)
+            {
+
+                int candidate = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    if (i != candidate && Knows(candidate, i))
+                    {
+                        candidate = i;
+                    }
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    if (i != candidate && (!Knows(i, candidate) || Knows(candidate, i)))
+                    {
+                        return -1;
+                    }
+                }
+                return candidate;
+            }
+        }
     }
 }
