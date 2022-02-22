@@ -1,35 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Algorithm.CH10_ElementaryDataStructure
 {
     class LC159LongestSubstringWithAtMostTwoDistinctCharacters
     {
-        public int LengthOfLongestSubstring(string s)
+        public int LengthOfLongestSubstringTwoDistinct(string s)
         {
+            if (s.Length <= 2)
+            {
+                return s.Length;
+            }
 
-            int[] chars = new int[128];
-
-            int left = 0;
-            int right = 0;
+            int l = 0;
+            int r = 0;
+            Dictionary<char, int> map = new Dictionary<char, int>();
 
             int ans = 0;
-            while (right < s.Length)
+            while (r < s.Length)
             {
-                char r = s[right];
-                chars[r]++;
 
-                while (chars[r] > 1)
+                map[s[r]] = r; // need to store the latest index of each charactor
+
+                if (map.Count > 2)
                 {
-                    char l = s[left];
-                    chars[l]--;
-                    left++;
+                    int leftmost = map.Values.ToArray().Min();
+                    map.Remove(s[leftmost]);
+                    l = leftmost + 1;
                 }
 
-                ans = Math.Max(ans, right - left + 1);
+                ans = Math.Max(ans, r - l + 1);
 
-                right++;
+                r++;
             }
 
             return ans;
