@@ -69,5 +69,45 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        class DftApproach
+        {
+            public IList<IList<int>> VerticalOrder(TreeNode root)
+            {
+
+                Dictionary<int, List<KeyValuePair<int, int>>> map = new Dictionary<int, List<KeyValuePair<int, int>>>();
+                DftUti(root, 0, 0, map);
+
+                List<int> sortedIndexes = map.Keys.ToList();
+                sortedIndexes.Sort();
+
+                IList<IList<int>> ans = new List<IList<int>>();
+                foreach (int index in sortedIndexes)
+                {
+                    List<KeyValuePair<int, int>> nodes = map[index];
+                    ans.Add(nodes.OrderBy(n => n.Key).Select(n => n.Value).ToList()); // order by row, select the node value as an array
+                }
+
+                return ans;
+            }
+
+            private void DftUti(TreeNode root, int col, int row, Dictionary<int, List<KeyValuePair<int, int>>> map)
+            { // map: index - value[]
+
+                if (root == null)
+                {
+                    return;
+                }
+
+                if (!map.ContainsKey(col))
+                {
+                    map[col] = new List<KeyValuePair<int, int>>();
+                }
+
+                map[col].Add(new KeyValuePair<int, int>(row, root.val));
+                DftUti(root.left, col - 1, row + 1, map);
+                DftUti(root.right, col + 1, row + 1, map);
+            }
+        }
     }
 }
