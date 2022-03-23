@@ -161,5 +161,62 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
 
+        public class ThridTrial
+        {
+            public int[] SearchRange(int[] nums, int target)
+            {
+                return new[] { SearchLowerBoundary(nums, target), SearchHigherBoundary(nums, target) };
+            }
+
+            private int SearchLowerBoundary(int[] nums, int target)
+            {
+                int l = 0;
+                int r = nums.Length - 1;
+                while (l <= r)
+                {
+                    int mid = l + (r - l) / 2;
+                    if (nums[mid] >= target)
+                    {
+                        r = mid - 1;
+                    }
+                    else
+                    {
+                        l = mid + 1;
+                    }
+                }
+
+                if (l >= nums.Length || nums[l] != target)
+                {
+                    return -1;
+                }
+
+                return l;
+            }
+
+            private int SearchHigherBoundary(int[] nums, int target)
+            {
+                int l = 0;
+                int r = nums.Length - 1;
+                while (l <= r)
+                {
+                    int mid = l + (r - l) / 2;
+                    if (nums[mid] <= target)
+                    {
+                        l = mid + 1;
+                    }
+                    else
+                    {
+                        r = mid - 1;
+                    }
+                }
+
+                if (r < 0 || nums[r] != target)
+                {
+                    return -1;
+                }
+
+                return r;
+            }
+        }
     }
 }
