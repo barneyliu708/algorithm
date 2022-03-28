@@ -34,5 +34,31 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class OptimizedSilidingWindowApproach
+        {
+            public int LengthOfLongestSubstring(string s)
+            {
+                Dictionary<char, int> map = new Dictionary<char, int>(); // charactor - the latest index of the charactor
+                int l = 0;
+                int r = 0;
+                int ans = 0;
+                while (r < s.Length)
+                {
+                    char rch = s[r];
+                    if (map.ContainsKey(rch))
+                    {
+                        // need to take the greater index between the left pointer and the stored index
+                        l = Math.Max(l, map[rch] + 1);
+                    }
+                    ans = Math.Max(ans, r - l + 1);
+                    map[rch] = r;
+
+                    r++;
+                }
+
+                return ans;
+            }
+        }
     }
 }
