@@ -78,5 +78,41 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class NeverReduceSlidingWindowSizeApproach
+        {
+            public int LengthOfLongestSubstringTwoDistinct(string s)
+            {
+                Dictionary<char, int> map = new Dictionary<char, int>();
+                int l = 0;
+                int r = 0;
+                while (r < s.Length)
+                {
+                    // update the state of the sliding window with the right index
+                    char rch = s[r];
+                    if (!map.ContainsKey(rch))
+                    {
+                        map[rch] = 0;
+                    }
+                    map[rch]++;
+
+                    // check once if the current substring satisfy the target condition
+                    if (map.Count > 2)
+                    {
+                        char lch = s[l];
+                        map[lch]--;
+                        if (map[lch] == 0)
+                        {
+                            map.Remove(lch);
+                        }
+                        l++;
+                    }
+
+                    r++;
+                }
+
+                return r - l;
+            }
+        }
     }
 }
