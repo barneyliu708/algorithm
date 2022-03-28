@@ -38,5 +38,45 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class StandardSlidingWidnowTemplateApproach
+        {
+            public int LengthOfLongestSubstringTwoDistinct(string s)
+            {
+                Dictionary<char, int> map = new Dictionary<char, int>();
+                int l = 0;
+                int r = 0;
+                int ans = 0;
+                while (r < s.Length)
+                {
+                    // update the state of the sliding window with the right index
+                    char rch = s[r];
+                    if (!map.ContainsKey(rch))
+                    {
+                        map[rch] = 0;
+                    }
+                    map[rch]++;
+
+                    // check if the current substring satisfy the target condition
+                    while (map.Count > 2)
+                    {
+                        char lch = s[l];
+                        map[lch]--;
+                        if (map[lch] == 0)
+                        {
+                            map.Remove(lch);
+                        }
+                        l++;
+                    }
+
+                    // update the answer
+                    ans = Math.Max(ans, r - l + 1);
+
+                    r++;
+                }
+
+                return ans;
+            }
+        }
     }
 }
