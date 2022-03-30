@@ -75,5 +75,78 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class SecondDone
+        {
+            public IList<IList<int>> FourSum(int[] nums, int target)
+            {
+                Array.Sort(nums);
+                return KSum(nums, 0, target, 4);
+            }
+
+            private IList<IList<int>> KSum(int[] nums, int start, int target, int k)
+            {
+                IList<IList<int>> ans = new List<IList<int>>();
+
+                if (start >= nums.Length)
+                {
+                    return ans;
+                }
+
+                // since nums is sorted, we can check the minimum and maxmum element to the target
+                if (nums[start] > target / k || nums[nums.Length - 1] < target / k) // target / k to avoid int overflow
+                {
+                    return ans;
+                }
+
+                if (k == 2)
+                {
+                    return TwoSum(nums, start, target);
+                }
+
+                for (int i = start; i < nums.Length; i++)
+                {
+                    if (i != start && nums[i] == nums[i - 1])
+                    {
+                        continue;
+                    }
+                    int num = nums[i];
+                    foreach (IList<int> subset in KSum(nums, i + 1, target - num, k - 1))
+                    {
+                        List<int> subAns = new List<int>() { num };
+                        subAns.AddRange(subset);
+                        ans.Add(subAns);
+                    }
+                }
+
+                return ans;
+            }
+
+            private IList<IList<int>> TwoSum(int[] nums, int start, int target)
+            {
+                IList<IList<int>> ans = new List<IList<int>>();
+                int l = start;
+                int r = nums.Length - 1;
+                while (l < r)
+                {
+                    int sum = nums[l] + nums[r];
+                    if (sum < target || (l != start && nums[l] == nums[l - 1]))
+                    {
+                        l++;
+                    }
+                    else if (sum > target || r != nums.Length - 1 && nums[r] == nums[r + 1])
+                    {
+                        r--;
+                    }
+                    else
+                    {
+                        ans.Add(new List<int> { nums[l], nums[r] });
+                        l++;
+                        r--;
+                    }
+                }
+                return ans;
+            }
+        }
     }
 }
