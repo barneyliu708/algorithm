@@ -65,5 +65,75 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans.len == -1 ? "" : s.Substring(ans.l, ans.len);
         }
+
+        public class SecondDone
+        {
+            public string MinWindow(string s, string t)
+            {
+
+                // count the characters in the t string
+                Dictionary<char, int> tmap = new Dictionary<char, int>();
+                foreach (char ch in t)
+                {
+                    if (!tmap.ContainsKey(ch))
+                    {
+                        tmap[ch] = 0;
+                    }
+                    tmap[ch]++;
+                }
+
+                // sliding window
+                int l = 0;
+                int r = 0;
+                Dictionary<char, int> smap = new Dictionary<char, int>(); // count the characters in the sliding window of s string
+                HashSet<char> goodChars = new HashSet<char>(); // good characters that satisfy the required condition
+                (int startIndex, int length) ans = (-1, s.Length);
+                while (r < s.Length)
+                {
+                    char rch = s[r];
+                    if (!smap.ContainsKey(rch))
+                    {
+                        smap[rch] = 0;
+                    }
+                    smap[rch]++;
+
+                    // check if rch is good enough
+                    if (tmap.ContainsKey(rch) && smap[rch] >= tmap[rch])
+                    {
+                        goodChars.Add(rch);
+                    }
+
+                    // check if need to shrink the sliding window
+                    while (l <= r && goodChars.Count == tmap.Keys.Count)
+                    {
+
+                        // store the current answer
+                        if (r - l + 1 <= ans.length)
+                        {
+                            ans.startIndex = l;
+                            ans.length = r - l + 1;
+                        }
+
+                        // shrink the window at left side
+                        char lch = s[l];
+                        smap[lch]--;
+                        if (tmap.ContainsKey(lch) && smap[lch] < tmap[lch])
+                        {
+                            goodChars.Remove(lch);
+                        }
+                        l++;
+                    }
+
+                    r++;
+                }
+
+                if (ans.startIndex == -1)
+                {
+                    return "";
+                }
+
+                return s.Substring(ans.startIndex, ans.length);
+            }
+        }
     }
 }
