@@ -23,5 +23,22 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return i;
         }
+
+        public class SecondDone
+        {
+            public int RemoveElement(int[] nums, int val)
+            {
+                int inject = 0;
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (nums[i] != val)
+                    {
+                        nums[inject] = nums[i];
+                        inject++;
+                    }
+                }
+                return inject;
+            }
+        }
     }
 }
