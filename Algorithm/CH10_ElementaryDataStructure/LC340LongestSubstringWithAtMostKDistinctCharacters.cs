@@ -83,5 +83,42 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class OptimizedSlidingWindowThatNeverShrink
+        {
+            public int LengthOfLongestSubstringKDistinct(string s, int k)
+            {
+                // character - count
+                // sliding window to find the longest substring that satisfy the required conditions
+                Dictionary<char, int> map = new Dictionary<char, int>(); 
+                int l = 0;
+                int r = 0;
+                while (r < s.Length)
+                {
+                    char rch = s[r];
+                    if (!map.ContainsKey(rch))
+                    {
+                        map[rch] = 0;
+                    }
+                    map[rch]++;
+
+                    // if the count of unique characters are greater than k, move the left pointer once, but never shrink the window
+                    if (map.Keys.Count > k)
+                    {
+                        char lch = s[l]; // character to be removed
+                        map[lch]--;
+                        if (map[lch] == 0)
+                        {
+                            map.Remove(lch);
+                        }
+                        l++;
+                    }
+
+                    r++;
+                }
+
+                return r - l;
+            }
+        }
     }
 }
