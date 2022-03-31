@@ -37,5 +37,35 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans.ToArray();
         }
+
+        public class SecondDone
+        {
+            public int[][] Merge(int[][] intervals)
+            {
+                Array.Sort(intervals, (int[] x, int[] y) => {
+                    return x[0].CompareTo(y[0]);
+                });
+
+                List<int[]> ans = new List<int[]>();
+                ans.Add(intervals[0]);
+
+                for (int i = 1; i < intervals.Length; i++)
+                {
+                    int[] pre = ans[ans.Count - 1];
+                    int[] cur = intervals[i];
+
+                    if (cur[0] <= pre[1]) // merge with previous interval
+                    { 
+                        pre[1] = Math.Max(pre[1], cur[1]);
+                    }
+                    else
+                    {
+                        ans.Add(cur);
+                    }
+                }
+
+                return ans.ToArray();
+            }
+        }
     }
 }
