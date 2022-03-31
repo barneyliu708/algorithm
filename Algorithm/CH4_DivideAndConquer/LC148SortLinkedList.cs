@@ -101,6 +101,79 @@ namespace Algorithm.CH4_DivideAndConque
             return dummy.next;
         }
 
+        public class SecondDone
+        {
+            public ListNode SortList(ListNode head)
+            {
+                return MergeSort(head);
+            }
+
+            private ListNode MergeSort(ListNode head)
+            {
+                if (head == null || head.next == null)
+                {
+                    return head;
+                }
+
+                ListNode dummy = new ListNode();
+                dummy.next = head;
+
+                // divide the list in the middle
+                ListNode f = dummy;
+                ListNode s = dummy;
+                while (f != null && f.next != null)
+                {
+                    f = f.next.next;
+                    s = s.next;
+                }
+
+                ListNode firstHalf = dummy.next;
+                ListNode secondHalf = s.next;
+                s.next = null; // break the chain
+
+                firstHalf = MergeSort(firstHalf);
+                secondHalf = MergeSort(secondHalf);
+
+                // conbine
+                return Combine(firstHalf, secondHalf);
+            }
+
+            private ListNode Combine(ListNode first, ListNode second)
+            {
+                ListNode dummy = new ListNode();
+                ListNode insert = dummy;
+                while (first != null && second != null)
+                {
+                    ListNode cur = null;
+                    if (first.val < second.val)
+                    {
+                        cur = first;
+                        first = first.next;
+                    }
+                    else
+                    {
+                        cur = second;
+                        second = second.next;
+                    }
+                    cur.next = null; // extract the node from the original chain
+                    insert.next = cur;
+                    insert = insert.next;
+                }
+
+                if (first != null)
+                {
+                    insert.next = first;
+                }
+
+                if (second != null)
+                {
+                    insert.next = second;
+                }
+
+                return dummy.next;
+            }
+        }
+
         [Test]
         public void PositiveCaase1()
         {
