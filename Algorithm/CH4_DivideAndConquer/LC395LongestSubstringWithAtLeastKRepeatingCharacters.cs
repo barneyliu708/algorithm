@@ -50,5 +50,75 @@ namespace Algorithm.CH4_DivideAndConque
 
             return r - l + 1;
         }
+
+        public class SlidingWindowApproach 
+        {
+            public int LongestSubstring(string s, int k)
+            {
+                HashSet<char> uniqueChars = new HashSet<char>();
+                foreach (char ch in s)
+                {
+                    uniqueChars.Add(ch);
+                }
+
+                int ans = 0;
+                for (int unique = 1; unique <= uniqueChars.Count; unique++)
+                {
+                    ans = Math.Max(ans, LongestSubstring(s, k, unique));
+                }
+
+                return ans;
+            }
+
+            private int LongestSubstring(string s, int k, int unique)
+            {
+                int ans = 0;
+                Dictionary<char, int> counts = new Dictionary<char, int>(); // character - the count of the character
+                HashSet<char> goodChars = new HashSet<char>(); // the characters whose count equals or is greater than k
+
+                // sliding windows to find the longest substring that satisfy the required conditions
+                int l = 0;
+                int r = 0;
+                while (r < s.Length)
+                {
+                    char rch = s[r];
+                    if (!counts.ContainsKey(rch))
+                    {
+                        counts[rch] = 0;
+                    }
+                    counts[rch]++;
+
+                    if (counts[rch] >= k)
+                    {
+                        goodChars.Add(rch);
+                    }
+
+                    while (counts.Keys.Count > unique)
+                    {
+                        char lch = s[l];
+                        counts[lch]--;
+                        if (counts[lch] < k)
+                        {
+                            goodChars.Remove(lch);
+                        }
+                        if (counts[lch] == 0)
+                        {
+                            counts.Remove(lch);
+                        }
+                        l++;
+                    }
+
+                    if (goodChars.Count == unique)
+                    {
+                        ans = Math.Max(ans, r - l + 1);
+                    }
+
+                    r++;
+                }
+
+                return ans;
+            }
+        }
+
     }
 }
