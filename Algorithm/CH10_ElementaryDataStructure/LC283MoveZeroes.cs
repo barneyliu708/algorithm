@@ -24,5 +24,28 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 nums[l++] = 0;
             }
         }
+
+        public class SecondDone
+        {
+            public void MoveZeroes(int[] nums)
+            {
+                int insert = 0;
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (nums[i] != 0)
+                    {
+                        Swap(nums, insert, i);
+                        insert++;
+                    }
+                }
+            }
+
+            private void Swap(int[] nums, int i, int j)
+            {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
     }
 }
