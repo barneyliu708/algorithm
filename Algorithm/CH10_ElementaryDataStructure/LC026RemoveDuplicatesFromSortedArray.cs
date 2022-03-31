@@ -28,5 +28,23 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return insert;
         }
+
+        public class SecondDone
+        {
+            public int RemoveDuplicates(int[] nums)
+            {
+
+                int insert = 0;
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (i == 0 || nums[i] != nums[i - 1])
+                    {
+                        nums[insert++] = nums[i];
+                    }
+                }
+
+                return insert;
+            }
+        }
     }
 }
