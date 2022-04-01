@@ -28,5 +28,30 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
             return sb.ToString();
         }
+
+        public class SecondDone
+        {
+            public string LargestNumber(int[] nums)
+            {
+                Array.Sort(nums, (int x, int y) => {
+                    string xstr = x.ToString();
+                    string ystr = y.ToString();
+                    return -(xstr + ystr).CompareTo(ystr + xstr);
+                });
+
+                if (nums[0] == 0)
+                {
+                    return "0";
+                }
+
+                StringBuilder sb = new StringBuilder();
+                foreach (int num in nums)
+                {
+                    sb.Append(num.ToString());
+                }
+
+                return sb.ToString();
+            }
+        }
     }
 }
