@@ -38,5 +38,37 @@ namespace Algorithm.CH10_ElementaryDataStructure
             nums[i] = nums[j];
             nums[j] = temp;
         }
+
+        public class SecondDone
+        {
+            public void SortColors(int[] nums)
+            {
+                int l = 0;
+                int r = nums.Length - 1;
+                for (int i = 0; i <= r; i++)
+                {
+                    if (nums[i] == 0)
+                    {
+                        Swap(nums, i, l);
+                        l++;
+                    }
+                }
+                for (int i = nums.Length - 1; i >= l; i--)
+                {
+                    if (nums[i] == 2)
+                    {
+                        Swap(nums, i, r);
+                        r--;
+                    }
+                }
+            }
+
+            private void Swap(int[] nums, int i, int j)
+            {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
     }
 }
