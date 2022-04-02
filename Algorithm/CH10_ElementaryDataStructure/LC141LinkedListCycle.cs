@@ -10,7 +10,7 @@ namespace Algorithm.CH10_ElementaryDataStructure
         {
             public int val;
             public ListNode next;
-            public ListNode(int x)
+            public ListNode(int x = 0)
             {
                 val = x;
                 next = null;
@@ -33,6 +33,28 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
 
             return false;
+        }
+
+        public class TwoPointerApproach
+        {
+            public bool HasCycle(ListNode head)
+            {
+                ListNode dummy = new ListNode();
+                dummy.next = head;
+                ListNode f = dummy.next;
+                ListNode s = dummy;
+                while (f != s)
+                {
+                    if (f == null || f.next == null)
+                    {
+                        return false;
+                    }
+                    f = f.next.next;
+                    s = s.next;
+                }
+
+                return true;
+            }
         }
     }
 }
