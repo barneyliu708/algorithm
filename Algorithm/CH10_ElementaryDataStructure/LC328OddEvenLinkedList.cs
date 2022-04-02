@@ -47,5 +47,38 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return oddDummy.next;
         }
+
+        public class SecondDone
+        {
+            public ListNode OddEvenList(ListNode head)
+            {
+                ListNode oddDummy = new ListNode();
+                ListNode evenDummy = new ListNode();
+
+                ListNode o = oddDummy;
+                ListNode e = evenDummy;
+                int position = 1;
+                while (head != null)
+                {
+                    if (position % 2 == 1)
+                    {
+                        o.next = head;
+                        head = head.next;
+                        o = o.next;
+                        o.next = null;
+                    }
+                    else
+                    {
+                        e.next = head;
+                        head = head.next;
+                        e = e.next;
+                        e.next = null;
+                    }
+                    position++;
+                }
+                o.next = evenDummy.next;
+                return oddDummy.next;
+            }
+        }
     }
 }
