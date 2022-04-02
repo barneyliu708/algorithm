@@ -43,5 +43,24 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return reversedNext;
         }
+
+        public class SecondDone
+        {
+            public ListNode ReverseList(ListNode head)
+            {
+                if (head == null || head.next == null)
+                {
+                    return head;
+                }
+
+                ListNode next = head.next;
+                head.next = null; // break the chain
+
+                ListNode reversed = ReverseList(next);
+                next.next = head; // the next object will be the tail after reversed
+
+                return reversed;
+            }
+        }
     }
 }
