@@ -51,10 +51,17 @@ namespace Algorithm.CH10_ElementaryDataStructure
         {
             public int EvalRPN(string[] tokens)
             {
+                Dictionary<string, Func<int, int, int>> operations = new Dictionary<string, Func<int, int, int>>()
+                {
+                    { "+", (int a, int b) => { return a + b; }},
+                    { "-", (int a, int b) => { return a - b; }},
+                    { "*", (int a, int b) => { return a * b; }},
+                    { "/", (int a, int b) => { return a / b; }}
+                };
                 Stack<int> stack = new Stack<int>();
                 foreach (string token in tokens)
                 {
-                    if (!IsOperator(token))
+                    if (!operations.ContainsKey(token))
                     {
                         stack.Push(int.Parse(token));
                     }
@@ -62,32 +69,11 @@ namespace Algorithm.CH10_ElementaryDataStructure
                     {
                         int operand2 = stack.Pop();
                         int operand1 = stack.Pop();
-                        int result;
-                        if (token == "+")
-                        {
-                            result = operand1 + operand2;
-                        }
-                        else if (token == "-")
-                        {
-                            result = operand1 - operand2;
-                        }
-                        else if (token == "*")
-                        {
-                            result = operand1 * operand2;
-                        }
-                        else
-                        {
-                            result = operand1 / operand2;
-                        }
+                        int result = operations[token](operand1, operand2);
                         stack.Push(result);
                     }
                 }
                 return stack.Peek();
-            }
-
-            private bool IsOperator(string token)
-            {
-                return token == "+" || token == "-" || token == "*" || token == "/";
             }
         }
     }
