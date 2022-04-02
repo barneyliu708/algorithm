@@ -61,5 +61,65 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class SecondDone
+        {
+            public class MaxStack
+            {
+
+                private Stack<int> stack;
+                private Stack<int> max;
+
+                public MaxStack()
+                {
+                    stack = new Stack<int>();
+                    max = new Stack<int>();
+                }
+
+                public void Push(int x)
+                {
+                    stack.Push(x);
+                    if (max.Count == 0)
+                    {
+                        max.Push(x);
+                    }
+                    else
+                    {
+                        max.Push(Math.Max(max.Peek(), x));
+                    }
+                }
+
+                public int Pop()
+                {
+                    max.Pop();
+                    return stack.Pop();
+                }
+
+                public int Top()
+                {
+                    return stack.Peek();
+                }
+
+                public int PeekMax()
+                {
+                    return max.Peek();
+                }
+
+                public int PopMax() // always reuse exiting functions to simplify the logic
+                {
+                    Stack<int> temp = new Stack<int>();
+                    while (PeekMax() > Top())
+                    {
+                        temp.Push(Pop());
+                    }
+                    int ans = Pop();
+                    while (temp.Count > 0)
+                    {
+                        Push(temp.Pop());
+                    }
+                    return ans;
+                }
+            }
+        }
     }
 }
