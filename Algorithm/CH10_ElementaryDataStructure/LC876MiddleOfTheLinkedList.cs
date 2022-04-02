@@ -33,5 +33,20 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return s.next;
         }
+
+        public class SecondDone
+        {
+            public ListNode MiddleNode(ListNode head)
+            {
+                ListNode f = head;
+                ListNode s = head;
+                while (f != null && f.next != null)
+                {
+                    f = f.next.next;
+                    s = s.next;
+                }
+                return s;
+            }
+        }
     }
 }
