@@ -56,6 +56,47 @@ namespace Algorithm.CH4_DivideAndConque
             }
             return FindKthSortedArray(nums1, i, nums2, j + mid2, kth - mid2);
         }
+
+        public class MergeTwoArrayApproach
+        {
+            public double FindMedianSortedArrays(int[] nums1, int[] nums2)
+            {
+                int len = nums1.Length + nums2.Length;
+                if (len % 2 == 1)
+                {
+                    return FindKIndex(nums1, nums2, len / 2);
+                }
+                return (FindKIndex(nums1, nums2, len / 2 - 1) + FindKIndex(nums1, nums2, len / 2)) / 2;
+            }
+
+            private double FindKIndex(int[] nums1, int[] nums2, int k)
+            {
+                int i1 = 0;
+                int i2 = 0;
+                while (i1 < nums1.Length && i2 < nums2.Length && k > 0)
+                {
+                    if (nums1[i1] < nums2[i2])
+                    {
+                        i1++;
+                    }
+                    else
+                    {
+                        i2++;
+                    }
+                    k--;
+                }
+                if (i1 >= nums1.Length)
+                {
+                    return nums2[i2 + k];
+                }
+                if (i2 >= nums2.Length)
+                {
+                    return nums1[i1 + k];
+                }
+                return nums1[i1] < nums2[i2] ? nums1[i1] : nums2[i2];
+            }
+        }
+
         [Test]
         public void PositiveCaase1()
         {
