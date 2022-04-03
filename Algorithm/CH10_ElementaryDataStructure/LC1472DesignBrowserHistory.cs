@@ -50,5 +50,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return histories[curi];
             }
         }
+
+        public class SecondDone
+        {
+            public class BrowserHistory
+            {
+
+                private Stack<string> stack1;
+                private Stack<string> stack2;
+
+                public BrowserHistory(string homepage)
+                {
+                    stack1 = new Stack<string>();
+                    stack2 = new Stack<string>();
+                    stack1.Push(homepage);
+                }
+
+                public void Visit(string url)
+                {
+                    stack1.Push(url);
+                    stack2.Clear();
+                }
+
+                public string Back(int steps)
+                {
+                    while (steps > 0 && stack1.Count > 1)
+                    {
+                        stack2.Push(stack1.Pop());
+                        steps--;
+                    }
+                    return stack1.Peek();
+                }
+
+                public string Forward(int steps)
+                {
+                    while (steps > 0 && stack2.Count > 0)
+                    {
+                        stack1.Push(stack2.Pop());
+                        steps--;
+                    }
+                    return stack1.Peek();
+                }
+            }
+        }
     }
 }
