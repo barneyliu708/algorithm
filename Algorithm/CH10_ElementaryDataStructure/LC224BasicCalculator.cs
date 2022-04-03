@@ -18,10 +18,11 @@ namespace Algorithm.CH10_ElementaryDataStructure
                     sb.Append(ch);
                 }
             }
-            return Calculate(sb.ToString(), 0);
+            int i = 0;
+            return Calculate(sb.ToString(), ref i);
         }
 
-        public int Calculate(string s, int i)
+        public int Calculate(string s, ref int i)
         {
             int operand = 0;
             int result = 0;
@@ -37,7 +38,7 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
                 else if (ch == '(')
                 {
-                    operand = Calculate(s, i);
+                    operand = Calculate(s, ref i);
                 }
                 else if (ch == ')')
                 {
