@@ -41,5 +41,32 @@ namespace Algorithm.CH10_ElementaryDataStructure
             // if stack still contains elements, then it is an invalid expression
             return stack.Count == 0;
         }
+
+        public class SecondDone
+        {
+            public bool IsValid(string s)
+            {
+                Stack<char> stack = new Stack<char>();
+                Dictionary<char, char> map = new Dictionary<char, char>() {
+                    { '(', ')' },
+                    { '{', '}' },
+                    { '[', ']' }
+                };
+                foreach (char ch in s)
+                {
+                    if (map.ContainsKey(ch))
+                    {
+                        stack.Push(ch);
+                        continue;
+                    }
+                    if (stack.Count == 0 || map[stack.Pop()] != ch)
+                    {
+                        return false;
+                    }
+                }
+
+                return stack.Count == 0;
+            }
+        }
     }
 }
