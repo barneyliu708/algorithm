@@ -40,5 +40,45 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return sb.ToString();
         }
+
+        public class SecondDone
+        {
+            public string RemoveDuplicates(string s, int k)
+            {
+                Stack<char> stack = new Stack<char>();
+                Stack<int> count = new Stack<int>();
+                foreach (char ch in s)
+                {
+                    if (stack.Count == 0 || ch != stack.Peek())
+                    {
+                        count.Push(1);
+                    }
+                    else
+                    {
+                        count.Push(count.Peek() + 1);
+                    }
+                    stack.Push(ch);
+
+                    // remove the duplicate
+                    if (count.Peek() >= k)
+                    {
+                        int steps = count.Peek();
+                        while (steps > 0)
+                        {
+                            count.Pop();
+                            stack.Pop();
+                            steps--;
+                        }
+                    }
+                }
+
+                StringBuilder sb = new StringBuilder();
+                foreach (char ch in stack)
+                {
+                    sb.Insert(0, ch);
+                }
+                return sb.ToString();
+            }
+        }
     }
 }
