@@ -53,5 +53,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class SecondDone
+        {
+            public int[] AsteroidCollision(int[] asteroids)
+            {
+                Stack<int> stack = new Stack<int>();
+                foreach (int a in asteroids)
+                {
+                    bool addnew = true;
+                    while (stack.Count != 0 && stack.Peek() > 0 && a < 0)
+                    {
+                        if (stack.Peek() < -a)
+                        {
+                            stack.Pop();
+                            continue;
+                        }
+                        else if (stack.Peek() == -a)
+                        {
+                            stack.Pop();
+                            addnew = false;
+                            break;
+                        }
+                        else
+                        {
+                            addnew = false;
+                            break;
+                        }
+                    }
+                    if (addnew)
+                    {
+                        stack.Push(a);
+                    }
+                }
+
+                int[] ans = new int[stack.Count];
+                for (int i = ans.Length - 1; i >= 0; i--)
+                {
+                    ans[i] = stack.Pop();
+                }
+
+                return ans;
+            }
+        }
     }
 }
