@@ -58,5 +58,30 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class RecursionApproach
+        {
+            public IList<IList<int>> LevelOrder(TreeNode root)
+            {
+                IList<IList<int>> ans = new List<IList<int>>();
+                LevelOrder(root, 0, ans);
+                return ans;
+            }
+
+            private void LevelOrder(TreeNode root, int level, IList<IList<int>> ans)
+            {
+                if (root == null)
+                {
+                    return;
+                }
+                if (level == ans.Count)
+                {
+                    ans.Add(new List<int>());
+                }
+                ans[level].Add(root.val);
+                LevelOrder(root.left, level + 1, ans);
+                LevelOrder(root.right, level + 1, ans);
+            }
+        }
     }
 }
