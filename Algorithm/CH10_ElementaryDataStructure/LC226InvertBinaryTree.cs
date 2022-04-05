@@ -36,5 +36,25 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return root;
         }
+
+        public class SecondDone
+        {
+            public TreeNode InvertTree(TreeNode root)
+            {
+                if (root == null)
+                {
+                    return root;
+                }
+
+                InvertTree(root.left);
+                InvertTree(root.right);
+
+                TreeNode left = root.left;
+                root.left = root.right;
+                root.right = left;
+
+                return root;
+            }
+        }
     }
 }
