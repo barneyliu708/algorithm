@@ -43,5 +43,31 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return Math.Max(left + 1, right + 1);
         }
+
+        public class SecondDone
+        {
+            private int diameter = 0;
+
+            public int DiameterOfBinaryTree(TreeNode root)
+            {
+                Depth(root);
+                return diameter;
+            }
+
+            private int Depth(TreeNode root)
+            {
+                if (root == null)
+                {
+                    return 0;
+                }
+
+                int left = Depth(root.left);
+                int right = Depth(root.right);
+
+                diameter = Math.Max(diameter, left + right);
+
+                return 1 + Math.Max(left, right);
+            }
+        }
     }
 }
