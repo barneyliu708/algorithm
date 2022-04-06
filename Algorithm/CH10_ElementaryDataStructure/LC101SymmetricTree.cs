@@ -67,5 +67,35 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return root1.val == root2.val && IsEqual(root1.left, root2.right) && IsEqual(root1.right, root2.left);
             }
         }
+
+        public class IterationApproach
+        {
+            public bool IsSymmetric(TreeNode root)
+            {
+                Queue<TreeNode> q1 = new Queue<TreeNode>();
+                Queue<TreeNode> q2 = new Queue<TreeNode>();
+                q1.Enqueue(root);
+                q2.Enqueue(root);
+                while (q1.Count > 0 && q2.Count > 0)
+                {
+                    TreeNode node1 = q1.Dequeue();
+                    TreeNode node2 = q2.Dequeue();
+                    if (node1 == null && node2 == null)
+                    {
+                        continue;
+                    }
+                    if (node1 == null || node2 == null || node1.val != node2.val)
+                    {
+                        return false;
+                    }
+                    q1.Enqueue(node1.left);
+                    q1.Enqueue(node1.right);
+                    q2.Enqueue(node2.right);
+                    q2.Enqueue(node2.left);
+                }
+
+                return true;
+            }
+        }
     }
 }
