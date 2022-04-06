@@ -44,5 +44,28 @@ namespace Algorithm.CH10_ElementaryDataStructure
             return IsSymmetric(p.left, q.right) &&
                    IsSymmetric(p.right, q.left);
         }
+        
+        public class SecondDone
+        {
+            public bool IsSymmetric(TreeNode root)
+            {
+                return IsEqual(root, root);
+            }
+
+            private bool IsEqual(TreeNode root1, TreeNode root2)
+            {
+                if (root1 == null && root2 == null)
+                {
+                    return true;
+                }
+
+                if (root1 == null || root2 == null)
+                {
+                    return false;
+                }
+
+                return root1.val == root2.val && IsEqual(root1.left, root2.right) && IsEqual(root1.right, root2.left);
+            }
+        }
     }
 }
