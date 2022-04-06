@@ -44,5 +44,30 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return Math.Max(0, Math.Max(left + root.val, right + root.val));
         }
+
+        public class SecondDone
+        {
+            private int maxSum = int.MinValue;
+            public int MaxPathSum(TreeNode root)
+            {
+                MaxChildSum(root);
+                return maxSum;
+            }
+
+            private int MaxChildSum(TreeNode root)
+            {
+                if (root == null)
+                {
+                    return 0;
+                }
+
+                int left = MaxChildSum(root.left);
+                int right = MaxChildSum(root.right);
+
+                maxSum = Math.Max(maxSum, root.val + left + right);
+
+                return Math.Max(0, root.val + Math.Max(left, right));
+            }
+        }
     }
 }
