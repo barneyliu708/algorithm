@@ -49,5 +49,43 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return mid + left + right;
         }
+
+        public class IterativeApproach
+        {
+            public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+            {
+
+                // DFT iteratively to generate parents pointers
+                Dictionary<TreeNode, TreeNode> parents = new Dictionary<TreeNode, TreeNode>();
+                parents[root] = null;
+                Stack<TreeNode> stack = new Stack<TreeNode>();
+                stack.Push(root);
+                while (stack.Count > 0)
+                {
+                    TreeNode cur = stack.Pop();
+                    if (cur.right != null)
+                    {
+                        parents[cur.right] = cur;
+                        stack.Push(cur.right);
+                    }
+                    if (cur.left != null)
+                    {
+                        parents[cur.left] = cur;
+                        stack.Push(cur.left);
+                    }
+                }
+
+                // find the ancestor by two pointers
+                TreeNode pi = p;
+                TreeNode qi = q;
+                while (pi != qi)
+                {
+                    pi = pi == null ? q : parents[pi];
+                    qi = qi == null ? p : parents[qi];
+                }
+
+                return pi;
+            }
+        }
     }
 }
