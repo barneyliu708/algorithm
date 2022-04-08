@@ -67,6 +67,37 @@ namespace Algorithm.CH4_DivideAndConque
             return -1;
         }
 
+        public class SecondDone
+        {
+            public TreeNode BuildTree(int[] preorder, int[] inorder)
+            {
+                if (preorder.Length == 0 || inorder.Length == 0)
+                {
+                    return null;
+                }
+
+                TreeNode root = new TreeNode(preorder[0]);
+                int i = FindIndex(inorder, root.val);
+
+                root.left = BuildTree(preorder.Skip(1).Take(i).ToArray(), inorder.Take(i).ToArray());
+                root.right = BuildTree(preorder.Skip(1 + i).Take(preorder.Length - i - 1).ToArray(), inorder.Skip(1 + i).Take(inorder.Length - i - 1).ToArray());
+
+                return root;
+            }
+
+            private int FindIndex(int[] array, int target)
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    if (array[i] == target)
+                    {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+        }
+
         [Test]
         public void PositiveCaase1()
         {
