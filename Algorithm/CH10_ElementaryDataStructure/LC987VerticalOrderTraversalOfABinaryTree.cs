@@ -79,5 +79,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class DftApproach
+        {
+            public IList<IList<int>> VerticalTraversal(TreeNode root)
+            {
+                Dictionary<int, List<(int row, int val)>> map = new Dictionary<int, List<(int row, int val)>>();
+                Dft(root, 0, 0, map);
+
+                // prepare the answer
+                int[] cols = map.Keys.ToArray();
+                Array.Sort(cols);
+                List<IList<int>> ans = new List<IList<int>>();
+                foreach (int col in cols)
+                {
+                    map[col].Sort(((int row, int val) x, (int row, int val) y) => {
+                        if (x.row == y.row)
+                        {
+                            return x.val.CompareTo(y.val);
+                        }
+                        return x.row.CompareTo(y.row);
+                    });
+                    ans.Add(map[col].Select(x => x.val).ToList());
+                }
+
+                return ans;
+            }
+
+            private void Dft(TreeNode root, int col, int row, Dictionary<int, List<(int row, int val)>> map)
+            {
+                if (root == null)
+                {
+                    return;
+                }
+                if (!map.ContainsKey(col))
+                {
+                    map[col] = new List<(int row, int val)>();
+                }
+                map[col].Add((row, root.val));
+
+                Dft(root.left, col - 1, row + 1, map);
+                Dft(root.right, col + 1, row + 1, map);
+            }
+        }
     }
 }
