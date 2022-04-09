@@ -85,5 +85,54 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 MapParents(cur.right, cur, parents);
             }
         }
+
+        public class SecondDone
+        {
+            public IList<int> DistanceK(TreeNode root, TreeNode target, int k)
+            {
+                Dictionary<TreeNode, TreeNode> parents = new Dictionary<TreeNode, TreeNode>();
+                DftParents(root, null, parents);
+
+                // breadth first traversal to get kth distance nodes
+                Queue<TreeNode> queue = new Queue<TreeNode>();
+                HashSet<TreeNode> visited = new HashSet<TreeNode>();
+                queue.Enqueue(target);
+                while (queue.Count > 0 && k > 0)
+                {
+                    int count = queue.Count();
+                    for (int i = 0; i < count; i++)
+                    {
+                        TreeNode cur = queue.Dequeue();
+                        visited.Add(cur);
+                        if (cur.left != null && !visited.Contains(cur.left))
+                        {
+                            queue.Enqueue(cur.left);
+                        }
+                        if (cur.right != null && !visited.Contains(cur.right))
+                        {
+                            queue.Enqueue(cur.right);
+                        }
+                        if (parents[cur] != null && !visited.Contains(parents[cur]))
+                        {
+                            queue.Enqueue(parents[cur]);
+                        }
+                    }
+                    k--;
+                }
+
+                return queue.ToList().Select(x => x.val).ToList();
+            }
+
+            private void DftParents(TreeNode cur, TreeNode par, Dictionary<TreeNode, TreeNode> parents)
+            {
+                if (cur == null)
+                {
+                    return;
+                }
+                parents[cur] = par;
+                DftParents(cur.left, cur, parents);
+                DftParents(cur.right, cur, parents);
+            }
+        }
     }
 }

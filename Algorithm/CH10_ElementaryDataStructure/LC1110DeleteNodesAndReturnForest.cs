@@ -78,5 +78,53 @@ namespace Algorithm.CH10_ElementaryDataStructure
             DelNodes(left, cur, -1, toDelete, ans);
             DelNodes(right, cur, 1, toDelete, ans);
         }
+
+        public class SecondDone
+        {
+            public IList<TreeNode> DelNodes(TreeNode root, int[] to_delete)
+            {
+                HashSet<int> toDelete = new HashSet<int>(to_delete);
+                HashSet<TreeNode> ans = new HashSet<TreeNode>();
+                ans.Add(root);
+                DelNodes(root, null, 0, toDelete, ans);
+                return ans.ToList();
+            }
+
+            private void DelNodes(TreeNode cur, TreeNode par, int direction, HashSet<int> to_delete, HashSet<TreeNode> ans)
+            {
+                if (cur == null)
+                {
+                    return;
+                }
+                if (to_delete.Contains(cur.val))
+                {
+                    if (direction == -1)
+                    {
+                        par.left = null;
+                    }
+                    if (direction == 1)
+                    {
+                        par.right = null;
+                    }
+
+                    // update ans
+                    if (ans.Contains(cur))
+                    {
+                        ans.Remove(cur);
+                    }
+                    if (cur.left != null)
+                    {
+                        ans.Add(cur.left);
+                    }
+                    if (cur.right != null)
+                    {
+                        ans.Add(cur.right);
+                    }
+                }
+
+                DelNodes(cur.left, cur, -1, to_delete, ans);
+                DelNodes(cur.right, cur, 1, to_delete, ans);
+            }
+        }
     }
 }
