@@ -81,5 +81,46 @@ namespace Algorithm.CH10_ElementaryDataStructure
             DftCopyPointer(root.left, rootcp.left, map);
             DftCopyPointer(root.right, rootcp.right, map);
         }
+
+        public class SecondDone
+        {
+            public NodeCopy CopyRandomBinaryTree(Node root)
+            {
+                Dictionary<Node, NodeCopy> map = new Dictionary<Node, NodeCopy>(); // original node - copy node
+                NodeCopy rootcopy = DftCopyNode(root, map);
+                DftCopyRandomPointers(root, rootcopy, map);
+
+                return rootcopy;
+            }
+
+            private NodeCopy DftCopyNode(Node root, Dictionary<Node, NodeCopy> map)
+            {
+                if (root == null)
+                {
+                    return null;
+                }
+                NodeCopy rootcopy = new NodeCopy(root.val);
+                map[root] = rootcopy;
+
+                rootcopy.left = DftCopyNode(root.left, map);
+                rootcopy.right = DftCopyNode(root.right, map);
+
+                return rootcopy;
+            }
+
+            private void DftCopyRandomPointers(Node root, NodeCopy rootcopy, Dictionary<Node, NodeCopy> map)
+            {
+                if (root == null)
+                {
+                    return;
+                }
+                if (root.random != null)
+                {
+                    rootcopy.random = map[root.random];
+                }
+                DftCopyRandomPointers(root.left, rootcopy.left, map);
+                DftCopyRandomPointers(root.right, rootcopy.right, map);
+            }
+        }
     }
 }
