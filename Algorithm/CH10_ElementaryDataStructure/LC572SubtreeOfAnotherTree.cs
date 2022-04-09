@@ -61,5 +61,39 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return IsSame(r1.left, r2.left) && IsSame(r1.right, r2.right);
         }
+
+        public class SecondDone
+        {
+            public bool IsSubtree(TreeNode root, TreeNode subRoot)
+            {
+                if (root == null && subRoot == null)
+                {
+                    return true;
+                }
+                if (root == null || subRoot == null)
+                {
+                    return false;
+                }
+                if (IsEqual(root, subRoot))
+                {
+                    return true;
+                }
+                return IsSubtree(root.left, subRoot) || IsSubtree(root.right, subRoot);
+            }
+
+            private bool IsEqual(TreeNode root1, TreeNode root2)
+            {
+                if (root1 == null && root2 == null)
+                {
+                    return true;
+                }
+                if (root1 == null || root2 == null)
+                {
+                    return false;
+                }
+
+                return root1.val == root2.val && IsEqual(root1.left, root2.left) && IsEqual(root1.right, root2.right);
+            }
+        }
     }
 }
