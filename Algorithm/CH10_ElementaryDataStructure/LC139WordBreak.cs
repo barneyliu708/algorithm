@@ -130,5 +130,25 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return false;
             }
         }
+
+        public class SecondDone_DynamicProgramming
+        {
+            public bool WordBreak(string s, IList<string> wordDict)
+            {
+                bool[] memo = new bool[s.Length];
+                for (int i = 0; i < s.Length; i++)
+                {
+                    for (int j = i; j >= -1; j--)
+                    {
+                        if ((j == -1 || memo[j]) && wordDict.Contains(s.Substring(j + 1, i - j)))
+                        {
+                            memo[i] = true;
+                            break;
+                        }
+                    }
+                }
+                return memo[s.Length - 1];
+            }
+        }
     }
 }
