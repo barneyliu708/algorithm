@@ -93,6 +93,42 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
                 return dp[0];
             }
-        }       
+        }
+
+        public class SecondDone_Dft_Memorization
+        {
+            public bool WordBreak(string s, IList<string> wordDict)
+            {
+                int[] memo = new int[s.Length];
+                return WordBreak(s, 0, new HashSet<string>(wordDict), memo);
+            }
+
+            private bool WordBreak(string s, int start, HashSet<string> wordDict, int[] memo)
+            {
+                if (start == s.Length)
+                {
+                    return true;
+                }
+                if (memo[start] != 0)
+                {
+                    return memo[start] == 1;
+                }
+                for (int i = start; i < s.Length; i++)
+                {
+                    string word = s.Substring(start, i - start + 1);
+                    if (!wordDict.Contains(word))
+                    {
+                        continue;
+                    }
+                    if (WordBreak(s, i + 1, wordDict, memo))
+                    {
+                        memo[start] = 1;
+                        return true;
+                    }
+                }
+                memo[start] = -1;
+                return false;
+            }
+        }
     }
 }
