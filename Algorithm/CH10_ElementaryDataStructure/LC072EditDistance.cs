@@ -39,5 +39,43 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
             return dp[m, n];
         }
+
+        public class DFT_MemorizationApproach
+        {
+            public int MinDistance(string word1, string word2)
+            {
+                int[,] memo = new int[word1.Length, word2.Length];
+                return MinDistance(word1, 0, word2, 0, memo);
+            }
+
+            private int MinDistance(string word1, int i, string word2, int j, int[,] memo)
+            {
+                if (i == word1.Length)
+                {
+                    return word2.Length - j;
+                }
+                if (j == word2.Length)
+                {
+                    return word1.Length - i;
+                }
+
+                if (memo[i, j] != 0)
+                {
+                    return memo[i, j];
+                }
+
+                if (word1[i] == word2[j])
+                {
+                    return MinDistance(word1, i + 1, word2, j + 1, memo);
+                }
+
+                int deleteOnWord1 = MinDistance(word1, i + 1, word2, j, memo);
+                int insertOnWord2 = MinDistance(word1, i, word2, j + 1, memo);
+                int change = MinDistance(word1, i + 1, word2, j + 1, memo);
+                memo[i, j] = Math.Min(Math.Min(deleteOnWord1, insertOnWord2), change) + 1;
+                Console.WriteLine(i + " " + j + " " + memo[i, j]);
+                return memo[i, j];
+            }
+        }
     }
 }
