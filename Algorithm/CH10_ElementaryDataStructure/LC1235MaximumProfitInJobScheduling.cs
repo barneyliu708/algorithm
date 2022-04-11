@@ -70,5 +70,57 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return l;
             }
         }
+
+        public class DP_BottomUp
+        {
+            public int JobScheduling(int[] startTime, int[] endTime, int[] profit)
+            {
+                int n = startTime.Length;
+                // prepare the jobs list
+                (int start, int end, int profit)[] jobs = new (int start, int end, int profit)[n];
+                for (int i = 0; i < n; i++)
+                {
+                    jobs[i] = (startTime[i], endTime[i], profit[i]);
+                }
+                Array.Sort(jobs, ((int start, int end, int profit) x, (int start, int end, int profit) y) => {
+                    return x.start.CompareTo(y.start);
+                });
+
+                // prepare the memorization
+                int[] memo = new int[n + 1];
+                for (int i = n - 1; i >= 0; i--)
+                {
+                    int nexti = FindNextJob(jobs, i);
+                    memo[i] = Math.Max(jobs[i].profit + memo[nexti], memo[i + 1]);
+                }
+
+                return memo[0];
+            }
+
+            // find the next available job after the ith job by the binary search
+            private int FindNextJob((int start, int end, int profit)[] jobs, int i)
+            {
+                int lastEnd = jobs[i].end;
+                int l = i;
+                int r = jobs.Length - 1;
+                while (l <= r)
+                {
+                    int mid = l + (r - l) / 2;
+                    if (jobs[mid].start == lastEnd)
+                    { // need to find the leftmost index that satisfy the conditions
+                        r = mid - 1;
+                    }
+                    if (jobs[mid].start < lastEnd)
+                    {
+                        l = mid + 1;
+                    }
+                    else
+                    {
+                        r = mid - 1;
+                    }
+                }
+                return l;
+            }
+        }
     }
 }
