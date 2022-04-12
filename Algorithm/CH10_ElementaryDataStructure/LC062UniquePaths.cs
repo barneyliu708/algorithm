@@ -54,5 +54,27 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return dp[m, n];
             }
         }
+
+        public class SecondDone_DP_TopDownApproach
+        {
+            public int UniquePaths(int m, int n)
+            {
+                return UniquePath(m - 1, n - 1, new int[m, n]);
+            }
+
+            private int UniquePath(int m, int n, int[,] memo)
+            {
+                if (m == 0 || n == 0)
+                {
+                    return 1;
+                }
+                if (memo[m, n] != 0)
+                {
+                    return memo[m, n];
+                }
+                memo[m, n] = UniquePath(m, n - 1, memo) + UniquePath(m - 1, n, memo);
+                return memo[m, n];
+            }
+        }
     }
 }
