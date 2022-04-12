@@ -34,5 +34,27 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class SecondDone
+        {
+            public int FindLengthOfLCIS(int[] nums)
+            {
+                int cur = 1;
+                int ans = 1;
+                for (int i = 1; i < nums.Length; i++)
+                {
+                    if (nums[i] > nums[i - 1])
+                    {
+                        cur++;
+                        ans = Math.Max(ans, cur);
+                    }
+                    else
+                    {
+                        cur = 1;
+                    }
+                }
+                return ans;
+            }
+        }
     }
 }
