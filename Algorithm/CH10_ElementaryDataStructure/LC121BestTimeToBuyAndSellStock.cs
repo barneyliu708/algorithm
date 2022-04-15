@@ -20,5 +20,25 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return curMaxProfit;
         }
+
+        public class SecondDone
+        {
+            public int MaxProfit(int[] prices)
+            {
+                int[] minprices = new int[prices.Length];
+                int min = prices[0];
+                for (int i = 0; i < prices.Length; i++)
+                {
+                    min = Math.Min(min, prices[i]);
+                    minprices[i] = min;
+                }
+                int maxProfit = 0;
+                for (int i = 0; i < prices.Length; i++)
+                {
+                    maxProfit = Math.Max(maxProfit, prices[i] - minprices[i]);
+                }
+                return maxProfit;
+            }
+        }
     }
 }
