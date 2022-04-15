@@ -114,5 +114,21 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return lastPos == 0;
             }
         }
+
+        public class SecondDone
+        {
+            public bool CanJump(int[] nums)
+            {
+                int final = 0;
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (i <= final)
+                    {
+                        final = Math.Max(final, i + nums[i]);
+                    }
+                }
+                return final >= nums.Length - 1;
+            }
+        }
     }
 }
