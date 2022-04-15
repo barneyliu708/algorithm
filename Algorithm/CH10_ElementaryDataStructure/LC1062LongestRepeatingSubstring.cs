@@ -85,5 +85,26 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return false;
             }
         }
+
+        public class BottomUp_DP
+        {
+            public int LongestRepeatingSubstring(string s)
+            {
+                int[,] dp = new int[s.Length + 1, s.Length + 1];
+                int longest = 0;
+                for (int i = 1; i < s.Length + 1; i++)
+                {
+                    for (int j = 1; j < i; j++)
+                    {
+                        if (s[i - 1] == s[j - 1])
+                        {
+                            dp[i, j] = 1 + dp[i - 1, j - 1];
+                            longest = Math.Max(longest, dp[i, j]);
+                        }
+                    }
+                }
+                return longest;
+            }
+        }
     }
 }
