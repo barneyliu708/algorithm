@@ -38,5 +38,35 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return t1;
         }
+
+        public class SecondDone
+        {
+            public int Rob(int[] nums)
+            {
+                if (nums.Length == 1)
+                {
+                    return nums[0];
+                }
+
+                // rob the 1st house and do not rob the last house
+                int[] dp1 = new int[nums.Length + 1];
+                dp1[1] = nums[0];
+                for (int i = 2; i < nums.Length; i++)
+                {
+                    dp1[i] = Math.Max(dp1[i - 1], dp1[i - 2] + nums[i - 1]);
+                }
+                dp1[nums.Length] = Math.Max(dp1[nums.Length - 1], dp1[nums.Length - 2]);
+
+                // do not rob the 1st house and potentially rob the last house
+                int[] dp2 = new int[nums.Length + 1]; 
+                for (int i = 2; i < nums.Length + 1; i++)
+                {
+                    dp2[i] = Math.Max(dp2[i - 1], dp2[i - 2] + nums[i - 1]);
+                }
+
+                return Math.Max(dp1[nums.Length], dp2[nums.Length]);
+            }
+        }
+
     }
 }
