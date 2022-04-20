@@ -61,5 +61,37 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return cloneNode;
         }
+
+        public class BFTApproach
+        {
+            public Node CloneGraph(Node node)
+            {
+                if (node == null)
+                {
+                    return null;
+                }
+
+                Dictionary<Node, Node> map = new Dictionary<Node, Node>();
+
+                Queue<Node> queue = new Queue<Node>();
+                queue.Enqueue(node);
+                map[node] = new Node(node.val, new List<Node>());
+                while (queue.Count > 0)
+                {
+                    Node curNode = queue.Dequeue();
+                    foreach (Node neighbor in curNode.neighbors)
+                    {
+                        if (!map.ContainsKey(neighbor))
+                        {
+                            map[neighbor] = new Node(neighbor.val, new List<Node>());
+                            queue.Enqueue(neighbor);
+                        }
+                        map[curNode].neighbors.Add(map[neighbor]);
+                    }
+                }
+
+                return map[node];
+            }
+        }
     }
 }
