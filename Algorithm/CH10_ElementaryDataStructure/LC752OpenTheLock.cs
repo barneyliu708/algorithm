@@ -53,5 +53,57 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return -1;
         }
+
+        public class SecondDone
+        {
+            public int OpenLock(string[] deadends, string target)
+            {
+                // HashSet<string> deads = new HashSet<string>(deadends);
+                HashSet<string> visited = new HashSet<string>(deadends);
+                int ans = 0;
+                Queue<string> queue = new Queue<string>();
+                queue.Enqueue("0000");
+                while (queue.Count > 0)
+                {
+                    int count = queue.Count;
+                    for (int i = 0; i < count; i++)
+                    {
+                        string cur = queue.Dequeue();
+                        if (cur == target)
+                        {
+                            return ans;
+                        }
+                        if (visited.Contains(cur))
+                        {
+                            continue;
+                        }
+                        visited.Add(cur);
+                        foreach (string neighbor in GetNeighbors(cur))
+                        {
+                            if (!visited.Contains(neighbor))
+                            {
+                                queue.Enqueue(neighbor);
+                            }
+                        }
+                    }
+                    ans++;
+                }
+                return -1;
+            }
+
+            private List<string> GetNeighbors(string state)
+            {
+                List<string> neighbors = new List<string>();
+                for (int i = 0; i < state.Length; i++)
+                {
+                    int digit = state[i] - '0';
+                    string next = state.Substring(0, i) + ((digit + 1 + 10) % 10) + state.Substring(i + 1);
+                    string prev = state.Substring(0, i) + ((digit - 1 + 10) % 10) + state.Substring(i + 1);
+                    neighbors.Add(next);
+                    neighbors.Add(prev);
+                }
+                return neighbors;
+            }
+        }
     }
 }
