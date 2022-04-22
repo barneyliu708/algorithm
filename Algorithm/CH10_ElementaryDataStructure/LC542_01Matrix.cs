@@ -58,5 +58,62 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return distances;
         }
+
+        public class SecondDone
+        {
+            public int[][] UpdateMatrix(int[][] mat)
+            {
+                (int r, int c)[] neighbors = new (int r, int c)[] { (-1, 0), (1, 0), (0, -1), (0, 1) };
+
+                bool[,] visited = new bool[mat.Length, mat[0].Length];
+                Queue<(int r, int c)> queue = new Queue<(int r, int c)>();
+                for (int i = 0; i < mat.Length; i++)
+                {
+                    for (int j = 0; j < mat[0].Length; j++)
+                    {
+                        if (mat[i][j] == 0)
+                        {
+                            queue.Enqueue((i, j));
+                        }
+                    }
+                }
+                int dist = 0;
+                while (queue.Count > 0)
+                {
+                    int count = queue.Count;
+                    // breadth-first traversal on current level
+                    for (int cnt = 0; cnt < count; cnt++)
+                    {
+                        (int r, int c) cur = queue.Dequeue();
+                        if (visited[cur.r, cur.c])
+                        {
+                            continue;
+                        }
+                        visited[cur.r, cur.c] = true;
+                        if (mat[cur.r][cur.c] == 1)
+                        {
+                            mat[cur.r][cur.c] = dist;
+                        }
+                        if (mat[cur.r][cur.c] == 0)
+                        {
+                            mat[cur.r][cur.c] = 0;
+                        }
+
+                        foreach ((int r, int c) nb in neighbors)
+                        {
+                            int row = cur.r + nb.r;
+                            int col = cur.c + nb.c;
+                            if (row >= 0 && row < mat.Length && col >= 0 && col < mat[0].Length && mat[row][col] == 1)
+                            {
+                                queue.Enqueue((row, col));
+                            }
+                        }
+                    }
+                    dist++;
+                }
+
+                return mat;
+            }
+        }
     }
 }
