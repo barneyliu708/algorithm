@@ -64,5 +64,62 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return new int[0];
         }
+
+        public class SecondDone
+        {
+            public int[] FindOrder(int numCourses, int[][] prerequisites)
+            {
+
+                // pre-process to build the graph
+                Dictionary<int, List<int>> outNodes = new Dictionary<int, List<int>>();
+                int[] inDegrees = new int[numCourses];
+                for (int course = 0; course < numCourses; course++)
+                {
+                    outNodes[course] = new List<int>();
+                }
+                foreach (int[] pre in prerequisites)
+                {
+                    int ai = pre[0];
+                    int bi = pre[1];
+                    // bi -> ai
+                    outNodes[bi].Add(ai);
+                    inDegrees[ai]++;
+                }
+
+                // initiate with 0-indegree nodes
+                Queue<int> queue = new Queue<int>();
+                for (int course = 0; course < numCourses; course++)
+                {
+                    if (inDegrees[course] == 0)
+                    {
+                        queue.Enqueue(course);
+                    }
+                }
+
+                // breadth-first traversal
+                List<int> ans = new List<int>();
+                while (queue.Count > 0)
+                {
+                    int course = queue.Dequeue();
+                    ans.Add(course);
+                    foreach (int nextCourse in outNodes[course])
+                    {
+                        // update indegrees
+                        inDegrees[nextCourse] -= 1;
+                        if (inDegrees[nextCourse] == 0)
+                        {
+                            queue.Enqueue(nextCourse);
+                        }
+                    }
+                }
+
+                if (ans.Count == numCourses)
+                {
+                    return ans.ToArray();
+                }
+
+                return new int[0];
+            }
+        }
     }
 }
