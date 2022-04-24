@@ -132,5 +132,58 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return false;
             }
         }
+
+        public class TopologicalSortApproach
+        {
+            public bool CanFinish(int numCourses, int[][] prerequisites)
+            {
+
+                // pre-process to build the graph
+                Dictionary<int, List<int>> outNodes = new Dictionary<int, List<int>>();
+                int[] inDegrees = new int[numCourses];
+                for (int course = 0; course < numCourses; course++)
+                {
+                    outNodes[course] = new List<int>();
+                }
+                foreach (int[] pre in prerequisites)
+                {
+                    int ai = pre[0];
+                    int bi = pre[1];
+                    // bi -> ai
+                    outNodes[bi].Add(ai);
+                    inDegrees[ai]++;
+                }
+
+                // initiate with 0-indegree nodes
+                Queue<int> queue = new Queue<int>();
+                for (int course = 0; course < numCourses; course++)
+                {
+                    if (inDegrees[course] == 0)
+                    {
+                        queue.Enqueue(course);
+                    }
+                }
+
+                // breadth-first traversal
+                int removeEdges = 0;
+                while (queue.Count > 0)
+                {
+                    int course = queue.Dequeue();
+
+                    foreach (int nextCourse in outNodes[course])
+                    {
+                        // update indegrees
+                        inDegrees[nextCourse] -= 1;
+                        removeEdges += 1;
+                        if (inDegrees[nextCourse] == 0)
+                        {
+                            queue.Enqueue(nextCourse);
+                        }
+                    }
+                }
+
+                return removeEdges == prerequisites.Length;
+            }
+        }
     }
 }
