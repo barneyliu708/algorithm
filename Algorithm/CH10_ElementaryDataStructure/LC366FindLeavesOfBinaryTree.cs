@@ -49,5 +49,35 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return dist;
         }
+
+        public class SecondDone
+        {
+            public IList<IList<int>> FindLeaves(TreeNode root)
+            {
+                List<IList<int>> ans = new List<IList<int>>();
+                GetHeight(root, ans);
+                return ans;
+            }
+
+            private int GetHeight(TreeNode root, List<IList<int>> ans)
+            {
+                if (root == null)
+                {
+                    return 0;
+                }
+
+                int left = GetHeight(root.left, ans);
+                int right = GetHeight(root.right, ans);
+                int height = Math.Max(left, right) + 1;
+
+                while (ans.Count < height)
+                {
+                    ans.Add(new List<int>());
+                }
+                ans[height - 1].Add(root.val);
+
+                return height;
+            }
+        }
     }
 }
