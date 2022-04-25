@@ -63,5 +63,64 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return leaves;
         }
+
+        public class SecondDone
+        {
+            public IList<int> FindMinHeightTrees(int n, int[][] edges)
+            {
+                if (n <= 1)
+                {
+                    return new List<int>() { 0 };
+                }
+
+                // pre-process to generate the graph
+                Dictionary<int, List<int>> adjacents = new Dictionary<int, List<int>>();
+                foreach (int[] edge in edges)
+                {
+                    if (!adjacents.ContainsKey(edge[0]))
+                    {
+                        adjacents[edge[0]] = new List<int>();
+                    }
+                    if (!adjacents.ContainsKey(edge[1]))
+                    {
+                        adjacents[edge[1]] = new List<int>();
+                    }
+                    adjacents[edge[0]].Add(edge[1]);
+                    adjacents[edge[1]].Add(edge[0]);
+                }
+
+                // initiate with 1-adjacent nodes
+                Queue<int> queue = new Queue<int>();
+                foreach (int node in adjacents.Keys)
+                {
+                    if (adjacents[node].Count == 1)
+                    {
+                        queue.Enqueue(node);
+                    }
+                }
+
+                // breadth-first traversal
+                int remainNodes = n;
+                while (remainNodes > 2)
+                {
+                    int count = queue.Count;
+                    for (int cnt = 0; cnt < count; cnt++)
+                    {
+                        int cur = queue.Dequeue();
+                        remainNodes--;
+                        foreach (int adj in adjacents[cur])
+                        {
+                            adjacents[adj].Remove(cur);
+                            if (adjacents[adj].Count == 1)
+                            {
+                                queue.Enqueue(adj);
+                            }
+                        }
+                    }
+                }
+
+                return queue.ToList();
+            }
+        }
     }
 }
