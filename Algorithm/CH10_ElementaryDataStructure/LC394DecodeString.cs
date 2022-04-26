@@ -47,5 +47,44 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return currentString.ToString();
         }
+
+        public class SecondDone
+        {
+            public string DecodeString(string s)
+            {
+                int i = 0;
+                return DecodeString(s, ref i);
+            }
+
+            private string DecodeString(string s, ref int i)
+            {
+                int digit = 0;
+                StringBuilder sb = new StringBuilder();
+                for (; i < s.Length; i++)
+                {
+                    char ch = s[i];
+                    if (char.IsDigit(ch))
+                    {
+                        digit = digit * 10 + (ch - '0');
+                    }
+                    else if (ch == '[')
+                    {
+                        i++;
+                        string nestedStr = DecodeString(s, ref i);
+                        sb.Append(string.Concat(Enumerable.Repeat(nestedStr, digit)));
+                        digit = 0;
+                    }
+                    else if (ch == ']')
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        sb.Append(ch);
+                    }
+                }
+                return sb.ToString();
+            }
+        }
     }
 }
