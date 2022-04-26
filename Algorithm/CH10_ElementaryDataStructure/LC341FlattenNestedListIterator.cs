@@ -63,5 +63,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return stack.Pop().GetInteger();
             }
         }
+
+        public class SecondDone
+        {
+            public class NestedIterator
+            {
+
+                private Stack<NestedInteger> stack;
+
+                public NestedIterator(IList<NestedInteger> nestedList)
+                {
+                    stack = new Stack<NestedInteger>();
+                    for (int i = nestedList.Count - 1; i >= 0; i--)
+                    {
+                        stack.Push(nestedList[i]);
+                    }
+                }
+
+                public bool HasNext()
+                {
+                    while (stack.Count > 0)
+                    {
+                        NestedInteger cur = stack.Peek();
+                        if (cur.IsInteger())
+                        {
+                            return true;
+                        }
+                        stack.Pop();
+                        IList<NestedInteger> list = cur.GetList();
+                        for (int i = list.Count - 1; i >= 0; i--)
+                        {
+                            stack.Push(list[i]);
+                        }
+                    }
+                    return false;
+                }
+
+                public int Next()
+                {
+
+                    return stack.Pop().GetInteger();
+                }
+            }
+        }
     }
 }
