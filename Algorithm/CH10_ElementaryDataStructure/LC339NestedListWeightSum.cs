@@ -44,5 +44,30 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
             return total;
         }
+
+        private class SecondDone
+        {
+            public int DepthSum(IList<NestedInteger> nestedList)
+            {
+                return DepthSum(nestedList, 1);
+            }
+
+            private int DepthSum(IList<NestedInteger> nestedList, int depth)
+            {
+                int sum = 0;
+                foreach (NestedInteger item in nestedList)
+                {
+                    if (item.IsInteger())
+                    {
+                        sum += item.GetInteger() * depth;
+                    }
+                    else
+                    {
+                        sum += DepthSum(item.GetList(), depth + 1);
+                    }
+                }
+                return sum;
+            }
+        }
     }
 }
