@@ -35,5 +35,37 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 utility(left, right - 1, output + ")", ans);
             }
         }
+
+        public class SecondDone
+        {
+            public IList<string> GenerateParenthesis(int n)
+            {
+                List<string> ans = new List<string>();
+                Backtracking(n, n, new List<char>(), ans);
+                return ans;
+            }
+
+            public void Backtracking(int ln, int rn, List<char> path, List<string> ans)
+            {
+                if (ln == 0 && rn == 0)
+                {
+                    ans.Add(string.Join("", path));
+                    return;
+                }
+
+                if (ln > rn || ln < 0 || rn < 0)
+                { // closing bracket is more that open bracket in the path
+                    return;
+                }
+
+                path.Add('(');
+                Backtracking(ln - 1, rn, path, ans);
+                path.RemoveAt(path.Count - 1);
+
+                path.Add(')');
+                Backtracking(ln, rn - 1, path, ans);
+                path.RemoveAt(path.Count - 1);
+            }
+        }
     }
 }
