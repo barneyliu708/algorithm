@@ -73,5 +73,51 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
             return true;
         }
+
+        public class SecondDone
+        {
+            public IList<string> RestoreIpAddresses(string s)
+            {
+                List<string> ans = new List<string>();
+                Backtracking(s, 0, new List<string>(), ans);
+                return ans;
+            }
+
+            private void Backtracking(string s, int si, List<string> path, List<string> ans)
+            {
+                if (path.Count > 4)
+                {
+                    return;
+                }
+
+                if (si == s.Length)
+                {
+                    if (path.Count == 4)
+                    {
+                        ans.Add(string.Join(".", path));
+                    }
+                    return;
+                }
+
+                for (int i = si; i < s.Length; i++)
+                {
+                    string substr = s.Substring(si, i - si + 1);
+                    if (substr[0] == '0' && substr.Length > 1)
+                    {
+                        break;
+                    }
+                    int num = int.Parse(substr);
+                    if (num > 255)
+                    {
+                        break;
+                    }
+
+                    // recursively to the next level
+                    path.Add(substr);
+                    Backtracking(s, i + 1, path, ans);
+                    path.RemoveAt(path.Count - 1);
+                }
+            }
+        }
     }
 }
