@@ -29,5 +29,28 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return stack.Pop();
         }
+
+        public class SecondDone
+        {
+            public int ScoreOfParentheses(string s)
+            {
+                Stack<int> scores = new Stack<int>();
+                scores.Push(0);
+                foreach (char ch in s)
+                {
+                    if (ch == '(')
+                    {
+                        scores.Push(0);
+                    }
+                    else
+                    {
+                        int pre = scores.Pop();
+                        int cur = scores.Pop();
+                        scores.Push(cur + Math.Max(2 * pre, 1));
+                    }
+                }
+                return scores.Pop();
+            }
+        }
     }
 }
