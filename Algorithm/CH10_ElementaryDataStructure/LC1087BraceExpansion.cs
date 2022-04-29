@@ -51,5 +51,45 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
             return ans;
         }
+
+        public class SecondDone
+        {
+            public string[] Expand(string s)
+            {
+                List<string> ans = new List<string>() { "" };
+                for (int i = 0; i < s.Length; i++)
+                {
+                    List<string> options = new List<string>();
+                    if (s[i] == '{')
+                    {
+                        int li = i + 1;
+                        while (s[i] != '}')
+                        {
+                            i++;
+                        }
+                        options = s.Substring(li, i - li).Split(',').ToList();
+                    }
+                    else
+                    {
+                        options.Add(s[i].ToString());
+                    }
+                    ans = CrossMultiple(ans, options);
+                }
+                ans.Sort();
+                return ans.ToArray();
+            }
+            public List<string> CrossMultiple(List<string> left, List<string> right)
+            {
+                List<string> ans = new List<string>();
+                foreach (string l in left)
+                {
+                    foreach (string r in right)
+                    {
+                        ans.Add(l + r);
+                    }
+                }
+                return ans;
+            }
+        }
     }
 }
