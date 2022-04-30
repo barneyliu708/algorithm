@@ -43,5 +43,43 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 Dft(subordinates, employee, informTime, curTime);
             }
         }
+
+        public class SecondDone
+        {
+            private int max = 0;
+
+            public int NumOfMinutes(int n, int headID, int[] manager, int[] informTime)
+            {
+                // pre-process to build graph
+                Dictionary<int, List<int>> graph = new Dictionary<int, List<int>>();
+                for (int e = 0; e < n; e++)
+                {
+                    int m = manager[e];
+                    if (!graph.ContainsKey(m))
+                    {
+                        graph[m] = new List<int>();
+                    }
+                    graph[m].Add(e);
+                }
+
+                // depth-first traversal
+                Dft(headID, graph, informTime, 0);
+
+                return max;
+            }
+
+            private void Dft(int start, Dictionary<int, List<int>> graph, int[] informTime, int time)
+            {
+                if (!graph.ContainsKey(start))
+                {
+                    max = Math.Max(max, time);
+                    return;
+                }
+                foreach (int sub in graph[start])
+                {
+                    Dft(sub, graph, informTime, time + informTime[start]);
+                }
+            }
+        }
     }
 }
