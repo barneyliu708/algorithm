@@ -28,5 +28,27 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 comb.Remove(nums[i]);
             }
         }
+
+        public class SecondDone
+        {
+            public IList<IList<int>> Subsets(int[] nums)
+            {
+                List<int> path = new List<int>();
+                List<IList<int>> ans = new List<IList<int>>();
+                Subsets(nums, 0, path, ans);
+                return ans;
+            }
+
+            private void Subsets(int[] nums, int i, List<int> path, List<IList<int>> ans)
+            {
+                ans.Add(new List<int>(path));
+                for (int j = i; j < nums.Length; j++)
+                {
+                    path.Add(nums[j]);
+                    Subsets(nums, j + 1, path, ans);
+                    path.RemoveAt(path.Count - 1);
+                }
+            }
+        }
     }
 }
