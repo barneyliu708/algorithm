@@ -98,5 +98,58 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class ThirdDone
+        {
+            public IList<string> LetterCombinations(string digits)
+            {
+                Dictionary<string, List<string>> memo = new Dictionary<string, List<string>>() {
+            { "2", new List<string>() {"a", "b", "c"}},
+            { "3", new List<string>() {"d", "e", "f"}},
+            { "4", new List<string>() {"g", "h", "i"}},
+            { "5", new List<string>() {"j", "k", "l"}},
+            { "6", new List<string>() {"m", "n", "o"}},
+            { "7", new List<string>() {"p", "q", "r", "s"}},
+            { "8", new List<string>() {"t", "u", "v"}},
+            { "9", new List<string>() {"w", "x", "y", "z"}}
+        };
+                return Divide(digits, 0, digits.Length - 1, memo);
+            }
+
+            private List<string> Divide(string digits, int l, int r, Dictionary<string, List<string>> memo)
+            {
+                if (l > r)
+                {
+                    return new List<string>();
+                }
+
+                string substr = digits.Substring(l, r - l + 1);
+                if (memo.ContainsKey(substr))
+                {
+                    return memo[substr];
+                }
+
+                int mid = l + (r - l) / 2;
+                List<string> left = Divide(digits, l, mid, memo);
+                List<string> right = Divide(digits, mid + 1, r, memo);
+
+                memo[substr] = Combine(left, right);
+
+                return memo[substr];
+            }
+
+            private List<string> Combine(List<string> left, List<string> right)
+            {
+                List<string> ans = new List<string>();
+                foreach (string l in left)
+                {
+                    foreach (string r in right)
+                    {
+                        ans.Add(l + r);
+                    }
+                }
+                return ans;
+            }
+        }
     }
 }
