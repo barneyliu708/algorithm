@@ -35,5 +35,37 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class SecondDone
+        {
+            public IList<IList<string>> Partition(string s)
+            {
+                bool[,] dp = new bool[s.Length, s.Length];
+                List<string> path = new List<string>();
+                List<IList<string>> ans = new List<IList<string>>();
+                Backtracking(s, 0, dp, path, ans);
+                return ans;
+            }
+
+            private void Backtracking(string s, int i, bool[,] dp, List<string> path, List<IList<string>> ans)
+            {
+                if (i == s.Length)
+                {
+                    ans.Add(new List<string>(path));
+                    return;
+                }
+
+                for (int j = i; j < s.Length; j++)
+                {
+                    if (s[i] == s[j] && (j <= i + 1 || dp[i + 1, j - 1]))
+                    {
+                        dp[i, j] = true;
+                        path.Add(s.Substring(i, j - i + 1));
+                        Backtracking(s, j + 1, dp, path, ans);
+                        path.RemoveAt(path.Count - 1);
+                    }
+                }
+            }
+        }
     }
 }
