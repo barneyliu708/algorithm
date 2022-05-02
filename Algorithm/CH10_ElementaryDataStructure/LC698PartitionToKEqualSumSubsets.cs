@@ -65,5 +65,77 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return false;
         }
+
+        public class SecondDone
+        {
+            public bool CanPartitionKSubsets(int[] nums, int k)
+            {
+
+                // calculate the sume
+                int sum = 0;
+                foreach (int num in nums)
+                {
+                    sum += num;
+                }
+
+                if (sum % k != 0)
+                {
+                    return false;
+                }
+
+                Array.Sort(nums, (int x, int y) => {
+                    return y.CompareTo(x);
+                });
+                int targetSum = sum / k;
+                bool[] visited = new bool[nums.Length];
+                Dictionary<string, bool> memo = new Dictionary<string, bool>();
+                return CanPartition(nums, k, targetSum, 0, 0, 0, visited, memo);
+            }
+
+            private bool CanPartition(int[] nums, int k, int targetSum, int curSum, int starti, int count, bool[] visited, Dictionary<string, bool> memo)
+            {
+
+                if (count == k - 1)
+                {
+                    return true;
+                }
+
+                if (curSum > targetSum)
+                {
+                    return false;
+                }
+
+                string subsethash = string.Join("", visited);
+                if (memo.ContainsKey(subsethash))
+                {
+                    return memo[subsethash];
+                }
+
+                if (curSum == targetSum)
+                {
+                    memo[subsethash] = CanPartition(nums, k, targetSum, 0, 0, count + 1, visited, memo);
+                    return memo[subsethash];
+                }
+
+                for (int i = starti; i < nums.Length; i++)
+                {
+                    if (!visited[i])
+                    {
+                        visited[i] = true;
+                        subsethash = string.Join("", visited);
+                        memo[subsethash] = CanPartition(nums, k, targetSum, curSum + nums[i], i + 1, count, visited, memo);
+                        if (memo[subsethash])
+                        {
+                            return true;
+                        }
+                        visited[i] = false;
+                    }
+                }
+
+                subsethash = string.Join("", visited);
+                memo[subsethash] = false;
+                return false;
+            }
+        }
     }
 }
