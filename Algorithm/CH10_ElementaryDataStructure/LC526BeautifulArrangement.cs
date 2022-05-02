@@ -34,5 +34,47 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class SecondDone
+        {
+            private int count = 0;
+
+            public int CountArrangement(int n)
+            {
+                int[] nums = new int[n];
+                for (int i = 0; i < n; i++)
+                {
+                    nums[i] = i + 1;
+                }
+                Backtracking(nums, 0);
+                return count;
+            }
+
+            private void Backtracking(int[] nums, int i)
+            {
+                if (i == nums.Length)
+                {
+                    count++;
+                    return;
+                }
+
+                for (int j = i; j < nums.Length; j++)
+                {
+                    if ((i + 1) % nums[j] == 0 || nums[j] % (i + 1) == 0)
+                    {
+                        Swap(nums, i, j);
+                        Backtracking(nums, i + 1);
+                        Swap(nums, i, j);
+                    }
+                }
+            }
+
+            private void Swap(int[] nums, int i, int j)
+            {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
     }
 }
