@@ -31,5 +31,31 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 comb.Remove(i);
             }
         }
+
+        public class SecondDone
+        {
+            public IList<IList<int>> Combine(int n, int k)
+            {
+                List<int> path = new List<int>();
+                List<IList<int>> ans = new List<IList<int>>();
+                Combine(n, k, 1, path, ans);
+                return ans;
+            }
+
+            private void Combine(int n, int k, int start, List<int> path, List<IList<int>> ans)
+            {
+                if (path.Count == k)
+                {
+                    ans.Add(new List<int>(path));
+                    return;
+                }
+                for (int i = start; i <= n; i++)
+                {
+                    path.Add(i);
+                    Combine(n, k, i + 1, path, ans);
+                    path.RemoveAt(path.Count - 1);
+                }
+            }
+        }
     }
 }
