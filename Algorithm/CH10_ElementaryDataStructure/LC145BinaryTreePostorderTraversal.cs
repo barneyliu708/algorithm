@@ -51,5 +51,39 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
             return results;
         }
+
+        public class SecondDone_TwoStacks
+        {
+            public IList<int> PostorderTraversal(TreeNode root)
+            {
+
+                Stack<TreeNode> stack1 = new Stack<TreeNode>();
+                Stack<TreeNode> stack2 = new Stack<TreeNode>();
+                stack1.Push(root);
+
+                while (stack1.Count > 0)
+                {
+                    TreeNode cur = stack1.Pop();
+                    stack2.Push(cur);
+
+                    if (cur.left != null)
+                    {
+                        stack1.Push(cur.left);
+                    }
+                    if (cur.right != null)
+                    {
+                        stack1.Push(cur.right);
+                    }
+                }
+
+                List<int> ans = new List<int>();
+                while (stack2.Count > 0)
+                {
+                    ans.Add(stack2.Pop().val);
+                }
+
+                return ans;
+            }
+        }
     }
 }
