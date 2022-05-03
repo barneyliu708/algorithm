@@ -85,5 +85,47 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class SecondDone_OneStack
+        {
+            public IList<int> PostorderTraversal(TreeNode root)
+            {
+                if (root == null)
+                {
+                    return new List<int>();
+                }
+
+                Stack<TreeNode> stack = new Stack<TreeNode>();
+                TreeNode head = root;
+                stack.Push(root);
+
+                List<int> ans = new List<int>();
+                while (stack.Count > 0)
+                {
+                    TreeNode node = stack.Peek();
+                    if ((node.left == null && node.right == null) ||
+                        node.left == head || node.right == head)
+                    {
+
+                        ans.Add(node.val);
+                        stack.Pop();
+                        head = node;
+                    }
+                    else
+                    {
+                        if (node.right != null)
+                        {
+                            stack.Push(node.right);
+                        }
+                        if (node.left != null)
+                        {
+                            stack.Push(node.left);
+                        }
+                    }
+                }
+
+                return ans;
+            }
+        }
     }
 }
