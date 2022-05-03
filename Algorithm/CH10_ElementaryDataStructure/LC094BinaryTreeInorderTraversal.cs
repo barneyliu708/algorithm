@@ -39,5 +39,32 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return result;
         }
+
+        public class SecondDone
+        {
+            public IList<int> InorderTraversal(TreeNode root)
+            {
+                List<int> ans = new List<int>();
+                Stack<TreeNode> stack = new Stack<TreeNode>();
+                TreeNode cur = root;
+                while (cur != null || stack.Count > 0)
+                {
+                    while (cur != null)
+                    {
+                        stack.Push(cur);
+                        cur = cur.left;
+                    }
+
+                    // get current node from stack
+                    cur = stack.Pop();
+                    ans.Add(cur.val);
+
+                    // traversal the right node, the left node has been visited
+                    cur = cur.right;
+                }
+
+                return ans;
+            }
+        }
     }
 }
