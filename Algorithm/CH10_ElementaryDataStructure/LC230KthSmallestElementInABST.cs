@@ -46,5 +46,34 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             throw new Exception("Invalid k!");
         }
+
+        public class SecondDone
+        {
+            public int KthSmallest(TreeNode root, int k)
+            {
+
+                Stack<TreeNode> stack = new Stack<TreeNode>();
+                TreeNode cur = root;
+                while (cur != null || stack.Count > 0)
+                {
+                    while (cur != null)
+                    {
+                        stack.Push(cur);
+                        cur = cur.left;
+                    }
+
+                    cur = stack.Pop();
+                    k--;
+                    if (k == 0)
+                    {
+                        return cur.val;
+                    }
+
+                    cur = cur.right;
+                }
+
+                throw new Exception("Invalid K");
+            }
+        }
     }
 }
