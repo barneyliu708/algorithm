@@ -53,6 +53,34 @@ namespace Algorithm.CH4_DivideAndConque
             return parent;
         }
 
+        public class SecondDone
+        {
+            public TreeNode SortedArrayToBST(int[] nums)
+            {
+                return BST(nums, 0, nums.Length - 1);
+            }
+
+            private TreeNode BST(int[] nums, int l, int r)
+            {
+                if (l > r)
+                {
+                    return null;
+                }
+
+                if (l == r)
+                {
+                    return new TreeNode(nums[l]);
+                }
+
+                int mid = l + (r - l) / 2;
+                TreeNode root = new TreeNode(nums[mid]);
+                root.left = BST(nums, l, mid - 1);
+                root.right = BST(nums, mid + 1, r);
+
+                return root;
+            }
+        }
+
         [Test]
         public void PositiveCaase1()
         {
