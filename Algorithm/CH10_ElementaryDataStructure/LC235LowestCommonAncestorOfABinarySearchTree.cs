@@ -65,5 +65,29 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return root;
             }
         }
+
+        public class SecondDone_2
+        {
+            public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+            {
+                if (p.val >= q.val)
+                {
+                    return LowestCommonAncestor(root, q, p);
+                }
+
+                // p.val < q.val
+                if (root.val < p.val)
+                {
+                    return LowestCommonAncestor(root.right, p, q);
+                }
+
+                if (root.val > q.val)
+                {
+                    return LowestCommonAncestor(root.left, p, q);
+                }
+
+                return root;
+            }
+        }
     }
 }
