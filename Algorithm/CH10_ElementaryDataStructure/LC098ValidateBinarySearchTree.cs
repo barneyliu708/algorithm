@@ -40,5 +40,29 @@ namespace Algorithm.CH10_ElementaryDataStructure
             return IsValidBSTUti(curNode.left, lower, curNode) &&
                    IsValidBSTUti(curNode.right, curNode, upper);
         }
+
+        public class SecondDone
+        {
+            public bool IsValidBST(TreeNode root)
+            {
+
+                return IsValidBST(root, long.MinValue, long.MaxValue);
+            }
+
+            private bool IsValidBST(TreeNode root, long left, long right)
+            {
+                if (root == null)
+                {
+                    return true;
+                }
+
+                if (root.val <= left || root.val >= right)
+                {
+                    return false;
+                }
+
+                return IsValidBST(root.left, left, root.val) && IsValidBST(root.right, root.val, right);
+            }
+        }
     }
 }
