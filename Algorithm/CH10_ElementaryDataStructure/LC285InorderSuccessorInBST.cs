@@ -51,5 +51,39 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return pre;
         }
+
+        public class SecondDone
+        {
+            public TreeNode InorderSuccessor(TreeNode root, TreeNode p)
+            {
+
+                Stack<TreeNode> stack = new Stack<TreeNode>();
+                TreeNode cur = root;
+                bool pfound = false;
+                TreeNode ans;
+                while (cur != null || stack.Count > 0)
+                {
+                    while (cur != null)
+                    {
+                        stack.Push(cur);
+                        cur = cur.left;
+                    }
+
+                    cur = stack.Pop();
+                    if (pfound)
+                    {
+                        return cur;
+                    }
+                    if (cur == p)
+                    {
+                        pfound = true;
+                    }
+
+                    cur = cur.right;
+                }
+
+                return null;
+            }
+        }
     }
 }
