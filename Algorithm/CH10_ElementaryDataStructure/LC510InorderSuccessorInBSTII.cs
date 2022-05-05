@@ -33,5 +33,29 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return x.parent;
         }
+
+        public class SecondDone
+        {
+            public Node InorderSuccessor(Node x)
+            {
+
+                if (x.right != null)
+                { // the successor is the leftmost node of x's right subtree
+                    Node cur = x.right;
+                    while (cur.left != null)
+                    {
+                        cur = cur.left;
+                    }
+                    return cur;
+                }
+
+                while (x.parent != null && x.parent.right == x)
+                { // the successor is somewhere upper in the tree
+                    x = x.parent;
+                }
+
+                return x.parent;
+            }
+        }
     }
 }
