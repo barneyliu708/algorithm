@@ -34,5 +34,35 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return (double)sum / queue.Count;
             }
         }
+
+        public class SecondDone
+        {
+            public class MovingAverage
+            {
+                private Queue<int> queue;
+                private int maxSize;
+                private int sum;
+
+                public MovingAverage(int size)
+                {
+                    queue = new Queue<int>();
+                    maxSize = size;
+                    sum = 0;
+                }
+
+                public double Next(int val)
+                {
+                    queue.Enqueue(val);
+                    sum += val;
+
+                    if (queue.Count > maxSize)
+                    {
+                        sum -= queue.Dequeue();
+                    }
+
+                    return (double)sum / queue.Count;
+                }
+            }
+        }
     }
 }
