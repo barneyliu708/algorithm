@@ -46,5 +46,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return v[i++];
             }
         }
+
+        public class SecondDone
+        {
+            public class ZigzagIterator
+            {
+
+                private Queue<(int ivec, int iele)> queue;
+                private List<IList<int>> vectors;
+                public ZigzagIterator(IList<int> v1, IList<int> v2)
+                {
+                    queue = new Queue<(int ivec, int iele)>();
+                    vectors = new List<IList<int>>();
+                    vectors.Add(v1);
+                    vectors.Add(v2);
+                    int i = 0;
+                    foreach (IList<int> vec in vectors)
+                    {
+                        if (vec.Count > 0)
+                        { // this is to avoid empty list
+                            queue.Enqueue((i, 0));
+                        }
+                        i++;
+                    }
+                }
+
+                public bool HasNext()
+                {
+                    return queue.Count > 0;
+                }
+
+                public int Next()
+                {
+                    (int ivec, int iele) cur = queue.Dequeue();
+                    IList<int> vec = vectors[cur.ivec];
+                    int ele = vec[cur.iele];
+                    if (cur.iele + 1 < vec.Count)
+                    {
+                        queue.Enqueue((cur.ivec, cur.iele + 1));
+                    }
+                    return ele;
+                }
+            }
+        }
     }
 }
