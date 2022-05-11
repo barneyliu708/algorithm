@@ -79,6 +79,49 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
 
+        public class SecondDone
+        {
+            public class FirstUnique
+            {
+
+                private Dictionary<int, int> duplicate;
+                private Queue<int> queue;
+                public FirstUnique(int[] nums)
+                {
+                    queue = new Queue<int>();
+                    duplicate = new Dictionary<int, int>();
+                    foreach (int num in nums)
+                    {
+                        queue.Enqueue(num);
+                        if (!duplicate.ContainsKey(num))
+                        {
+                            duplicate[num] = 0;
+                        }
+                        duplicate[num]++;
+                    }
+                }
+
+                public int ShowFirstUnique()
+                {
+                    while (queue.Count > 0 && duplicate[queue.Peek()] > 1)
+                    {
+                        queue.Dequeue();
+                    }
+                    return queue.Count > 0 ? queue.Peek() : -1;
+                }
+
+                public void Add(int val)
+                {
+                    queue.Enqueue(val);
+                    if (!duplicate.ContainsKey(val))
+                    {
+                        duplicate[val] = 0;
+                    }
+                    duplicate[val]++;
+                }
+            }
+        }
+
         [Test]
         public void TestCase1()
         {
