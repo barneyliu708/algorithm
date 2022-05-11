@@ -40,5 +40,93 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class SecondDone
+        {
+            public IList<int> SpiralOrder(int[][] matrix)
+            {
+                List<int> ans = new List<int>();
+                bool[,] visited = new bool[matrix.Length, matrix[0].Length];
+
+                int total = matrix.Length * matrix[0].Length;
+                (int i, int j) index = (0, -1);
+                while (ans.Count < total)
+                {
+                    index.j = MoveRight(matrix, visited, index.i, index.j + 1, ans);
+
+                    index.i = MoveDown(matrix, visited, index.i + 1, index.j, ans);
+
+                    index.j = MoveLeft(matrix, visited, index.i, index.j - 1, ans);
+
+                    index.i = MoveUp(matrix, visited, index.i - 1, index.j, ans);
+
+                }
+                return ans;
+            }
+
+            private int MoveRight(int[][] matrix, bool[,] visited, int i, int j, List<int> ans)
+            {
+                int c = j;
+                for (; c < matrix[0].Length; c++)
+                {
+                    if (visited[i, c])
+                    {
+                        break;
+                    }
+                    visited[i, c] = true;
+
+                    ans.Add(matrix[i][c]);
+                }
+                return c - 1; // return the last valid indice
+            }
+
+            private int MoveDown(int[][] matrix, bool[,] visited, int i, int j, List<int> ans)
+            {
+                int r = i;
+                for (; r < matrix.Length; r++)
+                {
+                    if (visited[r, j])
+                    {
+                        break;
+                    }
+                    visited[r, j] = true;
+
+                    ans.Add(matrix[r][j]);
+                }
+                return r - 1; // return the last valid indice
+            }
+
+            private int MoveLeft(int[][] matrix, bool[,] visited, int i, int j, List<int> ans)
+            {
+                int c = j;
+                for (; c >= 0; c--)
+                {
+                    if (visited[i, c])
+                    {
+                        break;
+                    }
+                    visited[i, c] = true;
+
+                    ans.Add(matrix[i][c]);
+                }
+                return c + 1; // return the last valid indice
+            }
+
+            private int MoveUp(int[][] matrix, bool[,] visited, int i, int j, List<int> ans)
+            {
+                int r = i;
+                for (; r >= 0; r--)
+                {
+                    if (visited[r, j])
+                    {
+                        break;
+                    }
+                    visited[r, j] = true;
+
+                    ans.Add(matrix[r][j]);
+                }
+                return r + 1; // return the last valid indice
+            }
+        }
     }
 }
