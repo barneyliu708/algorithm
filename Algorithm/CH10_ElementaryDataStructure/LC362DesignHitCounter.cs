@@ -31,5 +31,32 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return hits.Count;
             }
         }
+
+        public class SecondDone
+        {
+            public class HitCounter
+            {
+
+                private Queue<int> hits;
+                public HitCounter()
+                {
+                    hits = new Queue<int>();
+                }
+
+                public void Hit(int timestamp)
+                {
+                    hits.Enqueue(timestamp);
+                }
+
+                public int GetHits(int timestamp)
+                {
+                    while (hits.Count > 0 && timestamp - hits.Peek() >= 300)
+                    {
+                        hits.Dequeue();
+                    }
+                    return hits.Count;
+                }
+            }
+        }
     }
 }
