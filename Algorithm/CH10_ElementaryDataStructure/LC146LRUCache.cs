@@ -112,5 +112,57 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
 
         }
+
+        public class SecondDone
+        {
+            public class LRUCache
+            {
+
+                private Dictionary<int, int> map;
+                private Dictionary<int, LinkedListNode<int>> lruMap;
+                private LinkedList<int> lru;
+                private int capacity;
+
+                public LRUCache(int capacity)
+                {
+                    this.capacity = capacity;
+                    lruMap = new Dictionary<int, LinkedListNode<int>>();
+                    map = new Dictionary<int, int>();
+                    lru = new LinkedList<int>();
+                }
+
+                public int Get(int key)
+                {
+                    if (lruMap.ContainsKey(key))
+                    {
+                        int val = map[key];
+                        lru.Remove(lruMap[key]);
+                        LinkedListNode<int> newNode = lru.AddFirst(key);
+                        lruMap[key] = newNode;
+                        return val;
+                    }
+                    return -1;
+                }
+
+                public void Put(int key, int value)
+                {
+                    if (lruMap.ContainsKey(key))
+                    {
+                        lru.Remove(lruMap[key]); // o(1)
+                    }
+                    LinkedListNode<int> newNode = lru.AddFirst(key);
+                    lruMap[key] = newNode;
+                    map[key] = value;
+
+                    if (lru.Count > capacity)
+                    {
+                        int last = lru.Last.Value;
+                        lru.RemoveLast();
+                        lruMap.Remove(last);
+                    }
+
+                }
+            }
+        }
     }
 }
