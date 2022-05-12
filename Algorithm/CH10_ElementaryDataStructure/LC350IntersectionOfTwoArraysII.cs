@@ -36,5 +36,38 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans.ToArray();
         }
+
+        public class SecondDone
+        {
+            public int[] Intersect(int[] nums1, int[] nums2)
+            {
+                if (nums1.Length > nums2.Length)
+                {
+                    return Intersect(nums2, nums1);
+                }
+
+                Dictionary<int, int> count = new Dictionary<int, int>();
+                foreach (int num in nums1)
+                {
+                    if (!count.ContainsKey(num))
+                    {
+                        count[num] = 0;
+                    }
+                    count[num]++;
+                }
+
+                List<int> ans = new List<int>();
+                foreach (int num in nums2)
+                {
+                    if (count.ContainsKey(num) && count[num] > 0)
+                    {
+                        ans.Add(num);
+                        count[num]--;
+                    }
+                }
+
+                return ans.ToArray();
+            }
+        }
     }
 }
