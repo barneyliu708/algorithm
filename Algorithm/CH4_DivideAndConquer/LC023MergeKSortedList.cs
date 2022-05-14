@@ -72,5 +72,57 @@ namespace Algorithm.CH4_DivideAndConque
 
             return dummy.next;
         }
+
+        public class SecondDone_DivideAndConque_PriorityQueue
+        {
+            public ListNode MergeKLists(ListNode[] lists)
+            {
+                return MergeKLists(lists, 0, lists.Length - 1);
+            }
+
+            private ListNode MergeKLists(ListNode[] lists, int l, int r)
+            {
+                if (l > r)
+                {
+                    return null;
+                }
+                if (l == r)
+                {
+                    return lists[l];
+                }
+
+                int mid = l + (r - l) / 2;
+                ListNode left = MergeKLists(lists, l, mid);
+                ListNode right = MergeKLists(lists, mid + 1, r);
+
+                return MergeTwoLists(left, right);
+            }
+
+            private ListNode MergeTwoLists(ListNode left, ListNode right)
+            {
+                PriorityQueue<ListNode, int> pq = new PriorityQueue<ListNode, int>();
+                while (left != null)
+                {
+                    pq.Enqueue(left, left.val);
+                    left = left.next;
+                }
+                while (right != null)
+                {
+                    pq.Enqueue(right, right.val);
+                    right = right.next;
+                }
+
+                ListNode dummy = new ListNode();
+                ListNode p = dummy;
+                while (pq.Count > 0)
+                {
+                    p.next = pq.Dequeue();
+                    p = p.next;
+                    p.next = null; // break the original link
+                }
+
+                return dummy.next;
+            }
+        }
     }
 }
