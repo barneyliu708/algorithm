@@ -49,5 +49,38 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return bulls + "A" + cows + "B";
         }
+
+        public class SecondDone
+        {
+            public string GetHint(string secret, string guess)
+            {
+                int[] count = new int[10];
+                foreach (char ch in secret)
+                {
+                    count[ch - '0']++;
+                }
+
+                int cows = 0;
+                foreach (char ch in guess)
+                {
+                    if (count[ch - '0'] > 0)
+                    {
+                        cows++;
+                        count[ch - '0']--;
+                    }
+                }
+
+                int bulls = 0;
+                for (int i = 0; i < secret.Length; i++)
+                {
+                    if (secret[i] == guess[i])
+                    {
+                        bulls++;
+                    }
+                }
+
+                return bulls.ToString() + "A" + (cows - bulls).ToString() + "B";
+            }
+        }
     }
 }
