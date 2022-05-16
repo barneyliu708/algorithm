@@ -47,5 +47,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class SecondDone
+        {
+            public IList<string> TopKFrequent(string[] words, int k)
+            {
+                Dictionary<string, int> count = new Dictionary<string, int>();
+                foreach (string word in words)
+                {
+                    if (!count.ContainsKey(word))
+                    {
+                        count[word] = 0;
+                    }
+                    count[word]++;
+                }
+
+                PriorityQueue<string, (int cnt, string word)> pq = new PriorityQueue<string, (int cnt, string word)>(
+                    Comparer<(int cnt, string word)>.Create(((int cnt, string word) x, (int cnt, string word) y) => {
+                        if (x.cnt != y.cnt)
+                        {
+                            return x.cnt.CompareTo(y.cnt);
+                        }
+                        return y.word.CompareTo(x.word);
+                    })); // min-heap
+
+                foreach (string word in count.Keys)
+                {
+                    pq.Enqueue(word, (count[word], word));
+                    if (pq.Count > k)
+                    {
+                        pq.Dequeue();
+                    }
+                }
+
+                List<string> ans = new List<string>();
+                while (pq.Count > 0)
+                {
+                    ans.Add(pq.Dequeue());
+                }
+                ans.Reverse();
+
+                return ans;
+            }
+        }
     }
 }
