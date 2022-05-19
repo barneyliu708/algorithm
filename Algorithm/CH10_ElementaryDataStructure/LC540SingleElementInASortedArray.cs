@@ -53,5 +53,43 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return int.MinValue; // the returned value here does not matter
         }
+
+        public class SecondDone
+        {
+            public int SingleNonDuplicate(int[] nums)
+            {
+                if (nums.Length == 1)
+                {
+                    return nums[0];
+                }
+
+                int l = 0;
+                int r = nums.Length - 1;
+                while (l <= r)
+                {
+                    int mid = l + (r - l) / 2;
+                    if ((mid == 0 && nums[mid] != nums[mid + 1]) ||
+                        (mid == nums.Length - 1 && nums[mid] != nums[mid - 1]) ||
+                        (nums[mid] != nums[mid + 1] && nums[mid] != nums[mid - 1]))
+                    {
+                        return nums[mid];
+                    }
+
+                    // if there is no single element, the even-index should equal to its next odd-index, 0th == 1th, 2th == 3th, ...
+                    // otherwise, it contains a single value element
+                    if ((mid % 2 == 1 && nums[mid] == nums[mid - 1]) ||
+                        (mid % 2 == 0 && nums[mid] == nums[mid + 1]))
+                    {
+                        l = mid + 1;
+                    }
+                    else
+                    {
+                        r = mid - 1;
+                    }
+                }
+
+                return -1;
+            }
+        }
     }
 }
