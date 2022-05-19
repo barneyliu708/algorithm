@@ -32,5 +32,32 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return start;
         }
+
+        public class SecondDone
+        {
+            public bool IsBadVersion(int version)
+            {
+                return true;
+            }
+            public int FirstBadVersion(int n)
+            {
+                int l = 1;
+                int r = n;
+                while (l <= r)
+                {
+                    int mid = l + (r - l) / 2;
+                    if (IsBadVersion(mid))
+                    {
+                        r = mid - 1;
+                    }
+                    else
+                    {
+                        l = mid + 1;
+                    }
+                }
+
+                return l;
+            }
+        }
     }
 }
