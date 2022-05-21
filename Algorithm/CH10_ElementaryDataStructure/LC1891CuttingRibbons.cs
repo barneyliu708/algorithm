@@ -38,5 +38,39 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return count >= k;
         }
+
+
+        public class SecondDone
+        {
+            public int MaxLength(int[] ribbons, int k)
+            {
+                int l = 1;
+                int r = int.MaxValue;
+                while (l <= r)
+                {
+                    int mid = l + (r - l) / 2;
+                    if (CanRibbons(ribbons, mid, k))
+                    {
+                        l = mid + 1;
+                    }
+                    else
+                    {
+                        r = mid - 1;
+                    }
+                }
+
+                return r;
+            }
+
+            private bool CanRibbons(int[] ribbons, int len, int k)
+            {
+                int count = 0;
+                foreach (int rib in ribbons)
+                {
+                    count += rib / len;
+                }
+                return count >= k;
+            }
+        }
     }
 }
