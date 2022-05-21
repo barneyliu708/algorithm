@@ -106,5 +106,43 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return longest;
             }
         }
+
+        public class SecondDone
+        {
+            public int LongestRepeatingSubstring(string s)
+            {
+                int l = 1;
+                int r = s.Length;
+                while (l <= r)
+                {
+                    int mid = l + (r - l) / 2;
+                    if (HasDuplicate(s, mid))
+                    {
+                        l = mid + 1;
+                    }
+                    else
+                    {
+                        r = mid - 1;
+                    }
+                }
+
+                return r;
+            }
+
+            private bool HasDuplicate(string s, int len)
+            {
+                HashSet<string> seen = new HashSet<string>();
+                for (int i = 0; i + len - 1 < s.Length; i++)
+                {
+                    string substr = s.Substring(i, len);
+                    if (seen.Contains(substr))
+                    {
+                        return true;
+                    }
+                    seen.Add(substr);
+                }
+                return false;
+            }
+        }
     }
 }
