@@ -44,5 +44,40 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class SecondDone
+        {
+            public int MinimumTotal(IList<IList<int>> triangle)
+            {
+                int n = triangle.Count;
+                int[] dp = new int[n];
+                int ans = int.MaxValue;
+                for (int r = 0; r < n; r++)
+                {
+                    for (int c = r; c >= 0; c--)
+                    {
+                        if (c == 0)
+                        {
+                            dp[c] = triangle[r][c] + dp[c];
+                        }
+                        else if (c == r)
+                        {
+                            dp[c] = triangle[r][c] + dp[c - 1];
+                        }
+                        else
+                        {
+                            dp[c] = triangle[r][c] + Math.Min(dp[c], dp[c - 1]);
+                        }
+
+                        if (r == n - 1)
+                        {
+                            ans = Math.Min(ans, dp[c]);
+                        }
+                    }
+                }
+
+                return ans;
+            }
+        }
     }
 }
