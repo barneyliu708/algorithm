@@ -37,6 +37,28 @@ namespace Algorithm.CH10_ElementaryDataStructure
             return dp[0];
         }
 
+        public class SecondDone
+        {
+            public int Jump(int[] nums)
+            {
+                int[] dp = new int[nums.Length];
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    dp[i] = int.MaxValue;
+                }
+                dp[0] = 0; // it only takes 0 step to reach to the 0th position
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    for (int j = 1; j <= nums[i] && i + j < nums.Length; j++)
+                    {
+                        dp[i + j] = Math.Min(dp[i + j], dp[i] + 1);
+                    }
+                }
+
+                return dp[nums.Length - 1];
+            }
+        }
+
         [Test]
         public void TestJump()
         {
