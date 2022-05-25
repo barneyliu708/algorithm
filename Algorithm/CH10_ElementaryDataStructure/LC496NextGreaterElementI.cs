@@ -37,6 +37,36 @@ namespace Algorithm.CH10_ElementaryDataStructure
             return ans;
         }
 
+        public class SecondDone
+        {
+            public int[] NextGreaterElement(int[] nums1, int[] nums2)
+            {
+                Dictionary<int, int> map = new Dictionary<int, int>();
+                Stack<int> stack = new Stack<int>();
+                foreach (int num in nums2)
+                {
+                    while (stack.Count != 0 && stack.Peek() < num)
+                    {
+                        map[stack.Pop()] = num;
+                    }
+                    stack.Push(num);
+                }
+
+                while (stack.Count != 0)
+                {
+                    map[stack.Pop()] = -1;
+                }
+
+                int[] ans = new int[nums1.Length];
+                for (int i = 0; i < nums1.Length; i++)
+                {
+                    ans[i] = map[nums1[i]];
+                }
+
+                return ans;
+            }
+        }
+
         [Test]
         public void TestCases()
         {
