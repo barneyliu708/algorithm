@@ -36,5 +36,39 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
             return sum;
         }
+
+        public class SecondDone
+        {
+            public int ThreeSumSmaller(int[] nums, int target)
+            {
+                Array.Sort(nums);
+                int cnt = 0;
+                for (int i = 0; i < nums.Length - 2; i++)
+                {
+                    cnt += TwoSumSmaller(nums, i + 1, target - nums[i]);
+                }
+                return cnt;
+            }
+
+            private int TwoSumSmaller(int[] nums, int istart, int target)
+            {
+                int l = istart;
+                int r = nums.Length - 1;
+                int cnt = 0;
+                while (l < r)
+                {
+                    if (nums[l] + nums[r] < target)
+                    {
+                        cnt += r - l;
+                        l++;
+                    }
+                    else
+                    {
+                        r--;
+                    }
+                }
+                return cnt;
+            }
+        }
     }
 }
