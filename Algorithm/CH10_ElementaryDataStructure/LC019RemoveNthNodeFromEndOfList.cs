@@ -40,5 +40,28 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return dummy.next;
         }
+
+        public class SecondDone_OnePass
+        {
+            public ListNode RemoveNthFromEnd(ListNode head, int n)
+            {
+                ListNode dummy = new ListNode();
+                dummy.next = head;
+                ListNode ft = dummy;
+                ListNode sl = dummy;
+                while (n > 0)
+                {
+                    ft = ft.next;
+                    n--;
+                }
+                while (ft.next != null)
+                {
+                    ft = ft.next;
+                    sl = sl.next;
+                }
+                sl.next = sl.next.next;
+                return dummy.next;
+            }
+        }
     }
 }
