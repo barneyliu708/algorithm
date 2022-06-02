@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Algorithm.CH10_ElementaryDataStructure
@@ -45,6 +46,43 @@ namespace Algorithm.CH10_ElementaryDataStructure
             int revision = int.Parse(version.Substring(p, pEnd - p));
 
             return new KeyValuePair<int, int>(revision, pEnd + 1);
+        }
+
+        public class SecondDone
+        {
+            public int CompareVersion(string version1, string version2)
+            {
+                List<string> v1 = version1.Split('.').ToList();
+                List<string> v2 = version2.Split('.').ToList();
+                return CompareVersion(v1, v2);
+            }
+
+            private int CompareVersion(List<string> v1, List<string> v2)
+            {
+                if (v1.Count < v2.Count)
+                {
+                    return -CompareVersion(v2, v1);
+                }
+
+                // v1.Count >= v2.Count
+                while (v1.Count > v2.Count)
+                {
+                    v2.Add("0");
+                }
+
+                // v1.Count == v2.Count
+                for (int i = 0; i < v1.Count; i++)
+                {
+                    int chunk1 = int.Parse(v1[i]);
+                    int chunk2 = int.Parse(v2[i]);
+                    if (chunk1 != chunk2)
+                    {
+                        return chunk1.CompareTo(chunk2);
+                    }
+                }
+
+                return 0;
+            }
         }
     }
 }
