@@ -30,5 +30,30 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 while (curIndex != start);
             }
         }
+
+        public class SecondDone
+        {
+            public void Rotate(int[] nums, int k)
+            {
+                int len = nums.Length;
+                k %= len;
+                int cnt = 0;
+                for (int i = 0; cnt < len; i++)
+                {
+                    int curidx = i;
+                    int curval = nums[curidx];
+                    do
+                    {
+                        int nextidx = (curidx + k) % len;
+                        int nextval = nums[nextidx];
+                        nums[nextidx] = curval;
+                        curidx = nextidx;
+                        curval = nextval;
+                        cnt++;
+                    }
+                    while (curidx != i);
+                }
+            }
+        }
     }
 }
