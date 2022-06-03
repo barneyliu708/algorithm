@@ -119,5 +119,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class SecondDone
+        {
+            public void Flatten(TreeNode root)
+            {
+                FlattenUti(root);
+            }
+
+            public TreeNode FlattenUti(TreeNode root)
+            { // return the tail node of list
+                if (root == null)
+                {
+                    return null;
+                }
+
+                if (root.left == null && root.right == null)
+                {
+                    return root;
+                }
+
+                TreeNode leftTail;
+                TreeNode rightTail;
+                if (root.left != null && root.right == null)
+                {
+                    leftTail = FlattenUti(root.left);
+                    root.right = root.left;
+                    root.left = null;
+                    return leftTail;
+                }
+                if (root.left == null && root.right != null)
+                {
+                    rightTail = FlattenUti(root.right);
+                    return rightTail;
+                }
+
+                leftTail = FlattenUti(root.left);
+                rightTail = FlattenUti(root.right);
+                leftTail.right = root.right;
+                root.right = root.left;
+                root.left = null;
+                return rightTail;
+            }
+        }
     }
 }
