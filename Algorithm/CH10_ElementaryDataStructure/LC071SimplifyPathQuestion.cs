@@ -43,5 +43,46 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return result.Length > 0 ? result.ToString() : "/";
         }
+
+        public string SimplifyPath(string path)
+        {
+            string[] paths = path.Split('/');
+            Stack<string> stack = new Stack<string>();
+            foreach (string p in paths)
+            {
+                if (p == "")
+                {
+                    continue;
+                }
+                else if (p == ".")
+                {
+                    continue;
+                }
+                else if (p == "..")
+                {
+                    if (stack.Count > 0)
+                    {
+                        stack.Pop();
+                    }
+                }
+                else
+                {
+                    stack.Push(p);
+                }
+            }
+
+            if (stack.Count == 0)
+            {
+                return "/";
+            }
+
+            StringBuilder sb = new StringBuilder();
+            while (stack.Count > 0)
+            {
+                sb.Insert(0, '/' + stack.Pop());
+            }
+
+            return sb.ToString();
+        }
     }
 }
