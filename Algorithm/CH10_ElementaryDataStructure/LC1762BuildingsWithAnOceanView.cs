@@ -56,5 +56,33 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return indices.ToArray();
         }
+
+        public class SecondDone
+        {
+            public int[] FindBuildings(int[] heights)
+            {
+
+                int maxhight = int.MinValue;
+                List<int> indices = new List<int>();
+                for (int i = heights.Length - 1; i >= 0; i--)
+                {
+
+                    if (heights[i] <= maxhight)
+                    {
+                        continue;
+                    }
+
+                    maxhight = heights[i];
+
+                    indices.Add(i);
+
+                }
+
+                // reverse the indices in the list
+                indices.Reverse();
+
+                return indices.ToArray();
+            }
+        }
     }
 }
