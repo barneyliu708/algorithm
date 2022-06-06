@@ -44,5 +44,24 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return hasPathSum;
         }
+
+        public class SecondDone
+        {
+            public bool HasPathSum(TreeNode root, int targetSum)
+            {
+                if (root == null)
+                {
+                    return false;
+                }
+
+                if (root.left == null && root.right == null)
+                {
+                    return root.val == targetSum;
+                }
+
+                targetSum -= root.val;
+                return HasPathSum(root.left, targetSum) || HasPathSum(root.right, targetSum);
+            }
+        }
     }
 }
