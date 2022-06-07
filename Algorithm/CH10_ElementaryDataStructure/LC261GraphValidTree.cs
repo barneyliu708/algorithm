@@ -47,5 +47,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return parent.Count == n;
         }
+
+        public class SecondDone
+        {
+            public bool ValidTree(int n, int[][] edges)
+            {
+                List<int>[] adjacentList = new List<int>[n];
+                for (int i = 0; i < n; i++)
+                {
+                    adjacentList[i] = new List<int>();
+                }
+                foreach (int[] edge in edges)
+                {
+                    adjacentList[edge[0]].Add(edge[1]);
+                    adjacentList[edge[1]].Add(edge[0]);
+                }
+
+                Dictionary<int, int> parent = new Dictionary<int, int>();
+                parent[0] = -1;
+                Queue<int> queue = new Queue<int>();
+                queue.Enqueue(0);
+
+                while (queue.Count > 0)
+                {
+                    int cur = queue.Dequeue();
+
+                    foreach (int neighbor in adjacentList[cur])
+                    {
+                        if (parent[cur] == neighbor)
+                        {
+                            continue;
+                        }
+                        if (parent.ContainsKey(neighbor))
+                        { // cycle detected
+                            return false;
+                        }
+                        queue.Enqueue(neighbor);
+                        parent[neighbor] = cur;
+                    }
+                }
+
+                return parent.Count == n;
+            }
+        }
     }
 }
