@@ -68,5 +68,36 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 nums[j] = temp;
             }
         }
+
+        public class ThirdDone
+        {
+            public IList<IList<int>> Permute(int[] nums)
+            {
+                HashSet<int> numsSet = new HashSet<int>(nums);
+                List<int> cur = new List<int>();
+                List<IList<int>> ans = new List<IList<int>>();
+                Permute(numsSet, cur, ans);
+                return ans;
+            }
+
+            private void Permute(HashSet<int> nums, List<int> cur, List<IList<int>> ans)
+            {
+                if (nums.Count == 0)
+                {
+                    ans.Add(new List<int>(cur));
+                    return;
+                }
+
+                HashSet<int> numsCopy = new HashSet<int>(nums);
+                foreach (int num in numsCopy)
+                {
+                    cur.Add(num);
+                    nums.Remove(num);
+                    Permute(nums, cur, ans);
+                    nums.Add(num);
+                    cur.RemoveAt(cur.Count - 1);
+                }
+            }
+        }
     }
 }
