@@ -96,5 +96,41 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return dp[target];
             }
         }
+
+        public class ThirdDone
+        {
+            public int CombinationSum4(int[] nums, int target)
+            {
+                Dictionary<int, int> memo = new Dictionary<int, int>();
+                return Combination(nums, target, memo);
+            }
+
+            private int Combination(int[] nums, int remain, Dictionary<int, int> memo)
+            {
+                if (remain < 0)
+                {
+                    return 0;
+                }
+
+                if (memo.ContainsKey(remain))
+                {
+                    return memo[remain];
+                }
+
+                if (remain == 0)
+                {
+                    return 1;
+                }
+
+                int ans = 0;
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    ans += Combination(nums, remain - nums[i], memo);
+                }
+
+                memo[remain] = ans;
+                return ans;
+            }
+        }
     }
 }
