@@ -34,5 +34,32 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class SecondDone
+        {
+            private int count;
+
+            public int FindTargetSumWays(int[] nums, int target)
+            {
+                FindTarget(nums, target, 0);
+                return count;
+            }
+
+            private void FindTarget(int[] nums, int target, int i)
+            {
+                if (i == nums.Length)
+                {
+                    if (target == 0)
+                    {
+                        count++;
+                    }
+                }
+                else
+                {
+                    FindTarget(nums, target - nums[i], i + 1);
+                    FindTarget(nums, target + nums[i], i + 1);
+                }
+            }
+        }
     }
 }
