@@ -51,5 +51,47 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class SecondDone
+        {
+            public int MaxLength(IList<string> arr)
+            {
+                return MaxLength(arr, 0, new int[26]);
+            }
+
+            private int MaxLength(IList<string> arr, int istart, int[] count)
+            {
+                int curLen = 0;
+                for (int i = 0; i < count.Length; i++)
+                {
+                    if (count[i] > 1)
+                    {
+                        return 0;
+                    }
+                    if (count[i] == 1)
+                    {
+                        curLen++;
+                    }
+                }
+
+                int ans = curLen;
+                for (int i = istart; i < arr.Count; i++)
+                {
+                    foreach (char ch in arr[i])
+                    {
+                        count[ch - 'a']++;
+                    }
+
+                    ans = Math.Max(ans, MaxLength(arr, i + 1, count));
+
+                    foreach (char ch in arr[i])
+                    {
+                        count[ch - 'a']--;
+                    }
+                }
+
+                return ans;
+            }
+        }
     }
 }
