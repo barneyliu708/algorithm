@@ -109,6 +109,58 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
 
+        public class ThirdDone
+        {
+            public bool WordPatternMatch(string pattern, string s)
+            {
+                Dictionary<char, string> ptos = new Dictionary<char, string>();
+                Dictionary<string, char> stop = new Dictionary<string, char>();
+                return IsMatch(pattern, s, 0, 0, ptos, stop);
+            }
+
+            private bool IsMatch(string pattern, string s, int pi, int si, Dictionary<char, string> ptos, Dictionary<string, char> stop)
+            {
+
+                if (pi == pattern.Length && si == s.Length)
+                {
+                    return true;
+                }
+
+                if (pi == pattern.Length || si == s.Length)
+                {
+                    return false;
+                }
+
+                for (int i = si; i < s.Length; i++)
+                {
+
+                    char p = pattern[pi];
+                    string str = s.Substring(si, i - si + 1);
+
+                    if (!ptos.ContainsKey(p) && !stop.ContainsKey(str))
+                    {
+                        ptos[p] = str;
+                        stop[str] = p;
+                        if (IsMatch(pattern, s, pi + 1, i + 1, ptos, stop))
+                        {
+                            return true;
+                        }
+                        ptos.Remove(p);
+                        stop.Remove(str);
+                    }
+                    else if (ptos.ContainsKey(p) && stop.ContainsKey(str) && ptos[p] == str && stop[str] == p)
+                    {
+                        if (IsMatch(pattern, s, pi + 1, i + 1, ptos, stop))
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+        }
+
         [Test]
         public void TestCase1()
         {
