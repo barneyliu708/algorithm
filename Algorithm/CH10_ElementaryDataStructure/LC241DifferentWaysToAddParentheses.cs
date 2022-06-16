@@ -56,5 +56,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
             map[expression] = ans;
             return ans;
         }
+
+        public class SecondDone
+        {
+            public IList<int> DiffWaysToCompute(string expression)
+            {
+
+                int val = 0;
+                if (int.TryParse(expression, out val))
+                {
+                    return new List<int>() { val };
+                }
+
+                List<int> ans = new List<int>();
+                for (int i = 0; i < expression.Length; i++)
+                {
+                    if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*')
+                    {
+                        IList<int> leftResults = DiffWaysToCompute(expression.Substring(0, i));
+                        IList<int> rightResults = DiffWaysToCompute(expression.Substring(i + 1, expression.Length - i - 1));
+                        foreach (int l in leftResults)
+                        {
+                            foreach (int r in rightResults)
+                            {
+                                if (expression[i] == '+')
+                                {
+                                    ans.Add(l + r);
+                                }
+                                if (expression[i] == '-')
+                                {
+                                    ans.Add(l - r);
+                                }
+                                if (expression[i] == '*')
+                                {
+                                    ans.Add(l * r);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return ans;
+            }
+        }
     }
 }
