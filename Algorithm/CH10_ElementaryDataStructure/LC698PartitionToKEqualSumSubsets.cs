@@ -137,5 +137,59 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return false;
             }
         }
+
+        public class ThirdDone
+        {
+            public bool CanPartitionKSubsets(int[] nums, int k)
+            {
+                int sum = 0;
+                foreach (int num in nums)
+                {
+                    sum += num;
+                }
+
+                if (sum % k != 0)
+                {
+                    return false;
+                }
+
+                bool[] visited = new bool[nums.Length];
+                return Backtracking(nums, k, 0, 0, sum / k, 0, visited);
+            }
+
+            private bool Backtracking(int[] nums, int k, int curSum, int istart, int targetSum, int count, bool[] visited)
+            {
+
+                if (count == k - 1)
+                {
+                    return true;
+                }
+
+                if (curSum == targetSum)
+                {
+                    return Backtracking(nums, k, 0, 0, targetSum, count + 1, visited);
+                }
+
+                if (curSum > targetSum)
+                {
+                    return false;
+                }
+
+                for (int i = istart; i < nums.Length; i++)
+                {
+                    if (visited[i])
+                    {
+                        continue;
+                    }
+                    visited[i] = true;
+                    if (Backtracking(nums, k, curSum + nums[i], i + 1, targetSum, count, visited))
+                    {
+                        return true;
+                    }
+                    visited[i] = false;
+                }
+                return false;
+            }
+        }
     }
 }
