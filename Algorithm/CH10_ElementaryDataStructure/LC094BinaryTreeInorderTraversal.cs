@@ -66,5 +66,34 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class ThirdDone
+        {
+            public IList<int> InorderTraversal(TreeNode root)
+            {
+                List<int> ans = new List<int>();
+                Stack<TreeNode> stack = new Stack<TreeNode>();
+                while (root != null)
+                {
+                    stack.Push(root);
+                    root = root.left;
+                }
+
+                while (stack.Count > 0)
+                {
+                    TreeNode cur = stack.Pop();
+                    ans.Add(cur.val);
+
+                    cur = cur.right;
+                    while (cur != null)
+                    {
+                        stack.Push(cur);
+                        cur = cur.left;
+                    }
+                }
+
+                return ans;
+            }
+        }
     }
 }
