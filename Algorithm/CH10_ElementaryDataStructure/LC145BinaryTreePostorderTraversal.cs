@@ -127,5 +127,81 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class ThirdDone
+        {
+            public IList<int> PostorderTraversal(TreeNode root)
+            {
+                List<int> ans = new List<int>();
+                if (root == null)
+                {
+                    return ans;
+                }
+                TreeNode pre = null;
+                Stack<TreeNode> stack = new Stack<TreeNode>();
+                stack.Push(root);
+                while (stack.Count > 0)
+                {
+                    TreeNode cur = stack.Pop();
+                    if (pre != null && (pre == cur.left || pre == cur.right || pre == cur))
+                    {
+                        ans.Add(cur.val);
+                    }
+                    else
+                    {
+                        stack.Push(cur);
+                        if (cur.right != null)
+                        {
+                            stack.Push(cur.right);
+                        }
+                        if (cur.left != null)
+                        {
+                            stack.Push(cur.left);
+                        }
+                    }
+                    pre = cur;
+                }
+
+                return ans;
+            }
+        }
+
+        public class ThirdDone_v2
+        {
+            public IList<int> PostorderTraversal(TreeNode root)
+            {
+                List<int> ans = new List<int>();
+                if (root == null)
+                {
+                    return ans;
+                }
+                TreeNode pre = root; // instead of null
+                Stack<TreeNode> stack = new Stack<TreeNode>();
+                stack.Push(root);
+                while (stack.Count > 0)
+                {
+                    TreeNode cur = stack.Pop();
+                    if ((cur.left == null && cur.right == null) || pre == cur.left || pre == cur.right)
+                    {
+                        ans.Add(cur.val);
+                    }
+                    else
+                    {
+                        stack.Push(cur);
+                        if (cur.right != null)
+                        {
+                            stack.Push(cur.right);
+                        }
+                        if (cur.left != null)
+                        {
+                            stack.Push(cur.left);
+                        }
+                    }
+                    pre = cur;
+                }
+
+                return ans;
+            }
+        }
     }
 }
