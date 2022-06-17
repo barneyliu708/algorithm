@@ -95,5 +95,31 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return new NodeValue(int.MinValue, int.MaxValue, Math.Max(left.MaxSize, right.MaxSize));
             }
         }
+
+        public class ThirdDone
+        {
+            public int LargestBSTSubtree(TreeNode root)
+            {
+                return DFT(root).cnt;
+            }
+
+            private (int cnt, int left, int right) DFT(TreeNode root)
+            {
+
+                if (root == null)
+                {
+                    return (0, int.MaxValue, int.MinValue);
+                }
+
+                (int cnt, int left, int right) leftAns = DFT(root.left);
+                (int cnt, int left, int right) rightAns = DFT(root.right);
+                if (leftAns.right < root.val && root.val < rightAns.left)
+                {
+                    return (leftAns.cnt + rightAns.cnt + 1, Math.Min(leftAns.left, root.val), Math.Max(rightAns.right, root.val));
+                }
+
+                return (Math.Max(leftAns.cnt, rightAns.cnt), int.MinValue, int.MaxValue);
+            }
+        }
     }
 }
