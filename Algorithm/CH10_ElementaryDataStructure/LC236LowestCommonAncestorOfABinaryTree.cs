@@ -87,5 +87,44 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return pi;
             }
         }
+
+        public class ThirdDone
+        {
+            public class Solution
+            {
+                private TreeNode ancestor;
+
+                public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+                {
+                    Dft(root, p, q);
+                    return ancestor;
+                }
+
+                private int Dft(TreeNode root, TreeNode p, TreeNode q)
+                {
+
+                    if (root == null)
+                    {
+                        return 0;
+                    }
+
+                    int left = Dft(root.left, p, q);
+                    int right = Dft(root.right, p, q);
+
+                    int ans = left + right;
+                    if (root == p || root == q)
+                    {
+                        ans += 1;
+                    }
+
+                    if (ans == 2 && ancestor == null)
+                    {
+                        ancestor = root;
+                    }
+
+                    return ans;
+                }
+            }
+        }
     }
 }
