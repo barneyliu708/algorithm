@@ -99,6 +99,32 @@ namespace Algorithm.CH4_DivideAndConque
             }
         }
 
+        public class ThirdDone
+        {
+            public TreeNode BuildTree(int[] preorder, int[] inorder)
+            {
+                return BuildTree(preorder, 0, preorder.Length - 1, inorder, 0, inorder.Length - 1);
+            }
+
+            private TreeNode BuildTree(int[] preorder, int pl, int pr, int[] inorder, int il, int ir)
+            {
+                if (pl > pr || il > ir)
+                {
+                    return null;
+                }
+                TreeNode root = new TreeNode(preorder[pl]);
+                int imid = il;
+                while (inorder[imid] != root.val)
+                {
+                    imid++;
+                }
+                int leftLen = imid - il;
+                root.left = BuildTree(preorder, pl + 1, pl + leftLen, inorder, il, imid - 1);
+                root.right = BuildTree(preorder, pl + leftLen + 1, pr, inorder, imid + 1, ir);
+                return root;
+            }
+        }
+
         [Test]
         public void PositiveCaase1()
         {
