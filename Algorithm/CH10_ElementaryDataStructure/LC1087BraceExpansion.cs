@@ -91,5 +91,55 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class ThirdDone
+        {
+            public string[] Expand(string s)
+            {
+                List<string> ans = new List<string>();
+                for (int i = 0; i < s.Length; i++)
+                {
+                    List<string> cur = new List<string>();
+                    if (s[i] == '{')
+                    {
+                        int j = i + 1;
+                        while (s[j] != '}')
+                        {
+                            j++;
+                        }
+                        cur = s.Substring(i + 1, (j - 1) - (i + 1) + 1).Split(',').ToList();
+                        i = j;
+                    }
+                    else
+                    {
+                        cur.Add(s[i].ToString());
+                    }
+                    cur.Sort();
+                    ans = CrossMultiple(ans, cur);
+                }
+                return ans.ToArray();
+            }
+
+            private List<string> CrossMultiple(List<string> list1, List<string> list2)
+            {
+                if (list1.Count == 0)
+                {
+                    return list2;
+                }
+                if (list2.Count == 0)
+                {
+                    return list1;
+                }
+                List<string> ans = new List<string>();
+                foreach (string l1 in list1)
+                {
+                    foreach (string l2 in list2)
+                    {
+                        ans.Add(l1 + l2);
+                    }
+                }
+                return ans;
+            }
+        }
     }
 }
