@@ -122,5 +122,34 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 DftCopyRandomPointers(root.right, rootcopy.right, map);
             }
         }
+
+        public class ThirdDone
+        {
+            public NodeCopy CopyRandomBinaryTree(Node root)
+            {
+                Dictionary<Node, NodeCopy> memo = new Dictionary<Node, NodeCopy>();
+                NodeCopy rootcp = CopyBinaryTree(root, memo);
+                return rootcp;
+            }
+            private NodeCopy CopyBinaryTree(Node root, Dictionary<Node, NodeCopy> memo)
+            {
+                if (root == null)
+                {
+                    return null;
+                }
+                if (memo.ContainsKey(root))
+                {
+                    return memo[root];
+                }
+                NodeCopy rootcp = new NodeCopy(root.val);
+                memo[root] = rootcp;
+
+                rootcp.left = CopyBinaryTree(root.left, memo);
+                rootcp.right = CopyBinaryTree(root.right, memo);
+                rootcp.random = CopyBinaryTree(root.random, memo);
+
+                return rootcp;
+            }
+        }
     }
 }
