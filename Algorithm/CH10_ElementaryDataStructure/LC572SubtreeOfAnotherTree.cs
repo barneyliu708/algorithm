@@ -95,5 +95,31 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return root1.val == root2.val && IsEqual(root1.left, root2.left) && IsEqual(root1.right, root2.right);
             }
         }
+
+        public class ThirdDone
+        {
+            public bool IsSubtree(TreeNode root, TreeNode subRoot)
+            {
+                if (root == null)
+                {
+                    return false;
+                }
+                return IsEqual(root, subRoot) || IsSubtree(root.left, subRoot) || IsSubtree(root.right, subRoot);
+            }
+
+            private bool IsEqual(TreeNode root1, TreeNode root2)
+            {
+                if (root1 == null && root2 == null)
+                {
+                    return true;
+                }
+                if (root1 == null || root2 == null)
+                {
+                    return false;
+                }
+
+                return root1.val == root2.val && IsEqual(root1.left, root2.left) && IsEqual(root1.right, root2.right);
+            }
+        }
     }
 }
