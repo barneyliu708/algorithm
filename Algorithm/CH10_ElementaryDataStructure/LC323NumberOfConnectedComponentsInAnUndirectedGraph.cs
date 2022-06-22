@@ -99,5 +99,79 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return total;
             }
         }
+
+        public class ThirdDone
+        {
+            public class Solution
+            {
+                public int CountComponents(int n, int[][] edges)
+                {
+                    DSU dsu = new DSU(n);
+                    foreach (int[] edge in edges)
+                    {
+                        int ai = edge[0];
+                        int bi = edge[1];
+                        dsu.Union(ai, bi);
+                    }
+
+                    HashSet<int> reps = new HashSet<int>();
+                    for (int i = 0; i < n; i++)
+                    {
+                        reps.Add(dsu.GetRepresentative(i));
+                    }
+
+                    return reps.Count;
+                }
+            }
+
+            class DSU
+            {
+                private int[] representatives;
+                private int[] size;
+
+                public DSU(int sz)
+                {
+                    representatives = new int[sz];
+                    size = new int[sz];
+                    for (int i = 0; i < sz; i++)
+                    {
+                        representatives[i] = i;
+                        size[i] = 1;
+                    }
+                }
+
+                public int GetRepresentative(int i)
+                {
+                    if (representatives[i] == i)
+                    {
+                        return i;
+                    }
+                    return representatives[i] = GetRepresentative(representatives[i]);
+                }
+
+                public void Union(int a, int b)
+                {
+                    int arep = GetRepresentative(a);
+                    int brep = GetRepresentative(b);
+
+                    // a and b already unioned
+                    if (arep == brep)
+                    {
+                        return;
+                    }
+
+                    if (size[arep] >= size[brep])
+                    {
+                        size[arep] += size[brep];
+                        representatives[brep] = arep;
+                    }
+                    else
+                    {
+                        size[brep] += size[arep];
+                        representatives[arep] = brep;
+                    }
+                }
+            }
+        }
     }
 }
