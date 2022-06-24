@@ -94,4 +94,32 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
     }
+
+    public class ThirdDone
+    {
+        public Node CloneGraph(Node node)
+        {
+            return CloneGraphUti(node, new Dictionary<Node, Node>());
+        }
+
+        private Node CloneGraphUti(Node node, Dictionary<Node, Node> map)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+            if (map.ContainsKey(node))
+            {
+                return map[node];
+            }
+            Node cloneNode = new Node(node.val, new List<Node>());
+            map[node] = cloneNode;
+            foreach (Node neighbor in node.neighbors)
+            {
+                cloneNode.neighbors.Add(CloneGraphUti(neighbor, map));
+            }
+
+            return cloneNode;
+        }
+    }
 }
