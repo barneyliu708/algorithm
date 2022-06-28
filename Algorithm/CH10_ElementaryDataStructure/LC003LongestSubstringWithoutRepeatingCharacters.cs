@@ -60,5 +60,36 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class ThirdDone
+        {
+            // s.........x........x
+            // istart....idup.....i
+            public int LengthOfLongestSubstring(string s)
+            {
+                Dictionary<char, int> map = new Dictionary<char, int>(); // char - latest index
+                HashSet<char> subset = new HashSet<char>();
+                int istart = 0;
+                int ans = 0;
+                for (int i = 0; i < s.Length; i++)
+                {
+                    char ch = s[i];
+                    if (subset.Contains(ch))
+                    {
+                        int idup = map[ch];
+                        while (istart <= idup)
+                        {
+                            subset.Remove(s[istart]);
+                            istart++;
+                        }
+                    }
+                    subset.Add(ch);
+                    map[ch] = i;
+                    ans = Math.Max(ans, subset.Count);
+                }
+
+                return ans;
+            }
+        }
     }
 }
