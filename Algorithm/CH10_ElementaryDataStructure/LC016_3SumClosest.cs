@@ -38,6 +38,43 @@ namespace Algorithm.CH10_ElementaryDataStructure
             return target - diff;
         }
 
+        public class SecondDone
+        {
+            public int ThreeSumClosest(int[] nums, int target)
+            {
+                Array.Sort(nums);
+                int diff = int.MaxValue;
+                int ans = int.MaxValue;
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    int l = i + 1;
+                    int r = nums.Length - 1;
+                    while (l < r)
+                    {
+                        int sum = nums[i] + nums[l] + nums[r];
+                        if (Math.Abs(target - sum) < diff)
+                        {
+                            ans = sum;
+                            diff = Math.Abs(target - sum);
+                        }
+                        if (sum < target)
+                        {
+                            l++;
+                        }
+                        else if (sum > target)
+                        {
+                            r--;
+                        }
+                        else
+                        { // sum == target, diff will be the 0
+                            return target;
+                        }
+                    }
+                }
+                return ans;
+            }
+        }
+
         [Test]
         public void TestCase1()
         {
