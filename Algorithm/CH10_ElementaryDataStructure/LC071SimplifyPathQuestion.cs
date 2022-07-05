@@ -44,7 +44,7 @@ namespace Algorithm.CH10_ElementaryDataStructure
             return result.Length > 0 ? result.ToString() : "/";
         }
 
-        public string SimplifyPath(string path)
+        public string SimplifyPath_2ndDone(string path)
         {
             string[] paths = path.Split('/');
             Stack<string> stack = new Stack<string>();
@@ -83,6 +83,43 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
 
             return sb.ToString();
+        }
+
+        public class ThirdDone
+        {
+            public string SimplifyPath(string path)
+            {
+                string[] directories = path.Split('/');
+                Stack<string> stack = new Stack<string>();
+                foreach (string directory in directories)
+                {
+                    if (directory == "." || directory == "")
+                    {
+                        continue;
+                    }
+                    else if (directory == "..")
+                    {
+                        if (stack.Count > 0)
+                        {
+                            stack.Pop();
+                        }
+                    }
+                    else
+                    {
+                        stack.Push(directory);
+                    }
+                }
+                StringBuilder sb = new StringBuilder();
+                if (stack.Count == 0)
+                {
+                    return "/";
+                }
+                while (stack.Count > 0)
+                {
+                    sb.Insert(0, "/" + stack.Pop());
+                }
+                return sb.ToString();
+            }
         }
     }
 }
