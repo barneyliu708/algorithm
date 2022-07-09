@@ -44,5 +44,23 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return dp[n];
             }
         }
+
+        public class ThirdDone
+        {
+            public int NumTrees(int n)
+            {
+                int[] dp = new int[n + 1];
+                dp[0] = 1;
+                for (int i = 1; i <= n; i++)
+                {
+                    for (int l = 0; l <= i - 1; l++)
+                    {
+                        int r = i - l - 1;
+                        dp[i] += dp[l] * dp[r];
+                    }
+                }
+                return dp[n];
+            }
+        }
     }
 }
