@@ -51,5 +51,64 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class SecondDone
+        {
+            public IList<TreeNode> GenerateTrees(int n)
+            {
+                return GenerateTrees(1, n);
+            }
+
+            private List<TreeNode> GenerateTrees(int left, int right)
+            {
+                List<TreeNode> ans = new List<TreeNode>();
+                if (left > right)
+                {
+                    return ans;
+                }
+                if (left == right)
+                {
+                    ans.Add(new TreeNode(left));
+                    return ans;
+                }
+                for (int i = left; i <= right; i++)
+                {
+                    List<TreeNode> leftChildren = GenerateTrees(left, i - 1);
+                    List<TreeNode> rightChildren = GenerateTrees(i + 1, right);
+                    if (leftChildren.Count == 0)
+                    {
+                        foreach (TreeNode rightChild in rightChildren)
+                        {
+                            TreeNode root = new TreeNode(i);
+                            root.right = rightChild;
+                            ans.Add(root);
+                        }
+                    }
+                    else if (rightChildren.Count == 0)
+                    {
+                        foreach (TreeNode leftChild in leftChildren)
+                        {
+                            TreeNode root = new TreeNode(i);
+                            root.left = leftChild;
+                            ans.Add(root);
+                        }
+                    }
+                    else
+                    {
+                        foreach (TreeNode leftChild in leftChildren)
+                        {
+                            foreach (TreeNode rightChild in rightChildren)
+                            {
+                                TreeNode root = new TreeNode(i);
+                                root.left = leftChild;
+                                root.right = rightChild;
+                                ans.Add(root);
+                            }
+                        }
+                    }
+                }
+                return ans;
+            }
+        }
     }
 }
