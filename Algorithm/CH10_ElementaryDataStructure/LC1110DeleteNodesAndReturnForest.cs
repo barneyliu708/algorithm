@@ -126,5 +126,50 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 DelNodes(cur.right, cur, 1, to_delete, ans);
             }
         }
+
+        public class ThirdDone
+        {
+            public IList<TreeNode> DelNodes(TreeNode root, int[] to_delete)
+            {
+                HashSet<int> toDelete = new HashSet<int>(to_delete);
+                List<TreeNode> ans = new List<TreeNode>();
+                DelNodesUti(root, null, 0, toDelete, ans);
+                return ans;
+            }
+
+            private void DelNodesUti(TreeNode cur, TreeNode par, int direction, HashSet<int> toDelete, List<TreeNode> ans)
+            {
+                if (cur == null)
+                {
+                    return;
+                }
+
+                if (!toDelete.Contains(cur.val))
+                {
+                    if (par == null)
+                    {
+                        ans.Add(cur);
+                    }
+                    DelNodesUti(cur.left, cur, -1, toDelete, ans);
+                    DelNodesUti(cur.right, cur, 1, toDelete, ans);
+                    return;
+                }
+
+                // need to delete cur node
+                if (par != null)
+                {
+                    if (direction == -1)
+                    {
+                        par.left = null;
+                    }
+                    if (direction == 1)
+                    {
+                        par.right = null;
+                    }
+                }
+                DelNodesUti(cur.left, null, 0, toDelete, ans);
+                DelNodesUti(cur.right, null, 0, toDelete, ans);
+            }
+        }
     }
 }
