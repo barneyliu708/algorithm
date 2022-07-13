@@ -50,7 +50,7 @@ namespace Algorithm.CH10_ElementaryDataStructure
             return sb.ToString();
         }
 
-        public string FractionToDecimal(int numerator, int denominator)
+        public string FractionToDecimal2(int numerator, int denominator)
         {
 
             if (numerator == 0)

@@ -51,5 +51,31 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return Math.Abs(heightLeft - heightRight) < 2;
         }
+
+        public class SecondDone
+        {
+            public bool IsBalanced(TreeNode root)
+            {
+                return Uti(root).isBalanced;
+            }
+
+            private (bool isBalanced, int depth) Uti(TreeNode root)
+            {
+                if (root == null)
+                {
+                    return (true, 0);
+                }
+
+                var left = Uti(root.left);
+                var right = Uti(root.right);
+
+                if (left.isBalanced && right.isBalanced && Math.Abs(left.depth - right.depth) <= 1)
+                {
+                    return (true, Math.Max(left.depth, right.depth) + 1);
+                }
+
+                return (false, Math.Max(left.depth, right.depth) + 1);
+            }
+        }
     }
 }
