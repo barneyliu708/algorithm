@@ -161,6 +161,39 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 root.left = null;
                 return rightTail;
             }
+
+            public class ThirdDone
+            {
+                public void Flatten(TreeNode root)
+                {
+                    FlattenUti(root);
+                }
+
+                private TreeNode FlattenUti(TreeNode root)
+                {
+                    if (root == null)
+                    {
+                        return null;
+                    }
+                    if (root.left == null && root.right == null)
+                    {
+                        return root;
+                    }
+
+                    TreeNode left = root.left;
+                    TreeNode right = root.right;
+                    TreeNode leftTail = FlattenUti(left);
+                    TreeNode rightTail = FlattenUti(right);
+
+                    root.left = null;
+                    if (left != null)
+                    {
+                        root.right = left;
+                        leftTail.right = right;
+                    }
+                    return rightTail == null ? leftTail : rightTail;
+                }
+            }
         }
     }
 }
