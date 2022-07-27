@@ -55,5 +55,31 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class ThirdDone
+        {
+            public void Rotate(int[] nums, int k)
+            {
+                int n = nums.Length;
+                int cnt = 0;
+                for (int i = 0; cnt < n; i++)
+                {
+                    int j = (i + k) % n;
+                    int pre = nums[i];
+                    int cur = nums[j];
+                    while (j != i)
+                    {
+                        nums[j] = pre;
+                        pre = cur;
+                        j = (j + k) % n;
+                        cur = nums[j];
+                        cnt++;
+                        // Console.WriteLine(string.Join(',', nums) + "- cur: " + pre);
+                    }
+                    nums[j] = pre;
+                    cnt++;
+                }
+            }
+        }
     }
 }
