@@ -185,5 +185,57 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return removeEdges == prerequisites.Length;
             }
         }
+
+        public class ThirdDone
+        {
+            public bool CanFinish(int numCourses, int[][] prerequisites)
+            {
+                int[] indepth = new int[numCourses];
+                Dictionary<int, List<int>> neighbors = new Dictionary<int, List<int>>(); // prerequisite course - list of next courses
+                foreach (int[] prerequisite in prerequisites)
+                {
+                    int b = prerequisite[1];
+                    int a = prerequisite[0];
+                    if (!neighbors.ContainsKey(b))
+                    {
+                        neighbors[b] = new List<int>();
+                    }
+                    neighbors[b].Add(a); // b -> a
+                    indepth[a] += 1;
+                }
+
+                // topological sort - step 1: get all zero-indepth nodes
+                Queue<int> queue = new Queue<int>();
+                for (int i = 0; i < numCourses; i++)
+                {
+                    if (indepth[i] == 0)
+                    {
+                        queue.Enqueue(i);
+                    }
+                    if (!neighbors.ContainsKey(i))
+                    {
+                        neighbors[i] = new List<int>();
+                    }
+                }
+
+                // topological sort - step 2: remove zero-indepth nodes and get new zero-indepth nodes iteratively
+                int removedEdges = 0;
+                while (queue.Count > 0)
+                {
+                    int cur = queue.Dequeue();
+                    foreach (int neighbor in neighbors[cur])
+                    {
+                        indepth[neighbor]--;
+                        removedEdges++;
+                        if (indepth[neighbor] == 0)
+                        {
+                            queue.Enqueue(neighbor);
+                        }
+                    }
+                }
+
+                return removedEdges == prerequisites.Length;
+            }
+        }
     }
 }
