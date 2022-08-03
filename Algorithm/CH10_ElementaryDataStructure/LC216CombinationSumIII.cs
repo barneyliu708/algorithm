@@ -40,4 +40,37 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
     }
+
+    public class SecondDone
+    {
+        public IList<IList<int>> CombinationSum3(int k, int n)
+        {
+            List<int> comb = new List<int>();
+            List<IList<int>> ans = new List<IList<int>>();
+            Utility(k, n, 1, comb, 0, ans);
+            return ans;
+        }
+
+        private void Utility(int k, int n, int istart, List<int> comb, int sum, List<IList<int>> ans)
+        {
+
+            if (comb.Count == k)
+            {
+                if (sum == n)
+                {
+                    ans.Add(new List<int>(comb));
+                }
+                return;
+            }
+
+            for (int i = istart; i <= 9; i++)
+            {
+                comb.Add(i);
+                sum += i;
+                Utility(k, n, i + 1, comb, sum, ans);
+                sum -= i;
+                comb.RemoveAt(comb.Count - 1);
+            }
+        }
+    }
 }
