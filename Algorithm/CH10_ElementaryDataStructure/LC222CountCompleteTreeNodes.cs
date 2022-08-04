@@ -80,5 +80,68 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
             return node != null;
         }
+
+        public class SecondDone
+        {
+            public int CountNodes(TreeNode root)
+            {
+
+                if (root == null)
+                {
+                    return 0;
+                }
+
+                int depth = GetDepth(root);
+
+                int l = 1;
+                int r = (int)Math.Pow(2, depth - 1);
+                while (l <= r)
+                {
+                    int mid = l + (r - l) / 2;
+                    if (IsExist(mid, root, depth))
+                    {
+                        l = mid + 1;
+                    }
+                    else
+                    {
+                        r = mid - 1;
+                    }
+                }
+
+                return (int)Math.Pow(2, depth - 1) - 1 + r;
+            }
+
+            private int GetDepth(TreeNode root)
+            {
+                int dep = 0;
+                while (root != null)
+                {
+                    dep++;
+                    root = root.left;
+                }
+                return dep;
+            }
+
+            private bool IsExist(int index, TreeNode root, int depth)
+            {
+                int total = (int)Math.Pow(2, depth - 1);
+                while (depth > 1)
+                {
+                    total /= 2;
+                    if (index > total)
+                    {
+                        index -= total;
+                        root = root.right;
+                    }
+                    else
+                    {
+                        root = root.left;
+                    }
+                    depth--;
+                }
+
+                return root != null;
+            }
+        }
     }
 }
