@@ -90,5 +90,71 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return parent.Count == n;
             }
         }
+
+        public class ThirdDone_TropologicalSort
+        {
+            public bool ValidTree(int n, int[][] edges)
+            {
+                if (edges.Length < n - 1)
+                {
+                    return false;
+                }
+
+                if (n == 1)
+                {
+                    return true;
+                }
+
+                List<int>[] adjNodes = new List<int>[n];
+                for (int i = 0; i < n; i++)
+                {
+                    adjNodes[i] = new List<int>();
+                }
+                int[] indegrees = new int[n];
+
+                foreach (int[] edge in edges)
+                {
+                    int a = edge[0];
+                    int b = edge[1];
+                    adjNodes[a].Add(b);
+                    adjNodes[b].Add(a);
+                    indegrees[a]++;
+                    indegrees[b]++;
+                }
+
+                bool[] visited = new bool[n];
+                int visitedCount = 0;
+                Queue<int> queue = new Queue<int>();
+                for (int i = 0; i < n; i++)
+                {
+                    if (indegrees[i] == 1)
+                    {
+                        queue.Enqueue(i);
+                    }
+                }
+
+                while (queue.Count > 0)
+                {
+                    int cur = queue.Dequeue();
+                    if (visited[cur])
+                    {
+                        continue;
+                    }
+                    visited[cur] = true;
+                    visitedCount++;
+                    indegrees[cur]--;
+                    foreach (int neighbor in adjNodes[cur])
+                    {
+                        indegrees[neighbor]--;
+                        if (indegrees[neighbor] == 1)
+                        {
+                            queue.Enqueue(neighbor);
+                        }
+                    }
+                }
+                Console.WriteLine(visitedCount);
+                return visitedCount == n;
+            }
+        }
     }
 }
