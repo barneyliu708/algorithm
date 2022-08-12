@@ -75,5 +75,68 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class SecondDone
+        {
+            public IList<string> GeneratePalindromes(string s)
+            {
+                int[] count = new int[26];
+                foreach (char ch in s)
+                {
+                    count[ch - 'a']++;
+                }
+
+                char oddCh = '\t';
+                for (int i = 0; i < count.Length; i++)
+                {
+                    if (count[i] % 2 == 1)
+                    {
+                        if (oddCh != '\t')
+                        {
+                            return new List<string>();
+                        }
+                        oddCh = (char)('a' + i);
+                    }
+                }
+
+                StringBuilder sb = new StringBuilder();
+                if (oddCh != '\t')
+                {
+                    sb.Append(oddCh);
+                    count[oddCh - 'a']--;
+                }
+                List<string> ans = new List<string>();
+                GenerateUtility(count, sb, s.Length, ans);
+
+                return ans;
+            }
+
+            private void GenerateUtility(int[] count, StringBuilder sb, int n, List<string> ans)
+            {
+                if (sb.Length == n)
+                {
+                    ans.Add(sb.ToString());
+                    return;
+                }
+
+                for (int i = 0; i < count.Length; i++)
+                {
+                    if (count[i] == 0)
+                    {
+                        continue;
+                    }
+                    char ch = (char)('a' + i);
+                    sb.Append(ch);
+                    sb.Insert(0, ch);
+                    count[i] -= 2;
+
+                    GenerateUtility(count, sb, n, ans);
+
+                    count[i] += 2;
+                    sb.Remove(0, 1);
+                    sb.Remove(sb.Length - 1, 1);
+                }
+            }
+        }
     }
 }
