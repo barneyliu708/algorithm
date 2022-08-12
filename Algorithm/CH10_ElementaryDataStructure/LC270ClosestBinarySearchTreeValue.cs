@@ -83,5 +83,39 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class ThirdDone
+        {
+            public int ClosestValue(TreeNode root, double target)
+            {
+
+                if (root.val == target)
+                {
+                    return root.val;
+                }
+
+                double diff = Math.Abs(root.val - target);
+                if (root.val > target && root.left != null)
+                {
+                    int leftAns = ClosestValue(root.left, target);
+                    if (diff > Math.Abs(leftAns - target))
+                    {
+                        return leftAns;
+                    }
+                    return root.val;
+                }
+                if (root.val < target && root.right != null)
+                {
+                    int rightAns = ClosestValue(root.right, target);
+                    if (diff > Math.Abs(rightAns - target))
+                    {
+                        return rightAns;
+                    }
+                    return root.val;
+                }
+
+                return root.val;
+            }
+        }
     }
 }
