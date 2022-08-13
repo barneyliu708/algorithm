@@ -70,5 +70,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return dp[n];
             }
         }
+
+        public class ThirdDone_DP_Memorization
+        {
+            public int NumSquares(int n)
+            {
+                Dictionary<int, int> memo = new Dictionary<int, int>();
+                for (int i = 1; i * i <= n; i++)
+                {
+                    memo[i * i] = 1;
+                }
+                int[] squars = new int[(int)Math.Sqrt(n) + 1];
+                for (int i = 0; i < squars.Length; i++)
+                {
+                    squars[i] = i * i;
+                }
+                return NumSquares(n, memo, squars);
+            }
+
+            private int NumSquares(int n, Dictionary<int, int> memo, int[] squars)
+            {
+                if (memo.ContainsKey(n))
+                {
+                    // Console.WriteLine(n + " - " + memo[n]);
+                    return memo[n];
+                }
+                int root = (int)Math.Sqrt(n);
+                if (root * root == n)
+                { // n is perfect square
+                    memo[n] = 1;
+                    return memo[n];
+                }
+
+                int min = n;
+                for (int s = 1; s < squars.Length && squars[s] < n; s++)
+                {
+                    min = Math.Min(min, 1 + NumSquares(n - squars[s], memo, squars));
+                }
+
+                memo[n] = min;
+                // Console.WriteLine(n + " - " + memo[n]);
+                return memo[n];
+            }
+        }
     }
 }
