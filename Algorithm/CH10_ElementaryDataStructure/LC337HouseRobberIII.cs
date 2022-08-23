@@ -57,5 +57,55 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return result;
             }
         }
+
+        public class SecondDone_BottonUp
+        {
+            Dictionary<TreeNode, int> robResults = new Dictionary<TreeNode, int>();
+            Dictionary<TreeNode, int> notRobResults = new Dictionary<TreeNode, int>();
+
+            public int Rob(TreeNode root)
+            {
+
+                if (root == null)
+                {
+                    return 0;
+                }
+
+                if (root.left == null && root.right == null)
+                {
+                    robResults[root] = root.val;
+                    notRobResults[root] = 0;
+                    // Console.WriteLine($"{root.val} rob: {root.val} notRob: {0}");
+                    return robResults[root];
+                }
+
+                Rob(root.left);
+                Rob(root.right);
+
+                if (root.left == null && root.right != null)
+                {
+                    robResults[root] = root.val + notRobResults[root.right];
+                    notRobResults[root] = Math.Max(robResults[root.right], notRobResults[root.right]);
+                    // Console.WriteLine($"{root.val} rob: {robResults[root]} notRob: {notRobResults[root]}");
+                    return Math.Max(robResults[root], notRobResults[root]);
+                }
+
+                if (root.left != null && root.right == null)
+                {
+                    robResults[root] = root.val + notRobResults[root.left];
+                    notRobResults[root] = Math.Max(robResults[root.left], notRobResults[root.left]);
+                    // Console.WriteLine($"{root.val} rob: {robResults[root]} notRob: {notRobResults[root]}");
+                    return Math.Max(robResults[root], notRobResults[root]);
+                }
+
+                robResults[root] = root.val + notRobResults[root.left] + notRobResults[root.right];
+                notRobResults[root] = robResults[root.left] + robResults[root.right];
+                notRobResults[root] = Math.Max(notRobResults[root], robResults[root.left] + notRobResults[root.right]);
+                notRobResults[root] = Math.Max(notRobResults[root], notRobResults[root.left] + robResults[root.right]);
+                notRobResults[root] = Math.Max(notRobResults[root], notRobResults[root.left] + notRobResults[root.right]);
+                // Console.WriteLine($"{root.val} rob: {robResults[root]} notRob: {notRobResults[root]}");
+                return Math.Max(robResults[root], notRobResults[root]);
+            }
+        }
     }
 }
