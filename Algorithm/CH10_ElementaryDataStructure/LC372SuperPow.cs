@@ -33,5 +33,34 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return Pow(x % 1337, n / 2) * Pow(x % 1337, n - n / 2) % 1337;
         }
+
+        public class SecondDone
+        {
+            public int SuperPow(int a, int[] b)
+            {
+                int MOD = 1337;
+                int n = b.Length;
+                int[] dp = new int[n];
+                dp[n - 1] = a % MOD;
+                for (int i = n - 2; i >= 0; i--)
+                {
+                    dp[i] = 1;
+                    for (int j = 0; j < 10; j++)
+                    {
+                        dp[i] = (dp[i] * dp[i + 1]) % MOD;
+                    }
+                }
+                int ans = 1;
+                for (int i = n - 1; i >= 0; i--)
+                {
+                    for (int j = 0; j < b[i]; j++)
+                    {
+                        ans = (ans * dp[i]) % MOD;
+                    }
+                }
+
+                return ans;
+            }
+        }
     }
 }
