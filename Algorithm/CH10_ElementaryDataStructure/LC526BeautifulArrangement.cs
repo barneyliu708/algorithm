@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -75,6 +76,55 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 nums[i] = nums[j];
                 nums[j] = temp;
             }
+        }
+
+        public class ThirdDone
+        {
+            private int count;
+            public int CountArrangement(int n)
+            {
+                count = 0;
+                int[] nums = new int[n + 1];
+                for (int i = 1; i < nums.Length; i++)
+                {
+                    nums[i] = i;
+                }
+                Backtracking(nums, 1);
+                return count;
+            }
+
+            private void Backtracking(int[] nums, int i)
+            {
+                if (i >= nums.Length)
+                {
+                    count++;
+                    return;
+                }
+
+                for (int j = i; j < nums.Length; j++)
+                {
+                    if (nums[j] % i == 0 || i % nums[j] == 0)
+                    {
+                        Swap(nums, i, j);
+                        Backtracking(nums, i + 1);
+                        Swap(nums, i, j);
+                    }
+                }
+            }
+
+            private void Swap(int[] nums, int i, int j)
+            {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+
+        [Test]
+        public void TestCase1()
+        {
+            var instance = new ThirdDone();
+            var result = instance.CountArrangement(2);
         }
     }
 }
