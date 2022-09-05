@@ -115,5 +115,63 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return mat;
             }
         }
+
+        public class ThirdDone
+        {
+            public int[][] UpdateMatrix(int[][] mat)
+            {
+
+                for (int i = 0; i < mat.Length; i++)
+                {
+                    for (int j = 0; j < mat[0].Length; j++)
+                    {
+                        mat[i][j] = Distance(mat, (i, j));
+                    }
+                }
+
+                return mat;
+            }
+
+            private int Distance(int[][] mat, (int r, int c) root)
+            {
+                if (mat[root.r][root.c] == 0)
+                {
+                    return 0;
+                }
+                (int r, int c)[] neighbors = new (int r, int c)[] { (-1, 0), (1, 0), (0, -1), (0, 1) };
+                bool[,] visited = new bool[mat.Length, mat[0].Length];
+                Queue<(int r, int c)> queue = new Queue<(int r, int c)>();
+                queue.Enqueue(root);
+                int dist = 0;
+                while (queue.Count > 0)
+                {
+                    int count = queue.Count;
+                    for (int i = 0; i < count; i++)
+                    {
+                        var cur = queue.Dequeue();
+                        if (mat[cur.r][cur.c] == 0)
+                        {
+                            return dist;
+                        }
+                        if (visited[cur.r, cur.c])
+                        {
+                            continue;
+                        }
+                        visited[cur.r, cur.c] = true;
+                        foreach (var neighbor in neighbors)
+                        {
+                            int r = cur.r + neighbor.r;
+                            int c = cur.c + neighbor.c;
+                            if (r >= 0 && r < mat.Length && c >= 0 && c < mat[0].Length)
+                            {
+                                queue.Enqueue((r, c));
+                            }
+                        }
+                    }
+                    dist++;
+                }
+                return dist;
+            }
+        }
     }
 }
