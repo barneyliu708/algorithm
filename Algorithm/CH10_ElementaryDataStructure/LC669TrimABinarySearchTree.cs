@@ -71,5 +71,31 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return root;
             }
         }
+
+        public class ThirdDone
+        {
+            public TreeNode TrimBST(TreeNode root, int low, int high)
+            {
+                if (root == null)
+                {
+                    return null;
+                }
+
+                root.left = TrimBST(root.left, low, high);
+                root.right = TrimBST(root.right, low, high);
+
+                if (root.val < low)
+                {
+                    return root.right;
+                }
+
+                if (root.val > high)
+                {
+                    return root.left;
+                }
+
+                return root;
+            }
+        }
     }
 }
