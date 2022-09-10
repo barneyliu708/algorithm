@@ -26,5 +26,50 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class SecondDone
+        {
+            public int MinFlipsMonoIncr(string s)
+            {
+                int n = s.Length;
+                int[] zeros = new int[n];
+                int[] ones = new int[n];
+
+                int flips = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    if (s[i] == '1')
+                    {
+                        flips++;
+                    }
+                    zeros[i] = flips;
+                }
+
+                flips = 0;
+                for (int i = n - 1; i >= 0; i--)
+                {
+                    if (s[i] == '0')
+                    {
+                        flips++;
+                    }
+                    ones[i] = flips;
+                }
+
+                int ans = ones[0];
+                for (int i = 0; i < n; i++)
+                {
+                    if (i == n - 1)
+                    {
+                        ans = Math.Min(ans, zeros[i]);
+                    }
+                    else
+                    {
+                        ans = Math.Min(ans, zeros[i] + ones[i + 1]);
+                    }
+                }
+
+                return ans;
+            }
+        }
     }
 }
