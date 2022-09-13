@@ -91,5 +91,32 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class ForthDone
+        {
+            public int LengthOfLongestSubstring(string s)
+            {
+                Dictionary<char, int> map = new Dictionary<char, int>(); // char - latest index
+                int l = 0;
+                int r = 0;
+                int ans = 0;
+                while (r < s.Length)
+                {
+                    char rch = s[r];
+                    if (!map.ContainsKey(rch))
+                    {
+                        map[rch] = r;
+                    }
+                    else
+                    {
+                        l = Math.Max(l, map[rch] + 1); // the last index of rch could be on the left of the l pointer
+                        map[rch] = r;
+                    }
+                    ans = Math.Max(ans, r - l + 1);
+                    r++;
+                }
+                return ans;
+            }
+        }
     }
 }
