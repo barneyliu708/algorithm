@@ -37,5 +37,41 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return s.Substring(left, maxLen);
         }
+
+        public class SecondDone
+        {
+            public string LongestPalindrome(string s)
+            {
+                bool[,] dp = new bool[s.Length, s.Length];
+                int maxlen = 0;
+                (int i, int j) ans = (0, 0);
+                for (int j = 0; j < s.Length; j++)
+                {
+                    for (int i = j; i >= 0; i--)
+                    {
+                        if (i == j)
+                        {
+                            dp[i, j] = true;
+                        }
+                        else if (i + 1 == j && s[i] == s[j])
+                        {
+                            dp[i, j] = true;
+                        }
+                        else if (s[i] == s[j])
+                        {
+                            dp[i, j] = dp[i + 1, j - 1];
+                        }
+
+                        if (dp[i, j] && j - i + 1 > maxlen)
+                        {
+                            maxlen = j - i + 1;
+                            ans = (i, j);
+                        }
+                    }
+                }
+
+                return s.Substring(ans.i, ans.j - ans.i + 1);
+            }
+        }
     }
 }
