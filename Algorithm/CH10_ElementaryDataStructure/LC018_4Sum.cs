@@ -148,5 +148,61 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class ThirdDone
+        {
+            public IList<IList<int>> FourSum(int[] nums, int target)
+            {
+                Array.Sort(nums);
+                return KSum(nums, target, 0, 4);
+            }
+
+            private List<IList<int>> KSum(int[] nums, long target, int istart, int k)
+            {
+                List<IList<int>> ans = new List<IList<int>>();
+                if (istart == nums.Length)
+                {
+                    return ans;
+                }
+
+                if (k == 2)
+                {
+                    return TwoSum(nums, target, istart);
+                }
+
+                for (int i = istart; i < nums.Length; i++)
+                {
+                    if (i == istart || nums[i] != nums[i - 1])
+                    {
+                        foreach (List<int> sublist in KSum(nums, target - nums[i], i + 1, k - 1))
+                        {
+                            List<int> list = new List<int>() { nums[i] };
+                            list.AddRange(sublist);
+                            ans.Add(list);
+                        }
+                    }
+                }
+
+                return ans;
+            }
+
+            private List<IList<int>> TwoSum(int[] nums, long target, int istart)
+            {
+                List<IList<int>> ans = new List<IList<int>>();
+                HashSet<long> hashset = new HashSet<long>();
+                for (int i = istart; i < nums.Length; i++)
+                {
+                    if (ans.Count == 0 || nums[i] != ans[ans.Count - 1][1])
+                    {
+                        if (hashset.Contains(target - nums[i]))
+                        {
+                            ans.Add(new List<int>() { (int)target - nums[i], nums[i] });
+                        }
+                    }
+                    hashset.Add((long)nums[i]);
+                }
+                return ans;
+            }
+        }
     }
 }
