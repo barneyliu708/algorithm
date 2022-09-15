@@ -124,5 +124,69 @@ namespace Algorithm.CH4_DivideAndConque
                 return dummy.next;
             }
         }
+
+        public class ThirdDone
+        {
+            public ListNode MergeKLists(ListNode[] lists)
+            {
+                return Divide(lists, 0, lists.Length - 1);
+            }
+
+            private ListNode Divide(ListNode[] lists, int l, int r)
+            {
+                if (l > r)
+                {
+                    return null;
+                }
+                if (l == r)
+                {
+                    return lists[l];
+                }
+
+                int mid = l + (r - l) / 2;
+                ListNode leftlist = Divide(lists, l, mid);
+                ListNode rightlist = Divide(lists, mid + 1, r);
+
+                return Merge(leftlist, rightlist);
+            }
+
+            private ListNode Merge(ListNode left, ListNode right)
+            {
+                ListNode dummy = new ListNode();
+                ListNode p = dummy;
+                ListNode l = left;
+                ListNode r = right;
+                while (l != null && r != null)
+                {
+                    if (l.val < r.val)
+                    {
+                        p.next = l;
+                        l = l.next;
+                    }
+                    else
+                    {
+                        p.next = r;
+                        r = r.next;
+                    }
+                    p = p.next;
+                }
+
+                while (l != null)
+                {
+                    p.next = l;
+                    l = l.next;
+                    p = p.next;
+                }
+
+                while (r != null)
+                {
+                    p.next = r;
+                    r = r.next;
+                    p = p.next;
+                }
+
+                return dummy.next;
+            }
+        }
     }
 }
