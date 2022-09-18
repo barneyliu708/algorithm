@@ -99,5 +99,38 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class ForthDone
+        {
+            public IList<IList<int>> Permute(int[] nums)
+            {
+                List<IList<int>> ans = new List<IList<int>>();
+                Utility(nums, 0, ans);
+                return ans;
+            }
+
+            private void Utility(int[] nums, int istart, List<IList<int>> ans)
+            {
+                if (istart == nums.Length)
+                {
+                    ans.Add(new List<int>(nums));
+                    return;
+                }
+
+                for (int i = istart; i < nums.Length; i++)
+                {
+                    Swap(nums, istart, i);
+                    Utility(nums, istart + 1, ans); // when passing to the next level, should pass istart + 1 rathe than i + 1
+                    Swap(nums, istart, i);
+                }
+            }
+
+            private void Swap(int[] nums, int i, int j)
+            {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
     }
 }
