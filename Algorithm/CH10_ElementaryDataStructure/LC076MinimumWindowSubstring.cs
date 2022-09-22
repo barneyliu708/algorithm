@@ -135,5 +135,64 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return s.Substring(ans.startIndex, ans.length);
             }
         }
+
+        public class ThirdDone
+        {
+            public string MinWindow(string s, string t)
+            {
+                Dictionary<char, int> tcnt = new Dictionary<char, int>();
+                foreach (char ch in t)
+                {
+                    if (!tcnt.ContainsKey(ch))
+                    {
+                        tcnt[ch] = 0;
+                    }
+                    tcnt[ch]++;
+                }
+
+                int l = 0;
+                int r = 0;
+                Dictionary<char, int> scnt = new Dictionary<char, int>();
+                int meet = 0;
+                int len = s.Length;
+                int i = 0;
+                bool ismeet = false;
+                while (r < s.Length)
+                {
+                    char rch = s[r];
+                    if (!scnt.ContainsKey(rch))
+                    {
+                        scnt[rch] = 0;
+                    }
+                    scnt[rch]++;
+                    if (tcnt.ContainsKey(rch) && scnt[rch] == tcnt[rch])
+                    {
+                        meet++;
+                    }
+
+                    while (meet == tcnt.Count)
+                    {
+                        ismeet = true;
+                        if (r - l + 1 < len)
+                        {
+                            len = r - l + 1;
+                            i = l;
+                        }
+
+                        char lch = s[l];
+                        scnt[lch]--;
+                        if (tcnt.ContainsKey(lch) && scnt[lch] < tcnt[lch])
+                        {
+                            meet--;
+                        }
+                        l++;
+                    }
+
+                    r++;
+                }
+
+                return ismeet ? s.Substring(i, len) : "";
+            }
+        }
     }
 }
