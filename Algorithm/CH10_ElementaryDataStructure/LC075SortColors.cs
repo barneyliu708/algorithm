@@ -70,5 +70,40 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 nums[j] = temp;
             }
         }
+
+        public class ThirdDone
+        {
+            public void SortColors(int[] nums)
+            {
+                int l = 0;
+                int r = nums.Length - 1;
+                int i = 0;
+                while (i <= r)
+                {
+                    if (nums[i] == 1)
+                    {
+                        i++;
+                    }
+                    else if (nums[i] == 0)
+                    {
+                        Swap(nums, i, l);
+                        l++;
+                        i++;
+                    }
+                    else
+                    {
+                        Swap(nums, i, r);
+                        r--;
+                    }
+                }
+            }
+
+            private void Swap(int[] nums, int i, int j)
+            {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
     }
 }
