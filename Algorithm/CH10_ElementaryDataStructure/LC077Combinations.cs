@@ -57,5 +57,43 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class ThirdDone
+        {
+            public IList<IList<int>> Combine(int n, int k)
+            {
+                List<int> cur = new List<int>();
+                List<IList<int>> ans = new List<IList<int>>();
+                Utility(n, 1, k, cur, ans);
+                return ans;
+            }
+
+            private void Utility(int n, int istart, int k, List<int> cur, List<IList<int>> ans)
+            {
+
+                if (n - istart + 1 + cur.Count < k)
+                {
+                    return;
+                }
+
+                if (cur.Count == k)
+                {
+                    ans.Add(new List<int>(cur));
+                    return;
+                }
+
+                if (istart > n)
+                {
+                    return;
+                }
+
+                for (int i = istart; i <= n; i++)
+                {
+                    cur.Add(i);
+                    Utility(n, i + 1, k, cur, ans);
+                    cur.RemoveAt(cur.Count - 1);
+                }
+            }
+        }
     }
 }
