@@ -50,5 +50,28 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class ThirdDone
+        {
+            public IList<IList<int>> Subsets(int[] nums)
+            {
+                List<int> cur = new List<int>();
+                List<IList<int>> ans = new List<IList<int>>();
+                Utility(nums, 0, cur, ans);
+                return ans;
+            }
+
+            private void Utility(int[] nums, int istart, List<int> cur, List<IList<int>> ans)
+            {
+                ans.Add(new List<int>(cur));
+
+                for (int i = istart; i < nums.Length; i++)
+                {
+                    cur.Add(nums[i]);
+                    Utility(nums, i + 1, cur, ans);
+                    cur.RemoveAt(cur.Count - 1);
+                }
+            }
+        }
     }
 }
