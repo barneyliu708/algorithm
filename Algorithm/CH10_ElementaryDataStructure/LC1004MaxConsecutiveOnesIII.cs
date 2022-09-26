@@ -102,6 +102,36 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
 
+        public class ForthDone
+        {
+            public int LongestOnes(int[] nums, int k)
+            {
+                int kcount = 0;
+                int l = 0;
+                int r = 0;
+                int ans = 0;
+                while (r < nums.Length)
+                {
+                    if (nums[r] == 0)
+                    {
+                        kcount++;
+                    }
+                    while (kcount > k)
+                    {
+                        if (nums[l] == 0)
+                        {
+                            kcount--;
+                        }
+                        l++;
+                    }
+
+                    ans = Math.Max(ans, r - l + 1);
+                    r++;
+                }
+                return ans;
+            }
+        }
+
         [TestCase]
         public void TestCase1()
         {
