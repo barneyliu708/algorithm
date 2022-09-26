@@ -63,5 +63,43 @@ namespace Algorithm.CH10_ElementaryDataStructure
             y.val = x.val;
             x.val = curVal;
         }
+
+        public class SecondDone
+        {
+            public void RecoverTree(TreeNode root)
+            {
+                Stack<TreeNode> stack = new Stack<TreeNode>();
+                TreeNode x = null;
+                TreeNode y = null;
+                TreeNode pre = null;
+                TreeNode cur = root;
+                while (cur != null || stack.Count > 0)
+                {
+                    while (cur != null)
+                    {
+                        stack.Push(cur);
+                        cur = cur.left;
+                    }
+
+                    cur = stack.Pop();
+                    if (pre != null && pre.val > cur.val)
+                    {
+                        if (x == null)
+                        {
+                            x = pre;
+                        }
+                        y = cur;
+                    }
+
+                    // move to next
+                    pre = cur;
+                    cur = cur.right;
+                }
+
+                int xval = x.val;
+                x.val = y.val;
+                y.val = xval;
+            }
+        }
     }
 }
