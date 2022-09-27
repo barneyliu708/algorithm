@@ -125,6 +125,39 @@ namespace Algorithm.CH4_DivideAndConque
             }
         }
 
+        public class ForthDone
+        {
+            public TreeNode BuildTree(int[] preorder, int[] inorder)
+            {
+                return Utility(preorder, inorder, (0, preorder.Length - 1), (0, inorder.Length - 1));
+            }
+
+            private TreeNode Utility(int[] preorder, int[] inorder, (int l, int r) pre, (int l, int r) ino)
+            {
+                if (pre.l > pre.r)
+                {
+                    return null;
+                }
+
+                TreeNode root = new TreeNode(preorder[pre.l]);
+
+                int i = ino.l;
+                while (i <= ino.r)
+                {
+                    if (inorder[i] == root.val)
+                    {
+                        break;
+                    }
+                    i++;
+                }
+
+                root.left = Utility(preorder, inorder, (pre.l + 1, pre.l + i - ino.l), (ino.l, i - 1));
+                root.right = Utility(preorder, inorder, (pre.l + i - ino.l + 1, pre.r), (i + 1, ino.r));
+
+                return root;
+            }
+        }
+
         [Test]
         public void PositiveCaase1()
         {
