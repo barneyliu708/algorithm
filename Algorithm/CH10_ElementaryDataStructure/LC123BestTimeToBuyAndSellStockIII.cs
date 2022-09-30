@@ -36,5 +36,44 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return max;
         }
+
+        public class SecondDone
+        {
+            public int MaxProfit(int[] prices)
+            {
+                int n = prices.Length;
+
+                int[] leftprofits = new int[n];
+                int min = prices[0];
+                for (int i = 1; i < n; i++)
+                {
+                    leftprofits[i] = Math.Max(leftprofits[i - 1], prices[i] - min);
+                    min = Math.Min(min, prices[i]);
+                }
+
+                int[] rightprofits = new int[n];
+                int max = prices[n - 1];
+                for (int i = n - 2; i >= 0; i--)
+                {
+                    rightprofits[i] = Math.Max(rightprofits[i + 1], max - prices[i]);
+                    max = Math.Max(max, prices[i]);
+                }
+
+                int ans = 0;
+                for (int i = 1; i < n; i++)
+                {
+                    if (i == n - 1)
+                    {
+                        ans = Math.Max(ans, leftprofits[i]);
+                    }
+                    else
+                    {
+                        ans = Math.Max(ans, leftprofits[i] + rightprofits[i + 1]);
+                    }
+                }
+
+                return ans;
+            }
+        }
     }
 }
