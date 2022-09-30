@@ -121,6 +121,65 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
                 return l;
             }
+
+            public class SecondDone
+            {
+                public int JobScheduling(int[] startTime, int[] endTime, int[] profit)
+                {
+                    int n = startTime.Length;
+                    Job[] jobs = new Job[n];
+                    for (int i = 0; i < n; i++)
+                    {
+                        jobs[i] = new Job(startTime[i], endTime[i], profit[i]);
+                    }
+
+                    Array.Sort(jobs, (Job x, Job y) => {
+                        return x.StartTime.CompareTo(y.StartTime);
+                    });
+
+                    int[] dp = new int[n + 1];
+                    dp[n - 1] = jobs[n - 1].Profit;
+                    for (int i = n - 2; i >= 0; i--)
+                    {
+                        int j = FindNextJob(jobs, i);
+                        dp[i] = Math.Max(jobs[i].Profit + dp[j], dp[i + 1]);
+                    }
+                    return dp[0];
+                }
+
+                public int FindNextJob(Job[] jobs, int icur)
+                {
+                    int curEndTime = jobs[icur].EndTime;
+                    int l = icur + 1;
+                    int r = jobs.Length - 1;
+                    while (l <= r)
+                    {
+                        int mid = l + (r - l) / 2;
+                        if (jobs[mid].StartTime >= curEndTime)
+                        {
+                            r = mid - 1;
+                        }
+                        else
+                        {
+                            l = mid + 1;
+                        }
+                    }
+                    return l;
+                }
+
+                public class Job
+                {
+                    public Job(int startTime, int endTime, int profit)
+                    {
+                        this.StartTime = startTime;
+                        this.EndTime = endTime;
+                        this.Profit = profit;
+                    }
+                    public int StartTime;
+                    public int EndTime;
+                    public int Profit;
+                }
+            }
         }
     }
 }
