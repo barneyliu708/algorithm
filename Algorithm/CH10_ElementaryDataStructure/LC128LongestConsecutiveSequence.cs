@@ -153,5 +153,93 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class ForthDone
+        {
+            public int LongestConsecutive(int[] nums)
+            {
+                UnionFind uf = new UnionFind();
+                HashSet<int> hashset = new HashSet<int>(); // nums;
+                foreach (int num in nums)
+                {
+                    if (!hashset.Contains(num))
+                    {
+                        hashset.Add(num);
+                        uf.Find(num);
+                    }
+                    if (hashset.Contains(num - 1))
+                    {
+                        int rep = uf.Find(num - 1);
+                        uf.Union(rep, num);
+                    }
+                    if (hashset.Contains(num + 1))
+                    {
+                        int rep = uf.Find(num + 1);
+                        uf.Union(rep, num);
+                    }
+                }
+
+                return uf.GetMaxSize();
+            }
+
+            public class UnionFind
+            {
+
+                private Dictionary<int, int> reps; // element - representative
+                private Dictionary<int, int> size; // representative - size
+
+                public UnionFind()
+                {
+                    reps = new Dictionary<int, int>();
+                    size = new Dictionary<int, int>();
+                }
+
+                public int Find(int x)
+                {
+                    if (!reps.ContainsKey(x))
+                    {
+                        reps[x] = x;
+                        size[x] = 1;
+                    }
+                    if (reps[x] != x)
+                    {
+                        return reps[x] = Find(reps[x]);
+                    }
+                    return x;
+                }
+
+                public void Union(int x, int y)
+                {
+                    // Console.WriteLine("union " + x + " " + y);
+                    int xrep = Find(x);
+                    int yrep = Find(y);
+                    if (xrep == yrep)
+                    {
+                        return;
+                    }
+
+                    if (size[xrep] > size[yrep])
+                    {
+                        size[xrep] += size[yrep];
+                        reps[yrep] = xrep;
+                    }
+                    else
+                    {
+                        size[yrep] += size[xrep];
+                        reps[xrep] = yrep;
+                    }
+                }
+
+                public int GetMaxSize()
+                {
+                    int ans = 0;
+                    foreach (int k in size.Keys)
+                    {
+                        ans = Math.Max(ans, size[k]);
+                    }
+                    return ans;
+                }
+            }
+        }
     }
 }
