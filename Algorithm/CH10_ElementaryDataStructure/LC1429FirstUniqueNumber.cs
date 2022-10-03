@@ -122,6 +122,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
 
+        public class ThirdDone
+        {
+            public class FirstUnique
+            {
+
+                private Queue<int> queue;
+                private Dictionary<int, int> count; // num - count
+
+                public FirstUnique(int[] nums)
+                {
+                    queue = new Queue<int>();
+                    count = new Dictionary<int, int>();
+                    foreach (int num in nums)
+                    {
+                        this.Add(num);
+                    }
+                }
+
+                public int ShowFirstUnique()
+                {
+                    while (queue.Count > 0 && count[queue.Peek()] > 1)
+                    {
+                        queue.Dequeue();
+                    }
+                    return queue.Count > 0 ? queue.Peek() : -1;
+                }
+
+                public void Add(int value)
+                {
+                    if (!count.ContainsKey(value))
+                    {
+                        count[value] = 0;
+                    }
+                    count[value]++;
+                    if (count[value] == 1)
+                    {
+                        queue.Enqueue(value);
+                    }
+                }
+            }
+        }
+
         [Test]
         public void TestCase1()
         {
