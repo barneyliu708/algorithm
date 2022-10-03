@@ -203,5 +203,48 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return ans;
             }
         }
+
+        public class ForthDone
+        {
+            public IList<int> PostorderTraversal(TreeNode root)
+            {
+                List<int> ans = new List<int>();
+                if (root == null)
+                {
+                    return ans;
+                }
+                TreeNode cur = root;
+                TreeNode pre = null;
+                Stack<TreeNode> stack = new Stack<TreeNode>();
+                while (cur != null || stack.Count > 0)
+                {
+                    while (cur != null)
+                    {
+                        stack.Push(cur);
+                        cur = cur.left;
+                    }
+
+                    root = stack.Peek();
+                    if (root.right == null || root.right == pre)
+                    {
+                        cur = null;
+                        pre = stack.Pop();
+                        ans.Add(root.val);
+                    }
+                    else if (root.right != null)
+                    {
+                        cur = root.right;
+                    }
+                    else
+                    {
+                        pre = stack.Pop();
+                        ans.Add(root.val);
+                        cur = root.right;
+                    }
+                }
+
+                return ans;
+            }
+        }
     }
 }
