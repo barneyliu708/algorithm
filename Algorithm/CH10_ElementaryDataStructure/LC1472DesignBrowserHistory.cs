@@ -93,5 +93,50 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class ThirdDone
+        {
+            public class BrowserHistory
+            {
+
+                private List<string> histories;
+                private int cur = 0;
+                private int latest = 0;
+
+                public BrowserHistory(string homepage)
+                {
+                    histories = new List<string>();
+                    histories.Add(""); // dummy url
+                    this.Visit(homepage);
+                }
+
+                public void Visit(string url)
+                {
+                    if (cur == histories.Count - 1)
+                    {
+                        histories.Add(url);
+                        cur++;
+                    }
+                    else
+                    {
+                        cur++;
+                        histories[cur] = url;
+                    }
+                    latest = cur;
+                }
+
+                public string Back(int steps)
+                {
+                    cur = Math.Max(1, cur - steps); // the first element is the dummy url, so the mininum valid index is 1
+                    return histories[cur];
+                }
+
+                public string Forward(int steps)
+                {
+                    cur = Math.Min(latest, cur + steps);
+                    return histories[cur];
+                }
+            }
+        }
     }
 }
