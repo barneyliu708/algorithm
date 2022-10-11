@@ -56,5 +56,63 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
             return result + sign * operand;
         }
+
+        public class SecondDone
+        {
+            public int Calculate(string s)
+            {
+
+                if (s[0] == '-')
+                {
+                    s = '0' + s;
+                }
+                Stack<int> stack = new Stack<int>();
+                Stack<int> signs = new Stack<int>();
+                stack.Push(0);
+                signs.Push(1);
+                int curSign = 1;
+                int curNum = 0;
+                foreach (char ch in s)
+                {
+                    if (ch == ' ')
+                    {
+                        continue;
+                    }
+                    if (ch == '+' || ch == '-')
+                    {
+                        int curSum = stack.Pop();
+                        curSum += curSign * curNum;
+                        stack.Push(curSum);
+
+                        // reset curNum and curSign
+                        curNum = 0;
+                        curSign = ch == '+' ? 1 : -1;
+                    }
+                    else if (ch == '(')
+                    {
+                        stack.Push(0);
+                        signs.Push(curSign);
+
+                        // reset the curSign for the next level
+                        curSign = 1;
+                    }
+                    else if (ch == ')')
+                    {
+                        int curSum = stack.Pop();
+                        curSum += curSign * curNum;
+
+                        // pop up to the parent level
+                        curNum = curSum;
+                        curSign = signs.Pop();
+                    }
+                    else
+                    { // digits
+                        curNum = curNum * 10 + (ch - '0');
+                    }
+                }
+
+                return stack.Pop() + curSign * curNum;
+            }
+        }
     }
 }
