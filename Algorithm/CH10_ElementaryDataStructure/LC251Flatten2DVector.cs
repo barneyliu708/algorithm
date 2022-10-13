@@ -41,5 +41,42 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
 
+        public class SecondDone
+        {
+            public class Vector2D
+            {
+                private int i = 0;
+                private int j = 0;
+                private int[][] vec;
+
+                public Vector2D(int[][] vec)
+                {
+                    this.vec = vec;
+                }
+
+                public int Next()
+                {
+                    int ans = vec[i][j];
+                    j++;
+                    while (i < vec.Length && j >= vec[i].Length)
+                    {
+                        i++;
+                        j = 0;
+                    }
+                    return ans;
+                }
+
+                public bool HasNext()
+                {
+                    while (i < vec.Length && j >= vec[i].Length)
+                    {
+                        i++;
+                        j = 0;
+                    }
+                    return i < vec.Length;
+                }
+            }
+        }
+
     }
 }
