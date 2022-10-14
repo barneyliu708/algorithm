@@ -156,5 +156,72 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return visitedCount == n;
             }
         }
+
+        public class ForthDone
+        {
+            public bool ValidTree(int n, int[][] edges)
+            {
+                if (edges.Length < n - 1)
+                {
+                    return false;
+                }
+
+                if (n == 1)
+                {
+                    return true;
+                }
+
+                List<int>[] adjNodes = new List<int>[n];
+                for (int i = 0; i < n; i++)
+                {
+                    adjNodes[i] = new List<int>();
+                }
+                int[] indegrees = new int[n];
+
+                foreach (int[] edge in edges)
+                {
+                    int a = edge[0];
+                    int b = edge[1];
+                    adjNodes[a].Add(b);
+                    adjNodes[b].Add(a);
+                    indegrees[a]++;
+                    indegrees[b]++;
+                }
+
+                bool[] visited = new bool[n];
+                Queue<int> queue = new Queue<int>();
+                for (int i = 0; i < n; i++)
+                {
+                    if (indegrees[i] == 1)
+                    {
+                        queue.Enqueue(i);
+                    }
+                }
+
+                int edgesCount = 0;
+                while (queue.Count > 0)
+                {
+                    int cur = queue.Dequeue();
+
+                    indegrees[cur]--;
+                    foreach (int neighbor in adjNodes[cur])
+                    {
+                        if (indegrees[neighbor] == 0)
+                        {
+                            continue;
+                        }
+                        indegrees[neighbor]--;
+                        edgesCount++;
+
+                        if (indegrees[neighbor] == 1)
+                        {
+                            queue.Enqueue(neighbor);
+                        }
+                    }
+                }
+
+                return edgesCount == edges.Length;
+            }
+        }
     }
 }
