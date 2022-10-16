@@ -47,5 +47,30 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 nums[j] = temp;
             }
         }
+
+        public class ThirdDone
+        {
+            public void MoveZeroes(int[] nums)
+            {
+                int l = 0;
+                int r = 0;
+                while (r < nums.Length)
+                {
+                    if (nums[r] != 0)
+                    {
+                        Swap(nums, l, r);
+                        l++;
+                    }
+                    r++;
+                }
+            }
+
+            private void Swap(int[] nums, int i, int j)
+            {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
     }
 }
