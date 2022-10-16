@@ -113,5 +113,26 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return memo[n];
             }
         }
+
+        public class ForthDone
+        {
+            public int NumSquares(int n)
+            {
+                int[] dp = new int[n + 1];
+                for (int i = 1; i <= n; i++)
+                {
+                    dp[i] = i;
+                    for (int s = 1; s <= i; s++)
+                    {
+                        int sqrt = (int)Math.Sqrt(s);
+                        if (sqrt * sqrt == s)
+                        {
+                            dp[i] = Math.Min(dp[i], dp[i - s] + 1);
+                        }
+                    }
+                }
+                return dp[n];
+            }
+        }
     }
 }
