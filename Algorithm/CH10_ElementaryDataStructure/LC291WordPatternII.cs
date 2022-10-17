@@ -161,6 +161,57 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
         }
 
+        public class ForthDone
+        {
+            public bool WordPatternMatch(string pattern, string s)
+            {
+                Dictionary<char, string> ptos = new Dictionary<char, string>();
+                Dictionary<string, char> stop = new Dictionary<string, char>();
+                return Utility(pattern, 0, s, 0, ptos, stop);
+            }
+
+            private bool Utility(string pattern, int pi, string s, int si, Dictionary<char, string> ptos, Dictionary<string, char> stop)
+            {
+                if (pi == pattern.Length && si == s.Length)
+                {
+                    return true;
+                }
+                if (pi == pattern.Length || si == s.Length)
+                {
+                    return false;
+                }
+                char curp = pattern[pi];
+                for (int i = si; i < s.Length; i++)
+                {
+                    string curs = s.Substring(si, i - si + 1);
+                    if ((ptos.ContainsKey(curp) && ptos[curp] != curs) ||
+                        (stop.ContainsKey(curs) && stop[curs] != curp))
+                    {
+                        continue;
+                    }
+                    else if (ptos.ContainsKey(curp) && stop.ContainsKey(curs) && ptos[curp] == curs && stop[curs] == curp)
+                    {
+                        if (Utility(pattern, pi + 1, s, i + 1, ptos, stop))
+                        {
+                            return true;
+                        }
+                    }
+                    else if (!ptos.ContainsKey(curp) && !stop.ContainsKey(curs))
+                    {
+                        ptos[curp] = curs;
+                        stop[curs] = curp;
+                        if (Utility(pattern, pi + 1, s, i + 1, ptos, stop))
+                        {
+                            return true;
+                        }
+                        ptos.Remove(curp);
+                        stop.Remove(curs);
+                    }
+                }
+                return false;
+            }
+        }
+
         [Test]
         public void TestCase1()
         {
