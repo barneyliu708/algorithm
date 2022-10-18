@@ -69,5 +69,28 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return memo[i];
             }
         }
+
+        public class ThirdDone
+        {
+            public int LengthOfLIS(int[] nums)
+            {
+                int[] dp = new int[nums.Length];
+                dp[0] = 1;
+                int ans = 1;
+                for (int i = 1; i < nums.Length; i++)
+                {
+                    dp[i] = 1;
+                    for (int j = i - 1; j >= 0; j--)
+                    {
+                        if (nums[i] > nums[j])
+                        {
+                            dp[i] = Math.Max(dp[i], dp[j] + 1);
+                        }
+                    }
+                    ans = Math.Max(ans, dp[i]);
+                }
+                return ans;
+            }
+        }
     }
 }
