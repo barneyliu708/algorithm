@@ -37,5 +37,41 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans[ans.Count - 1];
         }
+
+        public class SecondDone
+        {
+            public int NthSuperUglyNumber(int n, int[] primes)
+            {
+                int[] indexs = new int[primes.Length];
+                List<int> ans = new List<int>();
+                ans.Add(1);
+                while (ans.Count < n)
+                {
+                    int minValue = int.MaxValue;
+                    int minIndex = indexs.Length;
+                    for (int i = 0; i < indexs.Length; i++)
+                    {
+                        if (indexs[i] >= ans.Count)
+                        {
+                            continue;
+                        }
+                        int val = ans[indexs[i]] * primes[i];
+                        if (val < minValue)
+                        {
+                            minValue = val;
+                            minIndex = i;
+                        }
+                    }
+
+                    indexs[minIndex]++;
+                    if (minValue > ans[ans.Count - 1])
+                    {
+                        ans.Add(minValue);
+                    }
+                }
+
+                return ans[n - 1];
+            }
+        }
     }
 }
