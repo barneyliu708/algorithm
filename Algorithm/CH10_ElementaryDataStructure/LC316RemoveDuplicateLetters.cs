@@ -43,5 +43,44 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return sb.ToString();
         }
+
+        public class SecondDone
+        {
+            public string RemoveDuplicateLetters(string s)
+            {
+                int[] count = new int[26];
+                foreach (char ch in s)
+                {
+                    count[ch - 'a']++;
+                }
+
+                Stack<char> stack = new Stack<char>();
+                HashSet<char> hashset = new HashSet<char>();
+                foreach (char ch in s)
+                {
+                    if (hashset.Contains(ch))
+                    {
+                        count[ch - 'a']--;
+                        continue;
+                    }
+                    while (stack.Count > 0 && count[stack.Peek() - 'a'] > 1 && ch < stack.Peek())
+                    {
+                        char pre = stack.Pop();
+                        count[pre - 'a']--;
+                        hashset.Remove(pre);
+                    }
+                    stack.Push(ch);
+                    hashset.Add(ch);
+                }
+
+                StringBuilder sb = new StringBuilder();
+                while (stack.Count > 0)
+                {
+                    sb.Insert(0, stack.Pop());
+                }
+                return sb.ToString();
+            }
+
+        }
     }
 }
