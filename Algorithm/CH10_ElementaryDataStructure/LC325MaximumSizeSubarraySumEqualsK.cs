@@ -33,5 +33,32 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class SecondDone
+        {
+            public int MaxSubArrayLen(int[] nums, int k)
+            {
+                int[] presum = new int[nums.Length + 1];
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    presum[i + 1] = presum[i] + nums[i];
+                }
+                Dictionary<int, int> map = new Dictionary<int, int>(); // value - index
+                int ans = 0;
+                for (int i = 0; i < presum.Length; i++)
+                {
+                    if (map.ContainsKey(presum[i] - k))
+                    {
+                        int leftIdx = map[presum[i] - k];
+                        ans = Math.Max(ans, i - leftIdx);
+                    }
+                    if (!map.ContainsKey(presum[i]))
+                    {
+                        map[presum[i]] = i;
+                    }
+                }
+                return ans;
+            }
+        }
     }
 }
