@@ -107,5 +107,38 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return Math.Max(robResults[root], notRobResults[root]);
             }
         }
+
+        public class ThirdDone
+        {
+            public int Rob(TreeNode root)
+            {
+                Dictionary<TreeNode, int> robResults = new Dictionary<TreeNode, int>();
+                Dictionary<TreeNode, int> notRobResults = new Dictionary<TreeNode, int>();
+                return Rob(root, false, robResults, notRobResults);
+            }
+
+            private int Rob(TreeNode root, bool isParentRobbed, Dictionary<TreeNode, int> robResults, Dictionary<TreeNode, int> notRobResults)
+            {
+                if (root == null)
+                {
+                    return 0;
+                }
+
+                if (!robResults.ContainsKey(root))
+                {
+                    robResults[root] = Rob(root.left, true, robResults, notRobResults) + Rob(root.right, true, robResults, notRobResults) + root.val;
+                }
+                if (!notRobResults.ContainsKey(root))
+                {
+                    notRobResults[root] = Rob(root.left, false, robResults, notRobResults) + Rob(root.right, false, robResults, notRobResults);
+                }
+
+                if (isParentRobbed)
+                {
+                    return notRobResults[root];
+                }
+                return Math.Max(robResults[root], notRobResults[root]);
+            }
+        }
     }
 }
