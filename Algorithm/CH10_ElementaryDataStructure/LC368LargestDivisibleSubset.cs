@@ -93,5 +93,43 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return memo[i];
             }
         }
+
+        public class ThirdDone
+        {
+            public IList<int> LargestDivisibleSubset(int[] nums)
+            {
+                Array.Sort(nums);
+
+                int n = nums.Length;
+                List<int>[] dp = new List<int>[n];
+                // for (int i = 0; i < n; i++) {
+                //     dp[i] = new List<int>();
+                // }
+
+                List<int> ans = new List<int>();
+                for (int i = 0; i < n; i++)
+                {
+                    dp[i] = new List<int>() { nums[i] };
+                    for (int k = i - 1; k >= 0; k--)
+                    {
+                        if (nums[i] % nums[k] == 0)
+                        { // we have sorted the nums, so nums[i] always is greater than nums[k]
+                            if (dp[k].Count + 1 > dp[i].Count)
+                            {
+                                dp[i] = new List<int>(dp[k]);
+                                dp[i].Add(nums[i]);
+                                // Console.WriteLine(i + ": " + string.Join(' ', dp[i]));
+                            }
+                        }
+                    }
+                    // Console.WriteLine(i + ": " + string.Join(' ', dp[i]));
+                    if (dp[i].Count > ans.Count)
+                    {
+                        ans = dp[i];
+                    }
+                }
+                return ans;
+            }
+        }
     }
 }
