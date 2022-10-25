@@ -35,5 +35,33 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 LexicalOrder(n, next, ans);
             }
         }
+
+        public class SecondDone
+        {
+            public IList<int> LexicalOrder(int n)
+            {
+                List<int> ans = new List<int>();
+                Dft(n, 0, ans);
+                return ans;
+            }
+
+            private void Dft(int n, int current, List<int> ans)
+            {
+                List<int> digits = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+                if (current == 0)
+                {
+                    digits.RemoveAt(0);
+                }
+                foreach (int d in digits)
+                {
+                    if (current + d > n)
+                    {
+                        return;
+                    }
+                    ans.Add(current + d);
+                    Dft(n, (current + d) * 10, ans);
+                }
+            }
+        }
     }
 }
