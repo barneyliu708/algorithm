@@ -117,5 +117,61 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
 
         }
+
+        public class ThirdDone
+        {
+            public class RandomizedSet
+            {
+
+                private Random rand;
+                private Dictionary<int, int> map; // val - index
+                private List<int> list;
+
+                public RandomizedSet()
+                {
+                    rand = new Random();
+                    map = new Dictionary<int, int>();
+                    list = new List<int>();
+                }
+
+                public bool Insert(int val)
+                {
+                    if (map.ContainsKey(val))
+                    {
+                        return false;
+                    }
+                    list.Add(val);
+                    map[val] = list.Count - 1;
+                    return true;
+                }
+
+                public bool Remove(int val)
+                {
+                    if (!map.ContainsKey(val))
+                    {
+                        return false;
+                    }
+                    int val_index = map[val];
+                    Swap(val_index, list.Count - 1);
+                    map[list[val_index]] = val_index;
+                    map.Remove(val);
+                    list.RemoveAt(list.Count - 1);
+                    return true;
+                }
+
+                public int GetRandom()
+                {
+                    int rand_index = rand.Next(list.Count);
+                    return list[rand_index];
+                }
+
+                private void Swap(int i, int j)
+                {
+                    int temp = this.list[i];
+                    this.list[i] = this.list[j];
+                    this.list[j] = temp;
+                }
+            }
+        }
     }
 }
