@@ -44,5 +44,38 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return false;
         }
+
+        public class SecondDone
+        {
+            public bool CheckSubarraySum(int[] nums, int k)
+            {
+                int n = nums.Length;
+                int[] dp = new int[n + 1];
+                for (int i = 0; i < n; i++)
+                {
+                    dp[i + 1] = dp[i] + nums[i];
+                }
+
+                Dictionary<int, int> map = new Dictionary<int, int>(); // remainder - index in dp
+                map[0] = 0;
+                for (int i = 1; i <= n; i++)
+                {
+                    if (map.ContainsKey(dp[i] % k))
+                    {
+                        int j = map[dp[i] % k];
+                        if (i - j > 1)
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        map[dp[i] % k] = i;
+                    }
+                }
+
+                return false;
+            }
+        }
     }
 }
