@@ -57,5 +57,31 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 return x.parent;
             }
         }
+
+        public class ThirdDone
+        {
+            public Node InorderSuccessor(Node x)
+            {
+                if (x == null)
+                {
+                    return null;
+                }
+                Node successor = x;
+                if (x.right != null)
+                {
+                    successor = x.right;
+                    while (successor.left != null)
+                    {
+                        successor = successor.left;
+                    }
+                    return successor;
+                }
+                while (successor.parent != null && successor.parent.right == successor)
+                {
+                    successor = successor.parent;
+                }
+                return successor.parent;
+            }
+        }
     }
 }
