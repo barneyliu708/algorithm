@@ -32,5 +32,34 @@ namespace Algorithm.CH10_ElementaryDataStructure
 
             return ans;
         }
+
+        public class SecondDone
+        {
+            public int[] NextGreaterElements(int[] nums)
+            {
+                Stack<int> stack = new Stack<int>();
+                int[] ans = new int[nums.Length];
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    while (stack.Count > 0 && nums[stack.Peek()] < nums[i])
+                    {
+                        ans[stack.Pop()] = nums[i];
+                    }
+                    stack.Push(i);
+                }
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    while (stack.Count > 0 && nums[stack.Peek()] < nums[i])
+                    {
+                        ans[stack.Pop()] = nums[i];
+                    }
+                }
+                while (stack.Count > 0)
+                {
+                    ans[stack.Pop()] = -1;
+                }
+                return ans;
+            }
+        }
     }
 }
