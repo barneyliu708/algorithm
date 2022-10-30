@@ -60,5 +60,27 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
             return total / 2;
         }
+
+        public class SecondDone
+        {
+            public int FindPairs(int[] nums, int k)
+            {
+                Dictionary<int, int> map = new Dictionary<int, int>(); // value - index
+                HashSet<int> pairs = new HashSet<int>(); // set the hash value of pair = val_i + val_j (since val_i - val_j = k, val_i + val_j can be used as hash value)
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (map.ContainsKey(nums[i] - k))
+                    {
+                        pairs.Add(nums[i] + nums[i] - k);
+                    }
+                    if (map.ContainsKey(nums[i] + k))
+                    {
+                        pairs.Add(nums[i] + k + nums[i]);
+                    }
+                    map[nums[i]] = i;
+                }
+                return pairs.Count;
+            }
+        }
     }
 }
