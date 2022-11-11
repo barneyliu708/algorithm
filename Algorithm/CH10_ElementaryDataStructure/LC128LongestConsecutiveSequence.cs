@@ -241,5 +241,92 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class FifthDone
+        {
+            public class Solution
+            {
+                public int LongestConsecutive(int[] nums)
+                {
+                    UnionFind uf = new UnionFind(nums.Length);
+                    Dictionary<int, int> map = new Dictionary<int, int>(); // value - index
+                    for (int i = 0; i < nums.Length; i++)
+                    {
+                        if (map.ContainsKey(nums[i]))
+                        {
+                            continue;
+                        }
+                        map[nums[i]] = i;
+                        if (map.ContainsKey(nums[i] - 1))
+                        {
+                            uf.Union(i, map[nums[i] - 1]);
+                        }
+                        if (map.ContainsKey(nums[i] + 1))
+                        {
+                            uf.Union(i, map[nums[i] + 1]);
+                        }
+                    }
+
+                    return uf.GetMaxSize();
+                }
+
+                public class UnionFind
+                {
+                    private int[] representatives;
+                    private int[] sizes;
+                    public UnionFind(int n)
+                    {
+                        sizes = new int[n];
+                        representatives = new int[n];
+                        for (int i = 0; i < representatives.Length; i++)
+                        {
+                            representatives[i] = i;
+                            sizes[i] = 1;
+                        }
+                    }
+
+                    public int GetRep(int i)
+                    {
+                        if (representatives[i] == i)
+                        {
+                            return i;
+                        }
+                        return representatives[i] = GetRep(representatives[i]);
+                    }
+
+                    public void Union(int i, int j)
+                    {
+                        int irep = GetRep(i);
+                        int jrep = GetRep(j);
+                        if (irep == jrep)
+                        {
+                            return;
+                        }
+                        // Console.WriteLine("Union: " + i + " " + j);
+
+                        if (sizes[irep] > sizes[jrep])
+                        {
+                            sizes[irep] += sizes[jrep];
+                            representatives[jrep] = irep;
+                        }
+                        else
+                        {
+                            sizes[jrep] += sizes[irep];
+                            representatives[irep] = jrep;
+                        }
+                    }
+
+                    public int GetMaxSize()
+                    {
+                        int max = 0;
+                        for (int i = 0; i < sizes.Length; i++)
+                        {
+                            max = Math.Max(max, sizes[i]);
+                        }
+                        return max;
+                    }
+                }
+            }
+        }
     }
 }
