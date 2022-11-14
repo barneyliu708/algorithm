@@ -45,5 +45,51 @@ namespace Algorithm.CH10_ElementaryDataStructure
             }
             return ans;
         }
+
+        public class SecondDone
+        {
+            public long MaxPoints(int[][] points)
+            {
+                int m = points.Length;
+                int n = points[0].Length;
+                long[] dp = new long[n];
+                for (int i = 0; i < m; i++)
+                {
+                    long[] leftmost = new long[n];
+                    long[] rightmost = new long[n];
+                    for (int j = 0; j < n; j++)
+                    {
+                        if (j == 0)
+                        {
+                            leftmost[j] = dp[j];
+                            rightmost[n - 1 - j] = dp[n - 1 - j];
+                        }
+                        else
+                        {
+                            leftmost[j] = Math.Max(leftmost[j - 1], dp[j] + j);
+                            rightmost[n - 1 - j] = Math.Max(rightmost[n - j], dp[n - 1 - j] + j);
+                        }
+                    }
+
+                    for (int j = 0; j < n; j++)
+                    {
+                        dp[j] = points[i][j] + Math.Max(leftmost[j] - j, rightmost[j] - (n - 1 - j));
+                    }
+
+                    // Console.WriteLine("i = " + i);
+                    // Console.WriteLine(string.Join(", ", leftmost));
+                    // Console.WriteLine(string.Join(", ", rightmost));
+                    // Console.WriteLine(string.Join(", ", dp));
+                }
+
+                long ans = 0;
+                for (int j = 0; j < n; j++)
+                {
+                    ans = Math.Max(ans, dp[j]);
+                }
+
+                return ans;
+            }
+        }
     }
 }
