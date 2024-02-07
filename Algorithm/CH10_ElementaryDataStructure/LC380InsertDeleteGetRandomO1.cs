@@ -173,5 +173,67 @@ namespace Algorithm.CH10_ElementaryDataStructure
                 }
             }
         }
+
+        public class FirstDone2024
+        {
+            public class RandomizedSet
+            {
+
+                private List<int> list; // hold set value
+                private Random rnd; // generate random index
+                private Dictionary<int, int> map; // value - index 
+
+                public RandomizedSet()
+                {
+                    list = new List<int>();
+                    rnd = new Random();
+                    map = new Dictionary<int, int>();
+                }
+
+                public bool Insert(int val)
+                {
+                    if (map.ContainsKey(val))
+                    {
+                        return false;
+                    }
+
+                    list.Add(val);
+                    map.Add(val, list.Count - 1);
+                    return true;
+                }
+
+                public bool Remove(int val)
+                {
+                    if (!map.ContainsKey(val))
+                    {
+                        return false;
+                    }
+
+                    // swap the value to the end of list and then remove
+                    int lastVal = list[list.Count - 1];
+                    int i = map[val];
+                    list[i] = lastVal;
+                    map[lastVal] = i;
+                    list.RemoveAt(list.Count - 1);
+                    map.Remove(val);
+
+                    return true;
+                }
+
+                public int GetRandom()
+                {
+                    int ri = rnd.Next(list.Count);
+                    return list[ri];
+                }
+            }
+
+            /**
+             * Your RandomizedSet object will be instantiated and called as such:
+             * RandomizedSet obj = new RandomizedSet();
+             * bool param_1 = obj.Insert(val);
+             * bool param_2 = obj.Remove(val);
+             * int param_3 = obj.GetRandom();
+             */
+        }
     }
 }
